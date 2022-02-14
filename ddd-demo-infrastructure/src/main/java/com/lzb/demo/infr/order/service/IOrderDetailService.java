@@ -1,7 +1,7 @@
-package com.lzb.demo.infr.order.repository.service;
+package com.lzb.demo.infr.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lzb.demo.infr.order.repository.po.OrderDetailDo;
+import com.lzb.demo.infr.order.po.OrderDetailDo;
 
 /**
  * <p>

@@ -1,9 +1,9 @@
-package com.lzb.demo.infr.order.repository.service.impl;
+package com.lzb.demo.infr.order.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.lzb.demo.infr.order.repository.mapper.OrderDetailMapper;
-import com.lzb.demo.infr.order.repository.po.OrderDetailDo;
-import com.lzb.demo.infr.order.repository.service.IOrderDetailService;
+import com.lzb.demo.infr.order.mapper.OrderDetailMapper;
+import com.lzb.demo.infr.order.po.OrderDetailDo;
+import com.lzb.demo.infr.order.service.IOrderDetailService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author lizebin
  * @since 2022-02-14
  */
-@Service
+@Service("infr.OrderDetailServiceImpl")
 public class OrderDetailServiceImpl extends ServiceImpl<OrderDetailMapper, OrderDetailDo> implements IOrderDetailService {
 
 }

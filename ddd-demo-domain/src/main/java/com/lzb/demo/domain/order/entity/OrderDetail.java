@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
+import com.lzb.demo.domain.order.valobj.OrderDetailProduct;
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,6 +21,6 @@ public class OrderDetail {
     private final OrderId orderId;
     private final OrderDetailStatus orderDetailStatus;
     private final int count;
-    private final ProductId productId;
+    private final OrderDetailProduct product;
 
 }

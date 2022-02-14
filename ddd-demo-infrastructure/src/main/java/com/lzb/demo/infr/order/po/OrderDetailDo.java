@@ -1,4 +1,4 @@
-package com.lzb.demo.infr.order.repository.po;
+package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
@@ -31,6 +31,11 @@ public class OrderDetailDo {
      * 商品id
      */
     private Long productId;
+
+    /**
+     * 商品编码
+     */
+    private String productCode;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDateTime;

@@ -2,8 +2,8 @@ package com.lzb.demo.infr.order;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.infr.order.repository.mapper.OrderDetailMapper;
-import com.lzb.demo.infr.order.repository.mapper.OrderMapper;
+import com.lzb.demo.infr.order.mapper.OrderDetailMapper;
+import com.lzb.demo.infr.order.mapper.OrderMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

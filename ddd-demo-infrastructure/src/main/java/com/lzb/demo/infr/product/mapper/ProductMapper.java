@@ -1,7 +1,7 @@
-package com.lzb.demo.infr.order.repository.mapper;
+package com.lzb.demo.infr.product.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.lzb.demo.infr.order.repository.po.OrderDo;
+import com.lzb.demo.infr.product.po.ProductDo;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-02-14
  */
 @Mapper
-public interface OrderMapper extends BaseMapper<OrderDo> {
+public interface ProductMapper extends BaseMapper<ProductDo> {
 
 }

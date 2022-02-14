@@ -1,4 +1,4 @@
-package com.lzb.demo.infr.order.repository.po;
+package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
