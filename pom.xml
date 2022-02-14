@@ -16,7 +16,8 @@
 
         <mybatis-starter.version>1.3.1</mybatis-starter.version>
         <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
-        <cola.components.version>4.0.1</cola.components.version>
+        <org.postgresql.version>42.2.19</org.postgresql.version>
+        <guava.version>30.1-jre</guava.version>
     </properties>
 
     <modules>
@@ -30,29 +31,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--COLA Components-->
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-domain-starter</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-exception</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-dto</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cola</groupId>
-                <artifactId>cola-component-catchlog-starter</artifactId>
-                <version>${cola.components.version}</version>
-            </dependency>
-            <!--COLA Components End-->
-
             <!--Project modules-->
             <dependency>
                 <groupId>com.lzb</groupId>
@@ -118,11 +96,6 @@
             <!--Validation API End -->
             <!-- Misc -->
             <dependency>
-                <groupId>org.reflections</groupId>
-                <artifactId>reflections</artifactId>
-                <version>0.9.10</version>
-            </dependency>
-            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>1.18.16</version>
@@ -135,7 +108,7 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.2.55</version>
+                <version>1.2.78</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -143,7 +116,16 @@
                 <version>4.13.1</version>
                 <scope>test</scope>
             </dependency>
-            <!-- Misc End -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${org.postgresql.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
