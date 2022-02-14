@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.order.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,8 +12,10 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderId {
 
+    @EqualsAndHashCode.Include
     private final Long value;
 
 }

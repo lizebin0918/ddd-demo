@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.user;
+package com.lzb.demo.domain.user.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,5 +12,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class UserId {
+
+    private final Long userId;
 
 }

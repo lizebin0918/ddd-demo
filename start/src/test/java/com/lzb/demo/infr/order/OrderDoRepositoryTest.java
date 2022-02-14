@@ -2,6 +2,7 @@ package com.lzb.demo.infr.order;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.SpringbootTestBase;
+import com.lzb.demo.infr.order.repository.mapper.OrderDetailMapper;
 import com.lzb.demo.infr.order.repository.mapper.OrderMapper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,13 @@ public class OrderDoRepositoryTest extends SpringbootTestBase {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+
     @Test
     public void test_select_all() {
         System.out.println(orderMapper.selectList(Wrappers.emptyWrapper()));
+        System.out.println(orderDetailMapper.selectList(Wrappers.emptyWrapper()));
     }
 
 

@@ -1,8 +1,8 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.user.UserId;
-import lombok.Builder;
+import com.lzb.demo.domain.user.entity.UserId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -13,9 +13,11 @@ import lombok.RequiredArgsConstructor;
  * @author lizebin
  */
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 public class Order {
 
+    @EqualsAndHashCode.Include
     private final OrderId orderId;
     private final Money payMoney;
     private final OrderStatus orderStatus;
