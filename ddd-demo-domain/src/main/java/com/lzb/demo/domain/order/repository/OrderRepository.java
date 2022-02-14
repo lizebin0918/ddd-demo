@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order.repository;
 
 import com.lzb.demo.domain.order.agg.Orders;
-import com.lzb.demo.domain.order.entity.Order;
+import com.lzb.demo.domain.order.agg.Order;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 

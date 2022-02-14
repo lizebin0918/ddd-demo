@@ -1,8 +1,6 @@
 package com.lzb.demo.infr.order.repository.po;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -22,7 +20,7 @@ public class OrderDetailDo {
     /**
      * 订单号
      */
-    private Integer orderId;
+    private Long orderId;
 
     /**
      * 数量
@@ -34,8 +32,10 @@ public class OrderDetailDo {
      */
     private Long productId;
 
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDateTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateDateTime;
 
     /**

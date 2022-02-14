@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,36 +16,29 @@ import java.util.stream.Collectors;
  * @author lizebin
  */
 @Getter
-public enum OrderStatus {
+public enum OrderDetailStatus {
 
     /**
      * 已取消
      */
     CANCEL(-1),
     /**
-     * 待审核
+     * 已下单
      */
-    WAIT_REVIEW(0),
-    /**
-     * 待发货
-     */
-    PEDNING(1),
-    /**
-     * 已发货
-     */
-    SHIP(2);
+    ORDER(1);
 
     private final int value;
 
-    OrderStatus(int value) {
+    OrderDetailStatus(int value) {
         this.value = value;
     }
 
-    private static final Map<Integer, OrderStatus> ENUM_MAP = Arrays.stream(OrderStatus.values())
-            .collect(Collectors.toMap(OrderStatus::getValue, Function.identity()));
+    private static final Map<Integer, OrderDetailStatus> ENUM_MAP = Arrays.stream(OrderDetailStatus.values())
+            .collect(Collectors.toMap(OrderDetailStatus::getValue, Function.identity()));
 
 
-    public static OrderStatus valueOf(int value) {
+    public static OrderDetailStatus valueOf(int value) {
         return ENUM_MAP.get(value);
     }
+
 }

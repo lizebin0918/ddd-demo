@@ -1,14 +1,22 @@
 package com.lzb.demo.infr.order.repository;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.lzb.demo.domain.order.agg.Order;
 import com.lzb.demo.domain.order.agg.Orders;
-import com.lzb.demo.domain.order.entity.Order;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
+import com.lzb.demo.infr.order.converter.OrderConverter;
+import com.lzb.demo.infr.order.repository.po.OrderDetailDo;
+import com.lzb.demo.infr.order.repository.po.OrderDo;
+import com.lzb.demo.infr.order.repository.service.IOrderDetailService;
 import com.lzb.demo.infr.order.repository.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -23,14 +31,25 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Autowired
     private IOrderService orderService;
 
-    @Override
-    public void save(Order order) {
+    @Autowired
+    private IOrderDetailService orderDetailService;
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(Order order) {
+        orderService.saveOrUpdate(OrderConverter.toOrderDo(order));
+        orderDetailService.saveOrUpdateBatch(OrderConverter.toOrderDetailDoList(order.getOrderDetails()));
     }
 
     @Override
     public Optional<Order> getById(OrderId orderId) {
-        return Optional.empty();
+        long orderIdValue = orderId.getValue();
+        OrderDo orderDo = orderService.getById(orderIdValue);
+        if (Objects.isNull(orderDo)) {
+            return Optional.empty();
+        }
+        List<OrderDetailDo> orderDetailDoList = orderDetailService.list(Wrappers.<OrderDetailDo>lambdaQuery().eq(OrderDetailDo::getOrderId, orderIdValue));
+        return Optional.of(OrderConverter.toOrder(orderDo, orderDetailDoList));
     }
 
     @Override
