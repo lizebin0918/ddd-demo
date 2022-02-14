@@ -1,9 +1,8 @@
-package com.lzb.demo.infr.order.entity;
+package com.lzb.demo.domain.order.entity;
 
 import lombok.Data;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * 订单聚合根集合<br/>

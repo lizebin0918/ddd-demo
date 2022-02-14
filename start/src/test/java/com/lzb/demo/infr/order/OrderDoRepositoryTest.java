@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author lizebin
  */
-public class OrderRepositoryTest extends SpringbootTestBase {
+public class OrderDoRepositoryTest extends SpringbootTestBase {
 
     @Autowired
     private OrderMapper orderMapper;
