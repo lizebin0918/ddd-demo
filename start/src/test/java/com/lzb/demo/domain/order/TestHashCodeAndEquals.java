@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order;
 
 import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.agg.Order;
+import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.user.entity.UserId;
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

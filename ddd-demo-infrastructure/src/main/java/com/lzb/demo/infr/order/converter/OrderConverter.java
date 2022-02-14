@@ -1,6 +1,6 @@
 package com.lzb.demo.infr.order.converter;
 
-import com.lzb.demo.domain.order.agg.Order;
+import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;

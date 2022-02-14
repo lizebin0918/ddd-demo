@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.agg;
+package com.lzb.demo.domain.order.aggregate;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

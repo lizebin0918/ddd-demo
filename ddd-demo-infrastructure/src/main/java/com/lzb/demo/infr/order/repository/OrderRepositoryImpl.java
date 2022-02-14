@@ -1,8 +1,8 @@
 package com.lzb.demo.infr.order.repository;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.lzb.demo.domain.order.agg.Order;
-import com.lzb.demo.domain.order.agg.Orders;
+import com.lzb.demo.domain.order.aggregate.Order;
+import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;

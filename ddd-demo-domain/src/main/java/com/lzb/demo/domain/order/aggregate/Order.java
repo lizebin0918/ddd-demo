@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.agg;
+package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
