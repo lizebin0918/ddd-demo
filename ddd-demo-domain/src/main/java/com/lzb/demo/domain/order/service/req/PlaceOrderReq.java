@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.order.service.req;
 
-import com.lzb.demo.domain.order.entity.OrderDetail;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -15,7 +15,9 @@ import java.util.List;
 @Getter
 public class PlaceOrderReq {
 
-    public static class OrderDetail {
+    @Getter
+    @AllArgsConstructor
+    public static class Product {
         /**
          * 数量
          */
@@ -45,13 +47,13 @@ public class PlaceOrderReq {
     /**
      * 订单明细
      */
-    private final List<OrderDetail> orderDetailList;
+    private final List<Product> productList;
 
-    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<OrderDetail> orderDetailList) {
+    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<Product> productList) {
         this.orderId = orderId;
         this.payMoney = payMoney;
         this.userId = userId;
-        this.orderDetailList = orderDetailList;
+        this.productList = productList;
         if (!validate()) {
             throw new RuntimeException("参数有误");
         }
