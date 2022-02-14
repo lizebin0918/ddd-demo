@@ -36,9 +36,9 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void save(Order order) {
-        orderService.saveOrUpdate(OrderConverter.toOrderDo(order));
-        orderDetailService.saveOrUpdateBatch(OrderConverter.toOrderDetailDoList(order.getOrderDetails()));
+    public void add(Order order) {
+        orderService.save(OrderConverter.toOrderDo(order));
+        orderDetailService.saveBatch(OrderConverter.toOrderDetailDoList(order.getOrderDetails()));
     }
 
     @Override

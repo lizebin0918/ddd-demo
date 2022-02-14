@@ -56,7 +56,7 @@ public class TestOrderRepository extends SpringbootTestBase {
                 .userId(new UserId(1L))
                 .orderDetails(orderDetailList).build();
 
-        orderRepository.save(order);
+        orderRepository.add(order);
 
     }
 

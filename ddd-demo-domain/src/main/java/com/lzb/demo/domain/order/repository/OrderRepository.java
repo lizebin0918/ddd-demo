@@ -19,7 +19,7 @@ public interface OrderRepository {
      * 保存订单/订单明细（不能存在则插入，存在则更新）
      * @param order
      */
-    void save(Order order);
+    void add(Order order);
 
     /**
      * 获取订单聚合
