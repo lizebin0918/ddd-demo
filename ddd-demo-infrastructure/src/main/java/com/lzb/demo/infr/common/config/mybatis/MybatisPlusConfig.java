@@ -15,7 +15,6 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan("com.lzb.demo.infr.*.mapper")
 public class MybatisPlusConfig {
 
     @Autowired
@@ -26,7 +25,7 @@ public class MybatisPlusConfig {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        factoryBean.setMapperLocations(resolver.getResources("classpath:/**/*.xml"));
+        factoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
         factoryBean.setTypeHandlersPackage("com.lzb.demo.infr.common.config");
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setMapUnderscoreToCamelCase(true);
