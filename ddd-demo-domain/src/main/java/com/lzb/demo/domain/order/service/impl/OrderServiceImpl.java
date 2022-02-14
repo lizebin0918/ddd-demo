@@ -1,7 +1,9 @@
 package com.lzb.demo.domain.order.service.impl;
 
+import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
@@ -29,9 +31,19 @@ public class OrderServiceImpl implements OrderService {
     public OrderId placeOrder(PlaceOrderReq placeOrder) {
 
         OrderId orderId = new OrderId(placeOrder.getOrderId());
-        List<PlaceOrderReq.Product> productList = placeOrder.getProductList();
+        List<PlaceOrderReq.Product> products = placeOrder.getProducts();
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
+
+        Order order = Order.builder()
+                .orderId(orderId)
+                .orderStatus(OrderStatus.WAIT_REVIEW)
+                .payMoney(payMoney)
+                .userId(userId).build();
+
+        products.forEach(product -> {
+            //order.addOrderDetailForPlaceOrder();
+        });
 
         return null;
     }

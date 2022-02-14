@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.order.valobj;
 
+import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,9 +12,10 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class OrderDetailProduct {
+public class Product {
 
-    private Long productId;
+    private long productId;
     private String productCode;
+    private int count;
 
 }

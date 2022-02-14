@@ -6,15 +6,12 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.OrderDetailProduct;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
-import com.lzb.demo.infr.product.po.ProductDo;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -55,7 +52,7 @@ public class OrderConverter {
                 .orderDetailStatus(OrderDetailStatus.valueOf(orderDetailDo.getStatus()))
                 .orderId(new OrderId(orderDetailDo.getOrderId()))
                 .count(orderDetailDo.getCount())
-                .product(new OrderDetailProduct(orderDetailDo.getProductId(), orderDetailDo.getProductCode()))
+                .product(new Product(orderDetailDo.getProductId(), orderDetailDo.getProductCode()))
                 .build();
     }
 

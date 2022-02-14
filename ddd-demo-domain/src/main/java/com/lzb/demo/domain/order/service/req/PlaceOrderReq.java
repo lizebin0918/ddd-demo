@@ -47,13 +47,13 @@ public class PlaceOrderReq {
     /**
      * 订单明细
      */
-    private final List<Product> productList;
+    private final List<Product> products;
 
-    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<Product> productList) {
+    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<Product> products) {
         this.orderId = orderId;
         this.payMoney = payMoney;
         this.userId = userId;
-        this.productList = productList;
+        this.products = products;
         if (!validate()) {
             throw new RuntimeException("参数有误");
         }
