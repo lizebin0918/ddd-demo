@@ -13,6 +13,7 @@ import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -26,15 +27,11 @@ public class OrderConverter {
     /**
      * 订单聚合根转换
      * @param orderDo
-     * @param orderDetailDoList
+     * @param orderDetailDoSupplier
      * @param productIdMap
      * @return
      */
-    public static Order toOrder(OrderDo orderDo,
-                                List<OrderDetailDo> orderDetailDoList) {
-        List<OrderDetail> orderDetailList = orderDetailDoList.stream()
-                .map(OrderConverter::toOrderDetail)
-                .collect(Collectors.toList());
+    public static Order toOrder(OrderDo orderDo) {
         return Order.builder()
                 .orderDetails(orderDetailList)
                 .orderStatus(OrderStatus.valueOf(orderDo.getStatus()))

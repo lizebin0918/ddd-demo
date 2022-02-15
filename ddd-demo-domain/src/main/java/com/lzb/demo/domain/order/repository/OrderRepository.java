@@ -1,10 +1,12 @@
 package com.lzb.demo.domain.order.repository;
 
-import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.aggregate.Order;
+import com.lzb.demo.domain.order.aggregate.Orders;
+import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -34,5 +36,12 @@ public interface OrderRepository {
      * @return
      */
     Orders getByOrderStatus(OrderStatus orderStatus);
+
+    /**
+     * 根据订单号查询
+     * @param orderId
+     * @return
+     */
+    List<OrderDetail> getOrderDetailsByOrderId(OrderId orderId);
 
 }

@@ -10,7 +10,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * <br/>
@@ -21,21 +24,36 @@ import java.util.List;
 @Getter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@RequiredArgsConstructor
 public class Order {
 
     @EqualsAndHashCode.Include
-    private final OrderId orderId;
-    private final Money payMoney;
-    private final OrderStatus orderStatus;
-    private final UserId userId;
-    private final List<OrderDetail> orderDetails;
+    private OrderId orderId;
+    private Money payMoney;
+    private OrderStatus orderStatus;
+    private UserId userId;
+    private Supplier<List<OrderDetail>> orderDetailSupplier;
+    private List<OrderDetail> orderDetails;
 
     /**
-     * 添加明细
+     * 获取订单明细
+     * @return
+     */
+    public List<OrderDetail> getOrderDetails() {
+        if (Objects.isNull(orderDetails)) {
+            orderDetails = Collections.unmodifiableList(orderDetailSupplier.get());
+        }
+        return orderDetails;
+    }
+
+    /**
+     * 新增订单明细
      * @param orderDetail
      */
     public void addOrderDetail(OrderDetail orderDetail) {
+        if (Objects.isNull(orderDetails)) {
+            orderDetails = orderDetailSupplier.get();
+        }
         orderDetails.add(orderDetail);
     }
+
 }

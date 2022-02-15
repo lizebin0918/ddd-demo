@@ -67,4 +67,9 @@ public class OrderRepositoryImpl implements OrderRepository {
     public Orders getByOrderStatus(OrderStatus orderStatus) {
         return null;
     }
+
+    @Override
+    public List<OrderDetail> getOrderDetailsByOrderId(OrderId orderId) {
+        return null;
+    }
 }
