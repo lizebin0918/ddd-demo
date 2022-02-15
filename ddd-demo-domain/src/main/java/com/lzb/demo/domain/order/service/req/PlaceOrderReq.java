@@ -17,7 +17,7 @@ public class PlaceOrderReq {
 
     @Getter
     @AllArgsConstructor
-    public static class Product {
+    public static class OrderDetail {
         /**
          * 数量
          */
@@ -47,13 +47,13 @@ public class PlaceOrderReq {
     /**
      * 订单明细
      */
-    private final List<Product> products;
+    private final List<OrderDetail> orderDetails;
 
-    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<Product> products) {
+    public PlaceOrderReq(Long orderId, BigDecimal payMoney, Long userId, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
         this.payMoney = payMoney;
         this.userId = userId;
-        this.products = products;
+        this.orderDetails = orderDetails;
         if (!validate()) {
             throw new RuntimeException("参数有误");
         }

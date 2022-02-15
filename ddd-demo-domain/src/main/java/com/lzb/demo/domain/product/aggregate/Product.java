@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.valobj;
+package com.lzb.demo.domain.product.aggregate;
 
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Product {
 
-    private long productId;
+    private ProductId productId;
     private String productCode;
     private int count;
 

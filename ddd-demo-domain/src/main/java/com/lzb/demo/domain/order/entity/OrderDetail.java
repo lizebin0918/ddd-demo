@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.order.valobj.Product;
+import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,7 @@ public class OrderDetail {
 
     private final OrderId orderId;
     private final OrderDetailStatus orderDetailStatus;
-    private final Product product;
+    private final ProductId productId;
+    private final int count;
 
 }

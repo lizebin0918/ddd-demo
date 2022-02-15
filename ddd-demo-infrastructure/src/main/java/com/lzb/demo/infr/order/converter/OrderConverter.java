@@ -6,7 +6,8 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.Product;
+import com.lzb.demo.domain.order.valobj.OrderProducts;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
@@ -52,31 +53,33 @@ public class OrderConverter {
                 .orderDetailStatus(OrderDetailStatus.valueOf(orderDetailDo.getStatus()))
                 .orderId(new OrderId(orderDetailDo.getOrderId()))
                 .count(orderDetailDo.getCount())
-                .product(new Product(orderDetailDo.getProductId(), orderDetailDo.getProductCode()))
+                .productId(new ProductId(orderDetailDo.getProductId()))
                 .build();
     }
 
     /**
      * 转do集合
      * @param orderDetailList
+     * @param products 填充productCode
      * @return
      */
-    public static List<OrderDetailDo> toOrderDetailDoList(List<OrderDetail> orderDetailList) {
-        return orderDetailList.stream().map(OrderConverter::toOrderDetailDo).collect(Collectors.toList());
+    public static List<OrderDetailDo> toOrderDetailDoList(List<OrderDetail> orderDetailList , OrderProducts products) {
+        return orderDetailList.stream().map(item -> toOrderDetailDo(item, products)).collect(Collectors.toList());
     }
 
     /**
      * 转do
      * @param orderDetail
+     * @param products
      * @return
      */
-    public static OrderDetailDo toOrderDetailDo(OrderDetail orderDetail) {
+    public static OrderDetailDo toOrderDetailDo(OrderDetail orderDetail, OrderProducts products) {
         OrderDetailDo orderDetailDo = new OrderDetailDo();
         orderDetailDo.setOrderId(orderDetail.getOrderId().getValue());
         orderDetailDo.setCount(orderDetail.getCount());
         orderDetailDo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailDo.setProductId(orderDetail.getProduct().getProductId());
-        orderDetailDo.setProductCode(orderDetail.getProduct().getProductCode());
+        orderDetailDo.setProductId(orderDetail.getProductId().getValue());
+        orderDetailDo.setProductCode(products.get(orderDetail.getProductId().getValue()).getProductCode());
         return orderDetailDo;
     }
 

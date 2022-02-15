@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.product.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
  */
 @Getter
 @RequiredArgsConstructor
+@EqualsAndHashCode
 public class ProductId {
 
     private final Long value;

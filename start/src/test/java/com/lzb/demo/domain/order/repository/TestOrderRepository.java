@@ -8,7 +8,7 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.Product;
+import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import org.assertj.core.api.Assertions;
@@ -48,11 +48,12 @@ public class TestOrderRepository extends SpringbootTestBase {
         orderDetailList.add(OrderDetail.builder()
                 .orderId(orderId)
                 .orderDetailStatus(OrderDetailStatus.ORDER)
-                .product(new Product(1L, "1", 1))
+                        .count(1)
+                .productId(new ProductId(1L))
                 .build());
 
         Order order = Order.builder()
-                .orderId(new OrderId(1L))
+                .orderId(new OrderId(2L))
                 .orderStatus(OrderStatus.SHIP)
                 .payMoney(new Money(new BigDecimal(0)))
                 .userId(new UserId(1L))

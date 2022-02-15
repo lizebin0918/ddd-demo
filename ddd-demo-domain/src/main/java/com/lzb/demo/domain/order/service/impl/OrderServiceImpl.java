@@ -2,11 +2,14 @@ package com.lzb.demo.domain.order.service.impl;
 
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
+import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderId placeOrder(PlaceOrderReq placeOrder) {
 
         OrderId orderId = new OrderId(placeOrder.getOrderId());
-        List<PlaceOrderReq.Product> products = placeOrder.getProducts();
+        List<PlaceOrderReq.OrderDetail> orderDetails = placeOrder.getOrderDetails();
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
@@ -41,11 +44,19 @@ public class OrderServiceImpl implements OrderService {
                 .payMoney(payMoney)
                 .userId(userId).build();
 
-        products.forEach(product -> {
-            //order.addOrderDetailForPlaceOrder();
+        orderDetails.forEach(orderDetailReq -> {
+            OrderDetail orderDetail = OrderDetail.builder()
+                    .orderDetailStatus(OrderDetailStatus.ORDER)
+                    .orderId(orderId)
+                    .count(orderDetailReq.getCount())
+                    .productId(new ProductId(orderDetailReq.getProductId()))
+                    .build();
+            order.addOrderDetail(orderDetail);
         });
 
-        return null;
+        orderRepository.add(order);
+
+        return orderId;
     }
 
 }
