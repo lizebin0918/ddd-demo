@@ -31,13 +31,14 @@ public class OrderConverter {
      * @param productIdMap
      * @return
      */
-    public static Order toOrder(OrderDo orderDo) {
+    public static Order toOrder(OrderDo orderDo, Supplier<List<OrderDetail>> orderDetailDoSupplier) {
         return Order.builder()
-                .orderDetails(orderDetailList)
                 .orderStatus(OrderStatus.valueOf(orderDo.getStatus()))
                 .payMoney(new Money(orderDo.getPayMoney()))
                 .userId(new UserId(orderDo.getUserId()))
-                .orderId(new OrderId(orderDo.getOrderId())).build();
+                .orderId(new OrderId(orderDo.getOrderId()))
+                .orderDetailSupplier(orderDetailDoSupplier)
+                .build();
     }
 
     /**
@@ -52,6 +53,15 @@ public class OrderConverter {
                 .count(orderDetailDo.getCount())
                 .productId(new ProductId(orderDetailDo.getProductId()))
                 .build();
+    }
+
+    /**
+     * 订单明细列表转换
+     * @param orderDetailDos
+     * @return
+     */
+    public static List<OrderDetail> toOrderDetailList(List<OrderDetailDo> orderDetailDos) {
+        return orderDetailDos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toList());
     }
 
     /**

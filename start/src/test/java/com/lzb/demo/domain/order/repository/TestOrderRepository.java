@@ -36,7 +36,7 @@ public class TestOrderRepository extends SpringbootTestBase {
     public void test_getById() {
         Optional<Order> order = orderRepository.getById(new OrderId(1L));
         Assertions.assertThat(order.isPresent()).isEqualTo(true);
-        System.out.println(JSON.toJSONString(order.get()));
+        System.out.println(JSON.toJSONString(order.get().getOrderDetails()));
     }
 
     @Test

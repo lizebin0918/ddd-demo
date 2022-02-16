@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class OrderDetail {
 
+    private final long orderDetailId;
     private final OrderId orderId;
     private final OrderDetailStatus orderDetailStatus;
     private final ProductId productId;

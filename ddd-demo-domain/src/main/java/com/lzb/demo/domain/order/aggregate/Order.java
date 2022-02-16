@@ -40,7 +40,7 @@ public class Order {
      */
     public List<OrderDetail> getOrderDetails() {
         if (Objects.isNull(orderDetails)) {
-            orderDetails = Collections.unmodifiableList(orderDetailSupplier.get());
+            orderDetails = orderDetailSupplier.get();
         }
         return orderDetails;
     }

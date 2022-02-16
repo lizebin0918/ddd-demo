@@ -1,5 +1,7 @@
 package com.lzb.demo.infr.order.repository;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
@@ -7,7 +9,6 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
-import com.lzb.demo.domain.product.aggregate.Product;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
@@ -16,7 +17,6 @@ import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,8 +59,18 @@ public class OrderRepositoryImpl implements OrderRepository {
         if (Objects.isNull(orderDo)) {
             return Optional.empty();
         }
-        List<OrderDetailDo> orderDetailDoList = orderDetailService.list(Wrappers.<OrderDetailDo>lambdaQuery().eq(OrderDetailDo::getOrderId, orderIdValue));
-        return Optional.of(OrderConverter.toOrder(orderDo, orderDetailDoList));
+        return Optional.of(OrderConverter.toOrder(orderDo, () -> listOrderDetailByOrderId(orderId)));
+    }
+
+    /**
+     * 根据订单号查询订单明细
+     * @param orderId
+     * @return
+     */
+    private List<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
+        List<OrderDetailDo> orderDetailDoList = orderDetailService.list(
+                Wrappers.<OrderDetailDo>lambdaQuery().eq(OrderDetailDo::getOrderId, orderId.getValue()));
+        return OrderConverter.toOrderDetailList(orderDetailDoList);
     }
 
     @Override
@@ -68,8 +78,4 @@ public class OrderRepositoryImpl implements OrderRepository {
         return null;
     }
 
-    @Override
-    public List<OrderDetail> getOrderDetailsByOrderId(OrderId orderId) {
-        return null;
-    }
 }

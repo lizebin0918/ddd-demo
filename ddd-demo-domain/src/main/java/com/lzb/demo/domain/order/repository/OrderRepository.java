@@ -37,11 +37,4 @@ public interface OrderRepository {
      */
     Orders getByOrderStatus(OrderStatus orderStatus);
 
-    /**
-     * 根据订单号查询
-     * @param orderId
-     * @return
-     */
-    List<OrderDetail> getOrderDetailsByOrderId(OrderId orderId);
-
 }
