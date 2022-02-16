@@ -78,4 +78,9 @@ public class OrderRepositoryImpl implements OrderRepository {
         return null;
     }
 
+    @Override
+    public void update(Order order) {
+
+    }
+
 }

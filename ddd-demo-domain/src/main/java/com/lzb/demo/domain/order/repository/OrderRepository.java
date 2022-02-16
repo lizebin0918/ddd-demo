@@ -37,4 +37,10 @@ public interface OrderRepository {
      */
     Orders getByOrderStatus(OrderStatus orderStatus);
 
+    /**
+     * 更新订单
+     * @param order
+     */
+    void update(Order order);
+
 }

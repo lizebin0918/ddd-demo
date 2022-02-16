@@ -53,5 +53,7 @@ public class OrderDo {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateDateTime;
 
+    @Version
+    private Integer version;
 
 }

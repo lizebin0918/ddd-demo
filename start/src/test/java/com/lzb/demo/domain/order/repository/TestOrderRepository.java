@@ -11,6 +11,7 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.infr.order.gateway.OrderGateway;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class TestOrderRepository extends SpringbootTestBase {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderGateway orderGateway;
 
     @Test
     public void test_getById() {
@@ -61,6 +65,11 @@ public class TestOrderRepository extends SpringbootTestBase {
 
         orderRepository.add(order);
 
+    }
+
+    @Test
+    public void test_listOrderForPage() {
+        System.out.println(JSON.toJSONString(orderGateway.listForPage(1, 1)));
     }
 
 }
