@@ -72,4 +72,14 @@ public class TestOrderRepository extends SpringbootTestBase {
         System.out.println(JSON.toJSONString(orderGateway.listForPage(1, 1)));
     }
 
+    @Test
+    public void test_update() {
+        Order order = Order.builder()
+                .orderId(new OrderId(2L))
+                .orderStatus(OrderStatus.SHIP)
+                .payMoney(new Money(new BigDecimal(0)))
+                .userId(new UserId(1L)).build();
+        orderRepository.update(order);
+    }
+
 }

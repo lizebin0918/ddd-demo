@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,7 +81,10 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public void update(Order order) {
-
+        OrderDo orderDo = OrderConverter.toOrderDo(order);
+        orderDo.setPayMoney(new BigDecimal(10000));
+        orderDo.setVersion(2);
+        orderService.updateById(orderDo);
     }
 
 }
