@@ -1,7 +1,5 @@
 package com.lzb.demo.infr.order.repository;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.LambdaUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
@@ -11,8 +9,8 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
-import com.lzb.demo.infr.order.po.OrderDetailDo;
-import com.lzb.demo.infr.order.po.OrderDo;
+import com.lzb.demo.infr.order.po.OrderDetailPo;
+import com.lzb.demo.infr.order.po.OrderPo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
@@ -56,7 +54,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     public Optional<Order> getById(OrderId orderId) {
         long orderIdValue = orderId.getValue();
-        OrderDo orderDo = orderService.getById(orderIdValue);
+        OrderPo orderDo = orderService.getById(orderIdValue);
         if (Objects.isNull(orderDo)) {
             return Optional.empty();
         }
@@ -69,9 +67,9 @@ public class OrderRepositoryImpl implements OrderRepository {
      * @return
      */
     private List<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
-        List<OrderDetailDo> orderDetailDoList = orderDetailService.list(
-                Wrappers.<OrderDetailDo>lambdaQuery().eq(OrderDetailDo::getOrderId, orderId.getValue()));
-        return OrderConverter.toOrderDetailList(orderDetailDoList);
+        List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
+                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getValue()));
+        return OrderConverter.toOrderDetailList(orderDetailPoList);
     }
 
     @Override
@@ -81,7 +79,7 @@ public class OrderRepositoryImpl implements OrderRepository {
 
     @Override
     public void update(Order order) {
-        OrderDo orderDo = OrderConverter.toOrderDo(order);
+        OrderPo orderDo = OrderConverter.toOrderDo(order);
         orderDo.setPayMoney(new BigDecimal(10000));
         orderDo.setVersion(2);
         orderService.updateById(orderDo);

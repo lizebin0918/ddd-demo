@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @TableName("product")
-public class ProductDo {
+public class ProductPo {
 
     private static final long serialVersionUID = 1L;
 

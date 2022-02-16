@@ -3,55 +3,50 @@ package com.lzb.demo.infr.order.po;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author lizebin
- * @since 2022-02-14
- */
 @Data
-@TableName("\"order\"")
-public class OrderDo {
+@TableName("order_detail")
+public class OrderDetailPo {
 
     private static final long serialVersionUID = 1L;
 
     /**
+     * 主键
+     */
+    @TableId(type = IdType.AUTO)
+    private Long id;
+
+    /**
      * 订单号
      */
-    @TableId(type = IdType.INPUT)
     private Long orderId;
 
     /**
-     * 支付金额
+     * 数量
      */
-    private BigDecimal payMoney;
+    private Integer count;
 
     /**
-     * 下单用户
+     * 商品id
      */
-    private Long userId;
+    private Long productId;
 
     /**
-     * 订单状态
+     * 商品编码
      */
-    private Integer status;
+    private String productCode;
 
-    /**
-     * 创建时间
-     */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createDateTime;
 
-    /**
-     * 更新时间
-     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateDateTime;
+
+    /**
+     * 订单明细状态
+     */
+    private Integer status;
 
     @Version
     private Integer version;

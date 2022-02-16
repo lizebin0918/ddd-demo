@@ -6,8 +6,7 @@ import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.order.valobj.OrderProducts;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
-import com.lzb.demo.infr.product.mapper.ProductMapper;
-import com.lzb.demo.infr.product.po.ProductDo;
+import com.lzb.demo.infr.product.po.ProductPo;
 import com.lzb.demo.infr.product.service.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <br/>
@@ -33,13 +31,13 @@ public class ProductGatewayImpl implements ProductGateway {
     public OrderProducts getOrderProducts(Set<ProductId> productIds) {
         List<Long> productDoIds = productIds.stream().map(ProductId::getValue).collect(Collectors.toList());
 
-        LambdaQueryWrapper<ProductDo> query = Wrappers.lambdaQuery();
-        query.in(ProductDo::getId, productDoIds);
-        query.select(ProductDo::getId, ProductDo::getCode);
-        List<ProductDo> productDoList = productService.list(query);
+        LambdaQueryWrapper<ProductPo> query = Wrappers.lambdaQuery();
+        query.in(ProductPo::getId, productDoIds);
+        query.select(ProductPo::getId, ProductPo::getCode);
+        List<ProductPo> productPoList = productService.list(query);
 
-        return new OrderProducts(productDoList.stream().map(productDo -> {
-            return new OrderProduct(productDo.getId(), productDo.getCode());
+        return new OrderProducts(productPoList.stream().map(productPo -> {
+            return new OrderProduct(productPo.getId(), productPo.getCode());
         }).collect(Collectors.toList()));
     }
 }

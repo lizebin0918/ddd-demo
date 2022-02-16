@@ -1,7 +1,7 @@
 package com.lzb.demo.infr.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lzb.demo.infr.order.po.OrderDo;
+import com.lzb.demo.infr.order.po.OrderPo;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import com.lzb.demo.infr.order.po.OrderDo;
  * @author lizebin
  * @since 2022-02-14
  */
-public interface IOrderService extends IService<OrderDo> {
+public interface IOrderService extends IService<OrderPo> {
 
 }

@@ -1,7 +1,7 @@
 package com.lzb.demo.infr.order.gateway;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lzb.demo.infr.order.po.OrderDo;
+import com.lzb.demo.infr.order.po.OrderPo;
 
 /**
  * <br/>
@@ -11,6 +11,6 @@ import com.lzb.demo.infr.order.po.OrderDo;
  */
 public interface OrderGateway {
 
-    Page<OrderDo> listForPage(int pageNum, int pageSize);
+    Page<OrderPo> listForPage(int pageNum, int pageSize);
 
 }
