@@ -42,6 +42,6 @@ public interface OrderRepository {
      * @param order
      * @return 更新条数=0，表示version被修改
      */
-    boolean update(Order order);
+    void update(Order order);
 
 }

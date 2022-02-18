@@ -1,6 +1,7 @@
 package com.lzb.demo.infr.order.repository;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderDetail;
@@ -18,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -81,12 +81,12 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public boolean update(Order order) {
+    public void update(Order order) {
 
         // 先锁主表
         boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
         if (!success) {
-            return false;
+            throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getOrderId().getValue());
         }
 
         // 更新明细
@@ -94,7 +94,6 @@ public class OrderRepositoryImpl implements OrderRepository {
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
         orderDetailService.updateBatchById(OrderConverter.toOrderDetailDoList(orderDetails, productGateway.getOrderProducts(productIds)));
 
-        return success;
     }
 
 }

@@ -26,6 +26,7 @@
         <module>ddd-demo-domain</module>
         <module>ddd-demo-infrastructure</module>
         <module>start</module>
+        <module>ddd-demo-common</module>
     </modules>
 
     <dependencyManagement>
