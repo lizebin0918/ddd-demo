@@ -121,6 +121,11 @@
                 <artifactId>postgresql</artifactId>
                 <version>${org.postgresql.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.lzb</groupId>
+                <artifactId>ddd-demo-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

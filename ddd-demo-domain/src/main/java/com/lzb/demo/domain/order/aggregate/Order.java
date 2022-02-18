@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.order.aggregate;
 
+import com.alibaba.fastjson.JSON;
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.CheckValidation;
 import com.lzb.demo.domain.order.entity.Money;
@@ -10,7 +11,12 @@ import com.lzb.demo.domain.user.entity.UserId;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import org.apache.commons.lang3.builder.DiffBuilder;
+import org.apache.commons.lang3.builder.DiffResult;
+import org.apache.commons.lang3.builder.Diffable;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +24,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
- * <br/>
+ * Diffable 会依赖重写的 hashCode() 和 equals()<br/>
  * Created on : 2022-02-14 15:42
  *
  * @author lizebin
@@ -26,7 +32,7 @@ import java.util.function.Supplier;
 @Getter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Order {
+public class Order implements Diffable<Order> {
 
     @EqualsAndHashCode.Include
     private OrderId orderId;
@@ -43,7 +49,7 @@ public class Order {
      */
     public List<OrderDetail> getOrderDetails() {
         if (Objects.isNull(orderDetails)) {
-            orderDetails = orderDetailSupplier.get();
+            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new ArrayList<>());
         }
         return orderDetails;
     }
@@ -89,4 +95,21 @@ public class Order {
 
     }
 
+    @Override
+    public DiffResult diff(Order order) {
+        return new DiffBuilder(this, order, ToStringStyle.SHORT_PREFIX_STYLE)
+                .append("orderId", this.orderId, order.getOrderId())
+                .append("orderStatus", this.orderStatus, order.getOrderStatus())
+                .append("version", this.version, order.getVersion())
+                .build();
+    }
+
+    /*public static void main(String[] args) {
+        Order o1 = Order.builder().orderId(new OrderId(1L)).version(1).build();
+        Order o2 = Order.builder().orderId(new OrderId(2L)).version(2).build();
+
+        System.out.println(JSON.toJSONString(o1));
+        System.out.println(JSON.toJSONString(o2));
+        System.out.println(JSON.toJSONString(o1.diff(o2).getDiffs()));
+    }*/
 }
