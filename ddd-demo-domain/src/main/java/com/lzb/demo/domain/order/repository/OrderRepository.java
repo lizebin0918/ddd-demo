@@ -40,7 +40,8 @@ public interface OrderRepository {
     /**
      * 更新订单
      * @param order
+     * @return 更新条数=0，表示version被修改
      */
-    void update(Order order);
+    boolean update(Order order);
 
 }

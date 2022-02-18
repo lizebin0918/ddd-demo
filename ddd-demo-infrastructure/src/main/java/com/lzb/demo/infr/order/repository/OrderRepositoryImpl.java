@@ -44,8 +44,11 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
+
+        // 保存主表
         orderService.save(OrderConverter.toOrderDo(order));
 
+        // 保存明细
         List<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
         orderDetailService.saveBatch(OrderConverter.toOrderDetailDoList(orderDetails, productGateway.getOrderProducts(productIds)));
@@ -78,11 +81,20 @@ public class OrderRepositoryImpl implements OrderRepository {
     }
 
     @Override
-    public void update(Order order) {
-        OrderPo orderDo = OrderConverter.toOrderDo(order);
-        orderDo.setPayMoney(new BigDecimal(10000));
-        orderDo.setVersion(2);
-        orderService.updateById(orderDo);
+    public boolean update(Order order) {
+
+        // 先锁主表
+        boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
+        if (!success) {
+            return false;
+        }
+
+        // 更新明细
+        List<OrderDetail> orderDetails = order.getOrderDetails();
+        Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
+        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDoList(orderDetails, productGateway.getOrderProducts(productIds)));
+
+        return success;
     }
 
 }

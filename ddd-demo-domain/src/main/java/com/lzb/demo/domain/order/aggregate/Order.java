@@ -33,6 +33,7 @@ public class Order {
     private UserId userId;
     private Supplier<List<OrderDetail>> orderDetailSupplier;
     private List<OrderDetail> orderDetails;
+    private int version;
 
     /**
      * 获取订单明细

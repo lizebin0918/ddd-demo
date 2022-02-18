@@ -38,6 +38,7 @@ public class OrderConverter {
                 .userId(new UserId(orderDo.getUserId()))
                 .orderId(new OrderId(orderDo.getOrderId()))
                 .orderDetailSupplier(orderDetailDoSupplier)
+                .version(orderDo.getVersion())
                 .build();
     }
 
@@ -101,6 +102,7 @@ public class OrderConverter {
        orderDo.setStatus(order.getOrderStatus().getValue());
        orderDo.setPayMoney(order.getPayMoney().getValue());
        orderDo.setUserId(order.getUserId().getValue());
+       orderDo.setVersion(order.getVersion());
        return orderDo;
     }
 
