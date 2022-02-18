@@ -43,7 +43,7 @@ public class OrderServiceTest  extends SpringbootTestBase {
 
     @Test
     public void test_cancel() {
-       Assertions.assertThat(orderService.cancel(2586412).isSuccess()).isEqualTo(true);
+       Assertions.assertThat(orderService.cancel(9324594L).isSuccess()).isEqualTo(true);
     }
 
 }

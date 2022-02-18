@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.service.impl;
 
 import com.lzb.demo.common.exception.BizException;
+import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
@@ -14,11 +15,12 @@ import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.RequiredArgsConstructor;
+import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * <br/>
@@ -65,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
         Order order = orderRepository.getById(new OrderId(orderId)).orElseThrow(() -> new BizException("无此记录"));
         order.cancel();

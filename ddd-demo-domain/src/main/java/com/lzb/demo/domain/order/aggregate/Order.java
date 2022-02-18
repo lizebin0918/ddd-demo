@@ -63,7 +63,7 @@ public class Order {
      * 是否能取消
      * @return
      */
-    public CheckValidation canCancel() {
+    public CheckValidation checkCancel() {
 
         CheckValidation checkValidation = CheckValidation.newInstance();
 
@@ -79,10 +79,10 @@ public class Order {
      */
     public void cancel() {
 
-        CheckValidation checkValidation = canCancel();
+        CheckValidation checkValidation = checkCancel();
 
-        if (checkValidation.isNotValidate()) {
-            throw new BizException("取消异常:" + checkValidation.toString());
+        if (!checkValidation.canCancel()) {
+            throw new BizException("取消异常:" + checkValidation);
         }
 
         this.orderStatus = OrderStatus.CANCEL;

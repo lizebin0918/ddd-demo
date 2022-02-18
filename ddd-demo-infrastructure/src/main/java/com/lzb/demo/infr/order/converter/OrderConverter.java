@@ -53,6 +53,7 @@ public class OrderConverter {
                 .orderId(new OrderId(orderDetailPo.getOrderId()))
                 .count(orderDetailPo.getCount())
                 .productId(new ProductId(orderDetailPo.getProductId()))
+                .orderDetailId(orderDetailPo.getId())
                 .build();
     }
 

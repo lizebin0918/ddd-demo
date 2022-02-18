@@ -32,8 +32,8 @@ public class CheckValidation {
      * 是否合法
      * @return true:合法
      */
-    public boolean isNotValidate() {
-        return !errorMsgs.isEmpty();
+    public boolean canCancel() {
+        return errorMsgs.isEmpty();
     }
 
     @Override
