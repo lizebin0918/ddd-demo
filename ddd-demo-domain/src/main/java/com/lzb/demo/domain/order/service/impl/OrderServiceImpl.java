@@ -1,5 +1,7 @@
 package com.lzb.demo.domain.order.service.impl;
 
+import com.lzb.demo.common.exception.BizException;
+import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <br/>
@@ -31,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public OrderId placeOrder(PlaceOrderReq placeOrder) {
+    public Result placeOrder(PlaceOrderReq placeOrder) {
 
         OrderId orderId = new OrderId(placeOrder.getOrderId());
         List<PlaceOrderReq.OrderDetail> orderDetails = placeOrder.getOrderDetails();
@@ -56,7 +59,17 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.add(order);
 
-        return orderId;
+        return Result.success();
+
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Result cancel(long orderId) {
+        Order order = orderRepository.getById(new OrderId(orderId)).orElseThrow(() -> new BizException("无此记录"));
+        order.cancel();
+        orderRepository.update(order);
+        return Result.success();
     }
 
 }

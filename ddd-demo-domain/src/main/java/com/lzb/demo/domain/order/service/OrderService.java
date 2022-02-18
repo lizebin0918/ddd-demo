@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.order.service;
 
+import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
@@ -17,6 +18,12 @@ public interface OrderService {
      * @param req
      * @return
      */
-    OrderId placeOrder(PlaceOrderReq req);
+    Result placeOrder(PlaceOrderReq req);
+
+    /**
+     * 取消订单id
+     * @param orderId
+     */
+    Result cancel(long orderId);
 
 }

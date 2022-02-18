@@ -48,7 +48,4 @@ public class OrderDetailPo {
      */
     private Integer status;
 
-    @Version
-    private Integer version;
-
 }

@@ -88,6 +88,7 @@ public class OrderConverter {
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
         orderDetailPo.setProductId(orderDetail.getProductId().getValue());
         orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getValue()).getProductCode());
+        orderDetailPo.setId(orderDetail.getOrderDetailId());
         return orderDetailPo;
     }
 

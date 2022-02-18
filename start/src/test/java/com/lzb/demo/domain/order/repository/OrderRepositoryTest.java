@@ -8,7 +8,6 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
@@ -28,7 +27,7 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-public class TestOrderRepository extends SpringbootTestBase {
+public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Autowired
     private OrderRepository orderRepository;
