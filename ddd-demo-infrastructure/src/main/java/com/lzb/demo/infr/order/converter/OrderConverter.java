@@ -13,6 +13,7 @@ import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -27,17 +28,17 @@ public class OrderConverter {
     /**
      * 订单聚合根转换
      * @param orderDo
-     * @param orderDetailDoSupplier
+     * @param orderDetailSupplier
      * @param productIdMap
      * @return
      */
-    public static Order toOrder(OrderPo orderDo, Supplier<List<OrderDetail>> orderDetailDoSupplier) {
+    public static Order toOrder(OrderPo orderDo, Supplier<Set<OrderDetail>> orderDetailSupplier) {
         return Order.builder()
                 .orderStatus(OrderStatus.valueOf(orderDo.getStatus()))
                 .payMoney(new Money(orderDo.getPayMoney()))
                 .userId(new UserId(orderDo.getUserId()))
                 .orderId(new OrderId(orderDo.getOrderId()))
-                .orderDetailSupplier(orderDetailDoSupplier)
+                .orderDetailSupplier(orderDetailSupplier)
                 .version(orderDo.getVersion())
                 .build();
     }
@@ -62,18 +63,18 @@ public class OrderConverter {
      * @param orderDetailPos
      * @return
      */
-    public static List<OrderDetail> toOrderDetailList(List<OrderDetailPo> orderDetailPos) {
-        return orderDetailPos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toList());
+    public static Set<OrderDetail> toOrderDetails(List<OrderDetailPo> orderDetailPos) {
+        return orderDetailPos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
     }
 
     /**
      * 转do集合
-     * @param orderDetailList
+     * @param orderDetails
      * @param products 填充productCode
      * @return
      */
-    public static List<OrderDetailPo> toOrderDetailDoList(List<OrderDetail> orderDetailList , OrderProducts products) {
-        return orderDetailList.stream().map(item -> toOrderDetailDo(item, products)).collect(Collectors.toList());
+    public static List<OrderDetailPo> toOrderDetailDos(Set<OrderDetail> orderDetails , OrderProducts products) {
+        return orderDetails.stream().map(item -> toOrderDetailDo(item, products)).collect(Collectors.toList());
     }
 
     /**

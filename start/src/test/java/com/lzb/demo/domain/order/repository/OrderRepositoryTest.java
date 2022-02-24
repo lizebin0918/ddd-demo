@@ -16,9 +16,9 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 
 /**
@@ -47,7 +47,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
         OrderId orderId = new OrderId(1L);
 
-        List<OrderDetail> orderDetailList = new ArrayList<>();
+        Set<OrderDetail> orderDetailList = new HashSet<>();
         orderDetailList.add(OrderDetail.builder()
                 .orderId(orderId)
                 .orderDetailStatus(OrderDetailStatus.ORDER)

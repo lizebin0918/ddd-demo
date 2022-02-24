@@ -49,9 +49,9 @@ public class OrderRepositoryImpl implements OrderRepository {
         orderService.save(OrderConverter.toOrderDo(order));
 
         // 保存明细
-        List<OrderDetail> orderDetails = order.getOrderDetails();
+        Set<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.saveBatch(OrderConverter.toOrderDetailDoList(orderDetails, productGateway.getOrderProducts(productIds)));
+        orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
     }
 
     @Override
@@ -69,10 +69,10 @@ public class OrderRepositoryImpl implements OrderRepository {
      * @param orderId
      * @return
      */
-    private List<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
+    private Set<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
         List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
                 Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getValue()));
-        return OrderConverter.toOrderDetailList(orderDetailPoList);
+        return OrderConverter.toOrderDetails(orderDetailPoList);
     }
 
     @Override
@@ -90,9 +90,9 @@ public class OrderRepositoryImpl implements OrderRepository {
         }
 
         // 更新明细
-        List<OrderDetail> orderDetails = order.getOrderDetails();
+        Set<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDoList(orderDetails, productGateway.getOrderProducts(productIds)));
+        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
 
     }
 

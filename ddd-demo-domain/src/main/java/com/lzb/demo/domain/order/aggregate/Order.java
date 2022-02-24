@@ -2,6 +2,7 @@ package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.CheckValidation;
+import com.lzb.demo.domain.common.aggregate.AggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
@@ -24,16 +25,16 @@ import java.util.function.Supplier;
  */
 @Getter
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Order {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+public class Order extends AggregateRoot<Order> {
 
     @EqualsAndHashCode.Include
     private OrderId orderId;
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
-    private Supplier<List<OrderDetail>> orderDetailSupplier;
-    private List<OrderDetail> orderDetails;
+    private Supplier<Set<OrderDetail>> orderDetailSupplier;
+    private Set<OrderDetail> orderDetails;
     private int version;
     private final List<DomainEvent> events = new ArrayList<>();
 
@@ -41,9 +42,9 @@ public class Order {
      * 获取订单明细
      * @return
      */
-    public List<OrderDetail> getOrderDetails() {
+    public Set<OrderDetail> getOrderDetails() {
         if (Objects.isNull(orderDetails)) {
-            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new ArrayList<>());
+            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new HashSet<>());
         }
         return orderDetails;
     }
@@ -54,7 +55,7 @@ public class Order {
      */
     public void addOrderDetail(OrderDetail orderDetail) {
         if (Objects.isNull(orderDetails)) {
-            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new ArrayList<>());
+            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new HashSet<>());
         }
         orderDetails.add(orderDetail);
     }
@@ -127,5 +128,10 @@ public class Order {
             return Optional.empty();
         }
         return Optional.of(events.get(0));
+    }
+
+    @Override
+    public void snapshot() {
+
     }
 }
