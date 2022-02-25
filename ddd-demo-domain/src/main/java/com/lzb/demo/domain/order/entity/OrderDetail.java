@@ -2,10 +2,7 @@ package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.product.entity.ProductId;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 /**
  * <br/>
@@ -13,9 +10,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @author lizebin
  */
-@Getter
-@Builder
-@RequiredArgsConstructor
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderDetail {
 
@@ -23,11 +18,10 @@ public class OrderDetail {
      * 主键
      */
     @EqualsAndHashCode.Include
-    private final long orderDetailId;
-
-    private final OrderId orderId;
-    private final OrderDetailStatus orderDetailStatus;
-    private final ProductId productId;
-    private final int count;
+    private long orderDetailId;
+    private long orderId;
+    private OrderDetailStatus orderDetailStatus;
+    private ProductId productId;
+    private int count;
 
 }

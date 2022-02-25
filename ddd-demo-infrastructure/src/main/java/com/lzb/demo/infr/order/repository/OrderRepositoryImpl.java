@@ -2,6 +2,7 @@ package com.lzb.demo.infr.order.repository;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderDetail;
@@ -19,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -49,19 +47,17 @@ public class OrderRepositoryImpl implements OrderRepository {
         orderService.save(OrderConverter.toOrderDo(order));
 
         // 保存明细
-        Set<OrderDetail> orderDetails = order.getOrderDetails();
+        Collection<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
         orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
     }
 
     @Override
-    public Optional<Order> getById(OrderId orderId) {
+    @AggregateRootCreate
+    public Order getById(OrderId orderId) {
         long orderIdValue = orderId.getValue();
         OrderPo orderDo = orderService.getById(orderIdValue);
-        if (Objects.isNull(orderDo)) {
-            return Optional.empty();
-        }
-        return Optional.of(OrderConverter.toOrder(orderDo, () -> listOrderDetailByOrderId(orderId)));
+        return OrderConverter.toOrder(orderDo, listOrderDetailByOrderId(orderId));
     }
 
     /**
@@ -69,7 +65,7 @@ public class OrderRepositoryImpl implements OrderRepository {
      * @param orderId
      * @return
      */
-    private Set<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
+    private Collection<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
         List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
                 Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getValue()));
         return OrderConverter.toOrderDetails(orderDetailPoList);
@@ -90,7 +86,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         }
 
         // 更新明细
-        Set<OrderDetail> orderDetails = order.getOrderDetails();
+        Collection<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
         orderDetailService.updateBatchById(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
 

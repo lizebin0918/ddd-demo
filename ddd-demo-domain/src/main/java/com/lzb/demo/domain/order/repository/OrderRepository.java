@@ -1,13 +1,10 @@
 package com.lzb.demo.domain.order.repository;
 
+import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
-import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * <br/>
@@ -15,20 +12,7 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-public interface OrderRepository {
-
-    /**
-     * 保存订单/订单明细（不能存在则插入，存在则更新）
-     * @param order
-     */
-    void add(Order order);
-
-    /**
-     * 获取订单聚合
-     * @param orderId
-     * @return
-     */
-    Optional<Order> getById(OrderId orderId);
+public interface OrderRepository extends BaseRepository<Order, OrderId> {
 
     /**
      * 根据订单状态查询
@@ -36,12 +20,5 @@ public interface OrderRepository {
      * @return
      */
     Orders getByOrderStatus(OrderStatus orderStatus);
-
-    /**
-     * 更新订单
-     * @param order
-     * @return 更新条数=0，表示version被修改
-     */
-    void update(Order order);
 
 }

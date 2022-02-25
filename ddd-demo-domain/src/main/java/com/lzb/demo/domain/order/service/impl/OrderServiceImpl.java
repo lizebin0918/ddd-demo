@@ -43,19 +43,18 @@ public class OrderServiceImpl implements OrderService {
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
-        Order order = Order.builder()
-                .orderId(orderId)
-                .orderStatus(OrderStatus.WAIT_REVIEW)
-                .payMoney(payMoney)
-                .userId(userId).build();
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setOrderStatus(OrderStatus.WAIT_REVIEW);
+        order.setPayMoney(payMoney);
+        order.setUserId(userId);
 
         orderDetails.forEach(orderDetailReq -> {
-            OrderDetail orderDetail = OrderDetail.builder()
-                    .orderDetailStatus(OrderDetailStatus.ORDER)
-                    .orderId(orderId)
-                    .count(orderDetailReq.getCount())
-                    .productId(new ProductId(orderDetailReq.getProductId()))
-                    .build();
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
+            orderDetail.setOrderId(orderId.getValue());
+            orderDetail.setCount(orderDetailReq.getCount());
+            orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
             order.addOrderDetail(orderDetail);
         });
 
@@ -69,7 +68,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
-        Order order = orderRepository.getById(new OrderId(orderId)).orElseThrow(() -> new BizException("无此记录"));
+        Order order = orderRepository.getById(new OrderId(orderId));
         order.cancel();
         orderRepository.update(order);
         return Result.success();

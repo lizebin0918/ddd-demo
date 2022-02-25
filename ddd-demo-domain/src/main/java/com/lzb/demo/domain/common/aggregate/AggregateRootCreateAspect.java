@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.common.aop;
+package com.lzb.demo.domain.common.aggregate;
 
 import com.lzb.demo.domain.common.aggregate.AggregateRoot;
 import lombok.extern.slf4j.Slf4j;

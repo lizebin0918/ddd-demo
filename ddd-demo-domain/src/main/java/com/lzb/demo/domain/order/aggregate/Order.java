@@ -10,9 +10,7 @@ import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.user.entity.UserId;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -23,8 +21,7 @@ import java.util.function.Supplier;
  *
  * @author lizebin
  */
-@Getter
-@Builder
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
 public class Order extends AggregateRoot<Order> {
 
@@ -33,8 +30,10 @@ public class Order extends AggregateRoot<Order> {
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
-    private Supplier<Set<OrderDetail>> orderDetailSupplier;
-    private Set<OrderDetail> orderDetails;
+    // 延迟加载不适用实体，因为聚合根还要保存一份快照，如果考虑延迟加载，快照也要加载对应的实体，有点麻烦
+    // 如果是值对象，应该适用
+    //private Supplier<Set<OrderDetail>> orderDetailSupplier;
+    private Collection<OrderDetail> orderDetails;
     private int version;
     private final List<DomainEvent> events = new ArrayList<>();
 
@@ -42,10 +41,7 @@ public class Order extends AggregateRoot<Order> {
      * 获取订单明细
      * @return
      */
-    public Set<OrderDetail> getOrderDetails() {
-        if (Objects.isNull(orderDetails)) {
-            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new HashSet<>());
-        }
+    public Collection<OrderDetail> getOrderDetails() {
         return orderDetails;
     }
 
@@ -54,9 +50,6 @@ public class Order extends AggregateRoot<Order> {
      * @param orderDetail
      */
     public void addOrderDetail(OrderDetail orderDetail) {
-        if (Objects.isNull(orderDetails)) {
-            orderDetails = Optional.ofNullable(orderDetailSupplier).map(Supplier::get).orElse(new HashSet<>());
-        }
         orderDetails.add(orderDetail);
     }
 
@@ -90,27 +83,6 @@ public class Order extends AggregateRoot<Order> {
 
     }
 
-    /**
-     * Order implements Diffable<Order>
-     */
-    /*@Override
-    public DiffResult diff(Order order) {
-        return new DiffBuilder(this, order, ToStringStyle.SHORT_PREFIX_STYLE)
-                .append("orderId", this.orderId, order.getOrderId())
-                .append("orderStatus", this.orderStatus, order.getOrderStatus())
-                .append("version", this.version, order.getVersion())
-                .build();
-    }*/
-
-    /*public static void main(String[] args) {
-        Order o1 = Order.builder().orderId(new OrderId(1L)).version(1).build();
-        Order o2 = Order.builder().orderId(new OrderId(2L)).version(2).build();
-
-        System.out.println(JSON.toJSONString(o1));
-        System.out.println(JSON.toJSONString(o2));
-        System.out.println(JSON.toJSONString(o1.diff(o2).getDiffs()));
-    }*/
-
     public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(
                 "order",
@@ -130,8 +102,4 @@ public class Order extends AggregateRoot<Order> {
         return Optional.of(events.get(0));
     }
 
-    @Override
-    public void snapshot() {
-
-    }
 }
