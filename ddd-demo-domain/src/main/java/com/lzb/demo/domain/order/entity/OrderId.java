@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @author lizebin
  */
+@EqualsAndHashCode(callSuper = true)
 public class OrderId extends AggregateRootId {
 
     public OrderId(long id) {

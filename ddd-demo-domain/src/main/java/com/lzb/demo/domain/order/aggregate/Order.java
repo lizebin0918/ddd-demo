@@ -9,6 +9,7 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
 import org.aspectj.weaver.ast.Or;
@@ -101,6 +102,18 @@ public class Order extends AggregateRoot<Order> {
             return Optional.empty();
         }
         return Optional.of(events.get(0));
+    }
+
+    /**
+     * 根据商品id查询订单明细
+     * @param productId
+     * @return
+     */
+    private OrderDetail getByProductId(ProductId productId) {
+        return orderDetails.stream()
+                .filter(item -> item.getProductId().equals(productId))
+                .findFirst().orElseThrow(() -> new BizException("找不到商品信息"));
+
     }
 
 }
