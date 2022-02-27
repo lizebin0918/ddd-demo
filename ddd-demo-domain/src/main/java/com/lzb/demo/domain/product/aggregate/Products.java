@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.product.aggregate;
 
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Getter;
 
 import java.util.List;
@@ -19,14 +19,14 @@ public class Products {
 
     private final List<Product> products;
 
-    private final Map<ProductIdBase, Product> productMap;
+    private final Map<ProductId, Product> productMap;
 
     public Products(List<Product> products) {
         this.products = products;
         this.productMap = products.stream().collect(Collectors.toMap(Product::getProductId, Function.identity()));
     }
 
-    public Product get(ProductIdBase productId) {
+    public Product get(ProductId productId) {
         return productMap.get(productId);
     }
 }

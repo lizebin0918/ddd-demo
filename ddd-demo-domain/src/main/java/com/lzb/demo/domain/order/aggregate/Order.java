@@ -6,10 +6,10 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderIdBase;
+import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
 
@@ -22,11 +22,9 @@ import java.util.*;
  * @author lizebin
  */
 @Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Order extends BaseAggregateRoot<Order> {
+@EqualsAndHashCode(callSuper = true)
+public class Order extends BaseAggregateRoot<Order, OrderId> {
 
-    @EqualsAndHashCode.Include
-    private OrderIdBase orderId;
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
@@ -86,8 +84,8 @@ public class Order extends BaseAggregateRoot<Order> {
     public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(
                 "order",
-                Objects.toString(this.orderId.getId()),
-                this.orderId.getId(),
+                Objects.toString(this.getId().value()),
+                this.getId().value(),
                 Collections.emptySet()));
     }
 
@@ -107,11 +105,15 @@ public class Order extends BaseAggregateRoot<Order> {
      * @param productId
      * @return
      */
-    private OrderDetail getByProductId(ProductIdBase productId) {
+    private OrderDetail getByProductId(ProductId productId) {
         return orderDetails.stream()
                 .filter(item -> item.getProductId().equals(productId))
                 .findFirst().orElseThrow(() -> new BizException("找不到商品信息"));
 
     }
 
+    @Override
+    public void id(long id) {
+        this.id = new OrderId(id);
+    }
 }

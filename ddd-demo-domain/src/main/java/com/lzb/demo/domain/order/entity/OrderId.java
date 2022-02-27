@@ -10,9 +10,9 @@ import lombok.EqualsAndHashCode;
  * @author lizebin
  */
 @EqualsAndHashCode(callSuper = true)
-public class OrderIdBase extends BaseAggregateRootId {
+public class OrderId extends BaseAggregateRootId {
 
-    public OrderIdBase(long id) {
+    public OrderId(long id) {
         super(id);
     }
 }

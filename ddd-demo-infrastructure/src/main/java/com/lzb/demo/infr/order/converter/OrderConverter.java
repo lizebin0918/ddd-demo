@@ -3,11 +3,11 @@ package com.lzb.demo.infr.order.converter;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderIdBase;
+import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.valobj.OrderProducts;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
@@ -33,7 +33,7 @@ public class OrderConverter {
      */
     public static Order toOrder(OrderPo orderDo, Collection<OrderDetail> orderDetails) {
         Order order = new Order();
-        order.setOrderId(new OrderIdBase(orderDo.getOrderId()));
+        order.setOrderId(new OrderId(orderDo.getOrderId()));
         order.setOrderStatus(OrderStatus.valueOf(orderDo.getStatus()));
         order.setUserId(new UserId(orderDo.getUserId()));
         order.setVersion(orderDo.getVersion());
@@ -53,7 +53,7 @@ public class OrderConverter {
         orderDetail.setOrderId(orderDetailPo.getOrderId());
         orderDetail.setOrderDetailId(orderDetailPo.getId());
         orderDetail.setCount(orderDetailPo.getCount());
-        orderDetail.setProductId(new ProductIdBase(orderDetailPo.getProductId()));
+        orderDetail.setProductId(new ProductId(orderDetailPo.getProductId()));
         return orderDetail;
     }
 
@@ -87,8 +87,8 @@ public class OrderConverter {
         orderDetailPo.setOrderId(orderDetail.getOrderId());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailPo.setProductId(orderDetail.getProductId().getId());
-        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getId()).getProductCode());
+        orderDetailPo.setProductId(orderDetail.getProductId().getValue());
+        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getValue()).getProductCode());
         orderDetailPo.setId(orderDetail.getOrderDetailId());
         return orderDetailPo;
     }

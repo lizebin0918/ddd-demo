@@ -1,7 +1,7 @@
 package com.lzb.demo.infr.product.gateway;
 
 import com.lzb.demo.domain.order.valobj.OrderProducts;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 
 import java.util.Set;
 
@@ -18,6 +18,6 @@ public interface ProductGateway {
      * @param productIds
      * @return
      */
-    OrderProducts getOrderProducts(Set<ProductIdBase> productIds);
+    OrderProducts getOrderProducts(Set<ProductId> productIds);
 
 }

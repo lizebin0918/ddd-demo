@@ -8,8 +8,8 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
  *
  * @author lizebin
  */
-public class ProductIdBase extends BaseAggregateRootId {
-    public ProductIdBase(long id) {
+public class ProductId extends BaseAggregateRootId {
+    public ProductId(long id) {
         super(id);
     }
 }

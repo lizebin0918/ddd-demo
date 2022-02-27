@@ -5,13 +5,13 @@ import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderIdBase;
+import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.retry.annotation.Backoff;
@@ -37,13 +37,12 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Result placeOrder(PlaceOrderReq placeOrder) {
 
-        OrderIdBase orderId = new OrderIdBase(placeOrder.getOrderId());
         List<PlaceOrderReq.OrderDetail> orderDetails = placeOrder.getOrderDetails();
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
         Order order = new Order();
-        order.setOrderId(orderId);
+        order.id(placeOrder.getOrderId());
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
         order.setUserId(userId);
@@ -51,9 +50,9 @@ public class OrderServiceImpl implements OrderService {
         orderDetails.forEach(orderDetailReq -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
-            orderDetail.setOrderId(orderId.getId());
+            orderDetail.setOrderId(order.getId());
             orderDetail.setCount(orderDetailReq.getCount());
-            orderDetail.setProductId(new ProductIdBase(orderDetailReq.getProductId()));
+            orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
             order.addOrderDetail(orderDetail);
         });
 
@@ -67,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
-        Order order = orderRepository.getById(new OrderIdBase(orderId));
+        Order order = orderRepository.getById(new OrderId(orderId));
         order.cancel();
         orderRepository.update(order);
         return Result.success();

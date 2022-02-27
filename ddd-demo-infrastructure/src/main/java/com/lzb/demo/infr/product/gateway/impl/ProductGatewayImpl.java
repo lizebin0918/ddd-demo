@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.order.valobj.OrderProducts;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import com.lzb.demo.infr.product.po.ProductPo;
 import com.lzb.demo.infr.product.service.IProductService;
@@ -28,8 +28,8 @@ public class ProductGatewayImpl implements ProductGateway {
     private final IProductService productService;
 
     @Override
-    public OrderProducts getOrderProducts(Set<ProductIdBase> productIds) {
-        List<Long> productDoIds = productIds.stream().map(ProductIdBase::getId).collect(Collectors.toList());
+    public OrderProducts getOrderProducts(Set<ProductId> productIds) {
+        List<Long> productDoIds = productIds.stream().map(ProductId::getValue).collect(Collectors.toList());
 
         LambdaQueryWrapper<ProductPo> query = Wrappers.lambdaQuery();
         query.in(ProductPo::getId, productDoIds);

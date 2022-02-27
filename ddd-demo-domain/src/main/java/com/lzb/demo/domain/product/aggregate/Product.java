@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.product.aggregate;
 
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,7 +14,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Product {
 
-    private ProductIdBase productId;
+    private ProductId productId;
     private String productCode;
     private int count;
 

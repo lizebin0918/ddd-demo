@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.product.entity.ProductIdBase;
+import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.*;
 
 /**
@@ -19,12 +19,12 @@ public class OrderDetail {
      */
     @EqualsAndHashCode.Include
     private long orderDetailId;
-    private long orderId;
+    private OrderId orderId;
     private OrderDetailStatus orderDetailStatus;
     /**
      * 引用外部聚合，通过领域模型id，而非原生类型id
      */
-    private ProductIdBase productId;
+    private ProductId productId;
     private int count;
 
 }

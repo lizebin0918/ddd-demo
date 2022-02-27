@@ -12,11 +12,14 @@ import lombok.Getter;
 @EqualsAndHashCode
 public abstract class BaseAggregateRootId {
 
-    @Getter
-    private final long id;
+    private final long value;
 
-    public BaseAggregateRootId(long id) {
-        this.id = id;
+    public BaseAggregateRootId(long value) {
+        this.value = value;
+    }
+
+    public long value() {
+        return value;
     }
 
 }

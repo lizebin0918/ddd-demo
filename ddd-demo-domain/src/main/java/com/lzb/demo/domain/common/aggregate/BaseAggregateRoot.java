@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.common.aggregate;
 
 import com.alibaba.fastjson.JSON;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
@@ -9,10 +10,15 @@ import lombok.Getter;
  *
  * @author lizebin
  */
-public abstract class BaseAggregateRoot<T> {
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public abstract class BaseAggregateRoot<T, K> {
 
     @Getter
-    private BaseAggregateRoot<T> snapshot;
+    private T snapshot;
+
+    @Getter
+    @EqualsAndHashCode.Include
+    protected K id;
 
     /**
      * 生成快照
@@ -20,7 +26,9 @@ public abstract class BaseAggregateRoot<T> {
      */
     public void snapshot() {
         String jsonString = JSON.toJSONString(this);
-        this.snapshot = JSON.parseObject(jsonString, this.getClass());
+        this.snapshot = (T) JSON.parseObject(jsonString, this.getClass());
     }
+
+    public abstract void id(long id);
 
 }
