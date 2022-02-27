@@ -88,8 +88,8 @@ public class OrderConverter {
         orderDetailPo.setOrderId(orderDetail.getOrderId());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailPo.setProductId(orderDetail.getProductId().getValue());
-        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getValue()).getProductCode());
+        orderDetailPo.setProductId(orderDetail.getProductId().getId());
+        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getId()).getProductCode());
         orderDetailPo.setId(orderDetail.getOrderDetailId());
         return orderDetailPo;
     }
@@ -101,7 +101,7 @@ public class OrderConverter {
      */
     public static OrderPo toOrderDo(Order order) {
        OrderPo orderDo = new OrderPo();
-       orderDo.setOrderId(order.getOrderId().getValue());
+       orderDo.setOrderId(order.getOrderId().getId());
        orderDo.setStatus(order.getOrderStatus().getValue());
        orderDo.setPayMoney(order.getPayMoney().getValue());
        orderDo.setUserId(order.getUserId().getValue());

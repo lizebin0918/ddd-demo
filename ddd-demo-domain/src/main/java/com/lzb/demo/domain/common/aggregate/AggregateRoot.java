@@ -12,7 +12,7 @@ import lombok.Getter;
 public abstract class AggregateRoot<T> {
 
     @Getter
-    T snapshot;
+    private AggregateRoot<T> snapshot;
 
     /**
      * 生成快照
@@ -20,7 +20,7 @@ public abstract class AggregateRoot<T> {
      */
     public void snapshot() {
         String jsonString = JSON.toJSONString(this);
-        this.snapshot = (T) JSON.parseObject(jsonString, this.getClass());
+        this.snapshot = JSON.parseObject(jsonString, this.getClass());
     }
 
 }

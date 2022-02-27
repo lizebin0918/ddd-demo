@@ -11,6 +11,7 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -86,8 +87,8 @@ public class Order extends AggregateRoot<Order> {
     public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(
                 "order",
-                this.orderId.getValue().toString(),
-                this.orderId.getValue(),
+                Objects.toString(this.orderId.getId()),
+                this.orderId.getId(),
                 Collections.emptySet()));
     }
 

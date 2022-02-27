@@ -2,6 +2,7 @@ package com.lzb.demo.infr.order.repository;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.domain.common.aggregate.AggregateRoot;
 import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
@@ -55,7 +56,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     @AggregateRootCreate
     public Order getById(OrderId orderId) {
-        long orderIdValue = orderId.getValue();
+        long orderIdValue = orderId.getId();
         OrderPo orderDo = orderService.getById(orderIdValue);
         return OrderConverter.toOrder(orderDo, listOrderDetailByOrderId(orderId));
     }
@@ -67,7 +68,7 @@ public class OrderRepositoryImpl implements OrderRepository {
      */
     private Collection<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
         List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
-                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getValue()));
+                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getId()));
         return OrderConverter.toOrderDetails(orderDetailPoList);
     }
 
@@ -82,7 +83,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         // 先锁主表
         boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
         if (!success) {
-            throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getOrderId().getValue());
+            throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getOrderId().getId());
         }
 
         // 更新明细

@@ -29,7 +29,7 @@ public class ProductGatewayImpl implements ProductGateway {
 
     @Override
     public OrderProducts getOrderProducts(Set<ProductId> productIds) {
-        List<Long> productDoIds = productIds.stream().map(ProductId::getValue).collect(Collectors.toList());
+        List<Long> productDoIds = productIds.stream().map(ProductId::getId).collect(Collectors.toList());
 
         LambdaQueryWrapper<ProductPo> query = Wrappers.lambdaQuery();
         query.in(ProductPo::getId, productDoIds);

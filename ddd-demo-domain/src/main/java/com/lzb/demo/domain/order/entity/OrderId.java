@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.order.entity;
 
+import com.lzb.demo.domain.common.aggregate.AggregateRootId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,12 +11,9 @@ import lombok.RequiredArgsConstructor;
  *
  * @author lizebin
  */
-@Getter
-@RequiredArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class OrderId {
+public class OrderId extends AggregateRootId {
 
-    @EqualsAndHashCode.Include
-    private final Long value;
-
+    public OrderId(long id) {
+        super(id);
+    }
 }

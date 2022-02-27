@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
         orderDetails.forEach(orderDetailReq -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
-            orderDetail.setOrderId(orderId.getValue());
+            orderDetail.setOrderId(orderId.getId());
             orderDetail.setCount(orderDetailReq.getCount());
             orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
             order.addOrderDetail(orderDetail);

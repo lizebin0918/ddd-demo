@@ -21,6 +21,9 @@ public class OrderDetail {
     private long orderDetailId;
     private long orderId;
     private OrderDetailStatus orderDetailStatus;
+    /**
+     * 引用外部聚合，通过领域模型id，而非原生类型id
+     */
     private ProductId productId;
     private int count;
 

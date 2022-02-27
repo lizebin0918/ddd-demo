@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.product.entity;
 
+import com.lzb.demo.domain.common.aggregate.AggregateRootId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +11,8 @@ import lombok.RequiredArgsConstructor;
  *
  * @author lizebin
  */
-@Getter
-@RequiredArgsConstructor
-@EqualsAndHashCode
-public class ProductId {
-
-    private final Long value;
-
+public class ProductId extends AggregateRootId {
+    public ProductId(long id) {
+        super(id);
+    }
 }
