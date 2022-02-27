@@ -1,6 +1,5 @@
 package com.lzb.demo.domain.order.valobj;
 
-import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Getter;
 
 import java.util.List;

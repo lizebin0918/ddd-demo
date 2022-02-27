@@ -4,15 +4,15 @@ import com.alibaba.fastjson.JSON;
 import lombok.Getter;
 
 /**
- * 聚合根<br/>
+ * 聚合根基类，包含共用属性和方法<br/>
  * Created on : 2022-02-24 22:49
  *
  * @author lizebin
  */
-public abstract class AggregateRoot<T> {
+public abstract class BaseAggregateRoot<T> {
 
     @Getter
-    private AggregateRoot<T> snapshot;
+    private BaseAggregateRoot<T> snapshot;
 
     /**
      * 生成快照

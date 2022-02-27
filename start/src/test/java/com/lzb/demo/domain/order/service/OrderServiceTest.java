@@ -1,16 +1,7 @@
 package com.lzb.demo.domain.order.service;
 
-import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.domain.order.aggregate.Order;
-import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
-import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.entity.UserId;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

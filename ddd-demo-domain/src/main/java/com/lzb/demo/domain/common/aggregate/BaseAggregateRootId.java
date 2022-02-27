@@ -4,18 +4,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
- * 聚合根id<br/>
+ * 聚合根id基类，包含共用属性和方法<br/>
  * Created on : 2022-02-27 11:35
  *
  * @author lizebin
  */
 @EqualsAndHashCode
-public abstract class AggregateRootId {
+public abstract class BaseAggregateRootId {
 
     @Getter
     private final long id;
 
-    public AggregateRootId(long id) {
+    public BaseAggregateRootId(long id) {
         this.id = id;
     }
 

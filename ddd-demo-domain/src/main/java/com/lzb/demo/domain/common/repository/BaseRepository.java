@@ -1,7 +1,6 @@
 package com.lzb.demo.domain.common.repository;
 
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.domain.common.aggregate.AggregateRoot;
 
 /**
  * 基础仓储层<br/>

@@ -1,6 +1,5 @@
 package com.lzb.demo.domain.common.aggregate;
 
-import com.lzb.demo.domain.common.aggregate.AggregateRoot;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -14,7 +13,7 @@ public class AggregateRootCreateAspect {
 
     @AfterReturning(pointcut = "@annotation(com.lzb.demo.domain.common.annotation.AggregateRootCreate)", returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) throws Throwable {
-        ((AggregateRoot) returnVal).snapshot();
+        ((BaseAggregateRoot) returnVal).snapshot();
     }
 
 }

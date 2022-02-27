@@ -1,18 +1,17 @@
 package com.lzb.demo.domain.order.service.impl;
 
-import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.entity.OrderIdBase;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.entity.ProductIdBase;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.retry.annotation.Backoff;
@@ -38,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Result placeOrder(PlaceOrderReq placeOrder) {
 
-        OrderId orderId = new OrderId(placeOrder.getOrderId());
+        OrderIdBase orderId = new OrderIdBase(placeOrder.getOrderId());
         List<PlaceOrderReq.OrderDetail> orderDetails = placeOrder.getOrderDetails();
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
@@ -54,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
             orderDetail.setOrderId(orderId.getId());
             orderDetail.setCount(orderDetailReq.getCount());
-            orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
+            orderDetail.setProductId(new ProductIdBase(orderDetailReq.getProductId()));
             order.addOrderDetail(orderDetail);
         });
 
@@ -68,7 +67,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
-        Order order = orderRepository.getById(new OrderId(orderId));
+        Order order = orderRepository.getById(new OrderIdBase(orderId));
         order.cancel();
         orderRepository.update(order);
         return Result.success();

@@ -1,8 +1,6 @@
 package com.lzb.demo.domain.order.service;
 
 import com.lzb.demo.common.exception.Result;
-import com.lzb.demo.domain.order.aggregate.Order;
-import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 
 /**

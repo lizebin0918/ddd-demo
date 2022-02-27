@@ -2,20 +2,18 @@ package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.CheckValidation;
-import com.lzb.demo.domain.common.aggregate.AggregateRoot;
+import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.entity.OrderIdBase;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.entity.ProductIdBase;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
-import org.aspectj.weaver.ast.Or;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
  * Diffable 会依赖重写的 hashCode() 和 equals()<br/>
@@ -25,10 +23,10 @@ import java.util.function.Supplier;
  */
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
-public class Order extends AggregateRoot<Order> {
+public class Order extends BaseAggregateRoot<Order> {
 
     @EqualsAndHashCode.Include
-    private OrderId orderId;
+    private OrderIdBase orderId;
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
@@ -109,7 +107,7 @@ public class Order extends AggregateRoot<Order> {
      * @param productId
      * @return
      */
-    private OrderDetail getByProductId(ProductId productId) {
+    private OrderDetail getByProductId(ProductIdBase productId) {
         return orderDetails.stream()
                 .filter(item -> item.getProductId().equals(productId))
                 .findFirst().orElseThrow(() -> new BizException("找不到商品信息"));

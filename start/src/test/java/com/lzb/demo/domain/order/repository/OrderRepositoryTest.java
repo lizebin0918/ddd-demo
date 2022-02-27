@@ -3,23 +3,13 @@ package com.lzb.demo.domain.order.repository;
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
-import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
-import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.domain.order.entity.OrderIdBase;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
 
 
 /**
@@ -38,7 +28,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(1L));
+        Order order = orderRepository.getById(new OrderIdBase(1L));
         Assertions.assertThat(Objects.nonNull(order)).isEqualTo(true);
         System.out.println(JSON.toJSONString(order));
     }

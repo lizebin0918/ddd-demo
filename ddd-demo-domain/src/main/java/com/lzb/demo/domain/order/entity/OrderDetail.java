@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.entity.ProductIdBase;
 import lombok.*;
 
 /**
@@ -24,7 +24,7 @@ public class OrderDetail {
     /**
      * 引用外部聚合，通过领域模型id，而非原生类型id
      */
-    private ProductId productId;
+    private ProductIdBase productId;
     private int count;
 
 }
