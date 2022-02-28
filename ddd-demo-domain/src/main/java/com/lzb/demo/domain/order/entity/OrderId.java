@@ -15,4 +15,8 @@ public class OrderId extends BaseAggregateRootId {
     public OrderId(long id) {
         super(id);
     }
+
+    public static OrderId create(long id) {
+        return new OrderId(id);
+    }
 }

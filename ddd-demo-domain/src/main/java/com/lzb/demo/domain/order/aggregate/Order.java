@@ -24,8 +24,9 @@ import java.util.*;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Order extends BaseAggregateRoot<Order, OrderId> {
+public class Order extends BaseAggregateRoot {
 
+    private OrderId id;
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
@@ -120,8 +121,4 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
 
     }
 
-    @Override
-    public void id(long id) {
-        this.id = new OrderId(id);
-    }
 }

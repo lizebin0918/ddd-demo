@@ -10,15 +10,10 @@ import lombok.Getter;
  *
  * @author lizebin
  */
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public abstract class BaseAggregateRoot<T, K> {
+public abstract class BaseAggregateRoot {
 
     @Getter
-    private T snapshot;
-
-    @Getter
-    @EqualsAndHashCode.Include
-    protected K id;
+    private BaseAggregateRoot snapshot;
 
     /**
      * 生成快照
@@ -26,9 +21,7 @@ public abstract class BaseAggregateRoot<T, K> {
      */
     public void snapshot() {
         String jsonString = JSON.toJSONString(this);
-        this.snapshot = (T) JSON.parseObject(jsonString, this.getClass());
+        this.snapshot = JSON.parseObject(jsonString, this.getClass());
     }
-
-    public abstract void id(long id);
 
 }

@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
         UserId userId = new UserId(placeOrder.getUserId());
 
         Order order = new Order();
-        order.id(placeOrder.getOrderId());
+        order.setId(OrderId.create(placeOrder.getOrderId()));
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
         order.setUserId(userId);
@@ -50,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
         orderDetails.forEach(orderDetailReq -> {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
-            orderDetail.setOrderId(order.getId());
             orderDetail.setCount(orderDetailReq.getCount());
             orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
             order.addOrderDetail(orderDetail);

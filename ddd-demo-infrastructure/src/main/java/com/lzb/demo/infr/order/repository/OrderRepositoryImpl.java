@@ -55,7 +55,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     @AggregateRootCreate
     public Order getById(OrderId orderId) {
-        long orderIdValue = orderId.getValue();
+        long orderIdValue = orderId.value();
         OrderPo orderDo = orderService.getById(orderIdValue);
         return OrderConverter.toOrder(orderDo, listOrderDetailByOrderId(orderId));
     }
@@ -67,7 +67,7 @@ public class OrderRepositoryImpl implements OrderRepository {
      */
     private Collection<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
         List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
-                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.getValue()));
+                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
         return OrderConverter.toOrderDetails(orderDetailPoList);
     }
 
@@ -82,7 +82,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         // 先锁主表
         boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
         if (!success) {
-            throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getOrderId().getId());
+            throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getId());
         }
 
         // 更新明细

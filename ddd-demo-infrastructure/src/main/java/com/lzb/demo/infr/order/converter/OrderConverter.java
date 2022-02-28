@@ -33,7 +33,7 @@ public class OrderConverter {
      */
     public static Order toOrder(OrderPo orderDo, Collection<OrderDetail> orderDetails) {
         Order order = new Order();
-        order.setOrderId(new OrderId(orderDo.getOrderId()));
+        order.setId(new OrderId(orderDo.getOrderId()));
         order.setOrderStatus(OrderStatus.valueOf(orderDo.getStatus()));
         order.setUserId(new UserId(orderDo.getUserId()));
         order.setVersion(orderDo.getVersion());
@@ -50,8 +50,6 @@ public class OrderConverter {
     public static OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailPo.getStatus()));
-        orderDetail.setOrderId(orderDetailPo.getOrderId());
-        orderDetail.setOrderDetailId(orderDetailPo.getId());
         orderDetail.setCount(orderDetailPo.getCount());
         orderDetail.setProductId(new ProductId(orderDetailPo.getProductId()));
         return orderDetail;
@@ -84,12 +82,10 @@ public class OrderConverter {
      */
     public static OrderDetailPo toOrderDetailDo(OrderDetail orderDetail, OrderProducts products) {
         OrderDetailPo orderDetailPo = new OrderDetailPo();
-        orderDetailPo.setOrderId(orderDetail.getOrderId());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailPo.setProductId(orderDetail.getProductId().getValue());
-        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().getValue()).getProductCode());
-        orderDetailPo.setId(orderDetail.getOrderDetailId());
+        orderDetailPo.setProductId(orderDetail.getProductId().value());
+        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().value()).getProductCode());
         return orderDetailPo;
     }
 
@@ -100,7 +96,7 @@ public class OrderConverter {
      */
     public static OrderPo toOrderDo(Order order) {
        OrderPo orderDo = new OrderPo();
-       orderDo.setOrderId(order.getOrderId().getId());
+       orderDo.setOrderId(order.getId().value());
        orderDo.setStatus(order.getOrderStatus().getValue());
        orderDo.setPayMoney(order.getPayMoney().getValue());
        orderDo.setUserId(order.getUserId().getValue());
