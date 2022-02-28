@@ -2,23 +2,23 @@ package com.lzb.demo.domain.common.event;
 
 import com.lzb.demo.common.datetime.DateTimeUtils;
 import lombok.Getter;
-import java.io.Serializable;
+
 import java.time.ZonedDateTime;
 
 @Getter
 public abstract class DomainEvent {
 
-    private final String businessId;
+    private final String key;
     private final String tag;
     private final String createDateTime = DateTimeUtils.zonedDateTimeToUtcString(ZonedDateTime.now());
 
     /**
-     * @param tag mq用到的tag
-     * @param businessId 业务id:订单号、包裹号
+     * @param tag topic:tag
+     * @param key msg.key
      */
-    protected DomainEvent(String tag, String businessId) {
+    protected DomainEvent(String tag, String key) {
         this.tag = tag;
-        this.businessId = businessId;
+        this.key = key;
     }
 
 }
