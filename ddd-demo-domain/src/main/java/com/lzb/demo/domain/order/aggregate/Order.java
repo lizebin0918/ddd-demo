@@ -13,6 +13,7 @@ import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
 
+import java.time.ZonedDateTime;
 import java.util.*;
 
 /**
@@ -28,12 +29,19 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
     private Money payMoney;
     private OrderStatus orderStatus;
     private UserId userId;
-    // 延迟加载不适用实体，因为聚合根还要保存一份快照，如果考虑延迟加载，快照也要加载对应的实体，有点麻烦
-    // 如果是值对象，应该适用
+    /**
+     * 延迟加载不适用实体，因为聚合根还要保存一份快照，如果考虑延迟加载，快照也要加载对应的实体，有点麻烦
+     * 如果是值对象，应该适用。持久化的时候，不用Diff
+     */
     //private Supplier<Set<OrderDetail>> orderDetailSupplier;
     private Collection<OrderDetail> orderDetails;
     private int version;
     private final List<DomainEvent> events = new ArrayList<>();
+    /**
+     * 预计发货时间:采用Optional声明，不好序列化
+     */
+    // private Optional<ZonedDateTime> estShipDateTime = Optional.empty();
+    private ZonedDateTime estShipDateTime;
 
     /**
      * 获取订单明细
