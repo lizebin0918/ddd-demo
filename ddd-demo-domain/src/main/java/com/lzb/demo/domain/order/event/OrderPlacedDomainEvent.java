@@ -1,7 +1,6 @@
 package com.lzb.demo.domain.order.event;
 
-import com.lzb.demo.domain.common.event.DomainEvent;
-
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -10,23 +9,27 @@ import java.util.Set;
  *
  * @author lizebin
  */
-public class OrderPlacedDomainEvent extends DomainEvent {
+public class OrderPlacedDomainEvent extends OrderBaseDomainEvent {
 
     private final long orderId;
     private final Set<Long> skuIds;
 
     /**
-     * @param tag        mq用到的tag
-     * @param businessId 业务id:订单号、包裹号
      * @param orderId
      * @param skuIds
      */
-    public OrderPlacedDomainEvent(String tag,
-                                  String businessId,
-                                  long orderId,
-                                  Set<Long> skuIds) {
-        super(tag, businessId);
+    public OrderPlacedDomainEvent(long orderId, Set<Long> skuIds) {
         this.orderId = orderId;
         this.skuIds = skuIds;
+    }
+
+    @Override
+    public String tag() {
+        return "order_placed";
+    }
+
+    @Override
+    public String key() {
+        return Objects.toString(orderId);
     }
 }
