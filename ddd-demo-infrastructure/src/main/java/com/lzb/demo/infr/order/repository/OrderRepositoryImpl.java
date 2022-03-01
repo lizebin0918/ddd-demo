@@ -3,6 +3,7 @@ package com.lzb.demo.infr.order.repository;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
+import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderDetail;
@@ -16,6 +17,7 @@ import com.lzb.demo.infr.order.po.OrderPo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +32,14 @@ import java.util.stream.Collectors;
  * @author lizebin
  */
 @Repository
-@RequiredArgsConstructor
-public class OrderRepositoryImpl implements OrderRepository {
+@AllArgsConstructor
+public class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
 
-    private final IOrderService orderService;
+    private IOrderService orderService;
 
-    private final IOrderDetailService orderDetailService;
+    private IOrderDetailService orderDetailService;
 
-    private final ProductGateway productGateway;
+    private ProductGateway productGateway;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -55,6 +57,7 @@ public class OrderRepositoryImpl implements OrderRepository {
     @Override
     @AggregateRootCreate
     public Order getById(OrderId orderId) {
+        sendDomainEvent(null);
         long orderIdValue = orderId.value();
         OrderPo orderDo = orderService.getById(orderIdValue);
         return OrderConverter.toOrder(orderDo, listOrderDetailByOrderId(orderId));

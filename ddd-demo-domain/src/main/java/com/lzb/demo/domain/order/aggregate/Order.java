@@ -1,9 +1,9 @@
 package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.common.exception.BizException;
-import com.lzb.demo.domain.common.CheckValidation;
+import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
-import com.lzb.demo.domain.common.event.BaseDomainEvent;
+import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
@@ -37,7 +37,7 @@ public class Order extends BaseAggregateRoot {
     //private Supplier<Set<OrderDetail>> orderDetailSupplier;
     private Collection<OrderDetail> orderDetails;
     private int version;
-    private final List<BaseDomainEvent> events = new ArrayList<>();
+    private final List<DomainEvent> events = new ArrayList<>();
     /**
      * 预计发货时间:采用Optional声明，不好序列化
      */
@@ -98,7 +98,7 @@ public class Order extends BaseAggregateRoot {
      * 每个动作只会产生一个领域事件，所以只取第一个元素
      * @return
      */
-    public Optional<BaseDomainEvent> getEvent() {
+    public Optional<DomainEvent> getEvent() {
         if (events.isEmpty()) {
             return Optional.empty();
         }

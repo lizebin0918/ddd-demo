@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.common;
+package com.lzb.demo.domain.common.check;
 
 import java.util.ArrayList;
 import java.util.List;

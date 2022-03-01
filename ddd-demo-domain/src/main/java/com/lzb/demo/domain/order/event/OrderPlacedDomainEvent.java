@@ -9,7 +9,7 @@ import java.util.Set;
  *
  * @author lizebin
  */
-public class OrderPlacedDomainEvent extends OrderBaseDomainEvent {
+public class OrderPlacedDomainEvent extends OrderDomainEvent {
 
     private final long orderId;
     private final Set<Long> skuIds;

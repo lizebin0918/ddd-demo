@@ -13,6 +13,7 @@ import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -28,10 +29,10 @@ import java.util.List;
  * @author lizebin
  */
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private final OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

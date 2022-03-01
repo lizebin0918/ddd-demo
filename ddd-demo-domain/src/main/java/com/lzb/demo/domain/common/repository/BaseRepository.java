@@ -1,33 +1,23 @@
 package com.lzb.demo.domain.common.repository;
 
-import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.domain.common.event.DomainEvent;
+import com.lzb.demo.domain.common.event.DomainEventSender;
+
+import javax.annotation.Resource;
 
 /**
- * 基础仓储层<br/>
- * Created on : 2022-02-25 19:55
+ * <br/>
+ * Created on : 2022-03-01 13:41
  *
  * @author lizebin
  */
-public interface BaseRepository<T, K> {
+public class BaseRepository {
 
-    /**
-     * 新增聚合根
-     * @param aggregateRoot
-     */
-    void add(T aggregateRoot);
+    @Resource
+    private DomainEventSender sender;
 
-    /**
-     * 更新聚合根
-     * @param aggregateRoot
-     * @throws ConcurrencyUpdateException 可能由于乐观锁版本更新，抛异常
-     */
-    void update(T aggregateRoot) throws ConcurrencyUpdateException;
-
-    /**
-     * 根据id查询
-     * @param id
-     * @return
-     */
-    T getById(K id);
+    protected void sendDomainEvent(DomainEvent event) {
+        sender.send(event);
+    }
 
 }

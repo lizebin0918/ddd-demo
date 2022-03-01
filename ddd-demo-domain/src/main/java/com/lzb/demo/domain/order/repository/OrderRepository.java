@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.repository;
 
 import com.lzb.demo.domain.common.repository.BaseRepository;
+import com.lzb.demo.domain.common.repository.IRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderId;
@@ -12,7 +13,7 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
  *
  * @author lizebin
  */
-public interface OrderRepository extends BaseRepository<Order, OrderId> {
+public interface OrderRepository extends IRepository<Order, OrderId> {
 
     /**
      * 根据订单状态查询

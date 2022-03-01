@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.order.event;
 
-import com.lzb.demo.domain.common.event.BaseDomainEvent;
+import com.lzb.demo.domain.common.event.DomainEvent;
 
 /**
  * 订单维度的事件<br/>
@@ -8,7 +8,7 @@ import com.lzb.demo.domain.common.event.BaseDomainEvent;
  *
  * @author lizebin
  */
-public abstract class OrderBaseDomainEvent extends BaseDomainEvent {
+public abstract class OrderDomainEvent extends DomainEvent {
 
     public static final String ORDER_TOPIC = "order_topic";
 
@@ -17,7 +17,7 @@ public abstract class OrderBaseDomainEvent extends BaseDomainEvent {
      * @param tag   tag
      * @param key   key
      */
-    protected OrderBaseDomainEvent() {
+    protected OrderDomainEvent() {
         super(ORDER_TOPIC);
     }
 

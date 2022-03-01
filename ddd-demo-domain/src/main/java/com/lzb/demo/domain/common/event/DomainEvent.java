@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.ZonedDateTime;
 
 @Getter
-public abstract class BaseDomainEvent {
+public abstract class DomainEvent {
 
     private final String topic;
     private final String createDateTime = DateTimeUtils.zonedDateTimeToUtcString(ZonedDateTime.now());
@@ -14,7 +14,7 @@ public abstract class BaseDomainEvent {
     /**
      * @param topic topic
      */
-    protected BaseDomainEvent(String topic) {
+    protected DomainEvent(String topic) {
         this.topic = topic;
     }
 
