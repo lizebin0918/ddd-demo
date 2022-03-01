@@ -51,27 +51,25 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         // 保存明细
         Collection<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
+        orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(order, productGateway.getOrderProducts(productIds)));
+
+        order.getEvent().ifPresent(this::sendDomainEvent);
     }
 
     @Override
     @AggregateRootCreate
     public Order getById(OrderId orderId) {
-        sendDomainEvent(null);
-        long orderIdValue = orderId.value();
-        OrderPo orderDo = orderService.getById(orderIdValue);
-        return OrderConverter.toOrder(orderDo, listOrderDetailByOrderId(orderId));
-    }
 
-    /**
-     * 根据订单号查询订单明细
-     * @param orderId
-     * @return
-     */
-    private Collection<OrderDetail> listOrderDetailByOrderId(OrderId orderId) {
-        List<OrderDetailPo> orderDetailPoList = orderDetailService.list(
+        long orderIdValue = orderId.value();
+
+        // 订单
+        OrderPo orderDo = orderService.getById(orderIdValue);
+
+        // 订单明细
+        Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
                 Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
-        return OrderConverter.toOrderDetails(orderDetailPoList);
+
+        return OrderConverter.toOrder(orderDo, orderDetailPos);
     }
 
     @Override
@@ -91,7 +89,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         // 更新明细
         Collection<OrderDetail> orderDetails = order.getOrderDetails();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDos(orderDetails, productGateway.getOrderProducts(productIds)));
+        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDos(order, productGateway.getOrderProducts(productIds)));
 
     }
 

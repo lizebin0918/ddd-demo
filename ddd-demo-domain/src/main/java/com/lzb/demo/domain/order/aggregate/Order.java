@@ -26,18 +26,40 @@ import java.util.*;
 @EqualsAndHashCode(callSuper = true)
 public class Order extends BaseAggregateRoot {
 
+    /**
+     * 订单号id
+     */
     private OrderId id;
+
+    /**
+     * 支付金额
+     */
     private Money payMoney;
+
+    /**
+     * 订单状态
+     */
     private OrderStatus orderStatus;
+
+    /**
+     * 用户id
+     */
     private UserId userId;
+
     /**
      * 延迟加载不适用实体，因为聚合根还要保存一份快照，如果考虑延迟加载，快照也要加载对应的实体，有点麻烦
      * 如果是值对象，应该适用。持久化的时候，不用Diff
      */
     //private Supplier<Set<OrderDetail>> orderDetailSupplier;
     private Collection<OrderDetail> orderDetails;
+
+    /**
+     * 版本号
+     */
     private int version;
+
     private final List<DomainEvent> events = new ArrayList<>();
+
     /**
      * 预计发货时间:采用Optional声明，不好序列化
      */
@@ -90,7 +112,11 @@ public class Order extends BaseAggregateRoot {
 
     }
 
+    /**
+     * 生单逻辑
+     */
     public void placeOrder() {
+
         events.add(new OrderPlacedDomainEvent(this.getId().value(), Collections.emptySet()));
     }
 

@@ -9,7 +9,13 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
  * @author lizebin
  */
 public class ProductId extends BaseAggregateRootId {
+
     public ProductId(long id) {
         super(id);
     }
+
+    public static ProductId create(long id) {
+        return new ProductId(id);
+    }
+
 }

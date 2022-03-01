@@ -17,15 +17,22 @@ public class OrderDetail {
      * 主键:orderDetail和Order的关系是组合，同一声明周期的，对外无需暴露主键，而且主键是数据库的玩意。
      */
     // private long orderDetailId;
+
     /**
      * 所有访问都通过外部的OrderId，明细无需关联OrderId
      */
     // private OrderId orderId;
+
+    /**
+     * 订单明细状态
+     */
     private OrderDetailStatus orderDetailStatus;
+
     /**
      * 引用外部聚合，通过领域模型id，而非原生类型id
      */
     private ProductId productId;
+
     private int count;
 
 }
