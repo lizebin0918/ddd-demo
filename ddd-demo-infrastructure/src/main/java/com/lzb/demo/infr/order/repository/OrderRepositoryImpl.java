@@ -53,6 +53,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
         orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(order, productGateway.getOrderProducts(productIds)));
 
+        // TODO:lizebin 是否做切面？
         order.getEvent().ifPresent(this::sendDomainEvent);
     }
 

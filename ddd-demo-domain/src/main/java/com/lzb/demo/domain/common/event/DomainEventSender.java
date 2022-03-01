@@ -9,7 +9,8 @@ package com.lzb.demo.domain.common.event;
 public interface DomainEventSender {
 
     /**
-     * 发送事件
+     * 1.持久化消息，方便重试
+     * 2.发送领域事件
      * @param event
      */
     void send(DomainEvent event);

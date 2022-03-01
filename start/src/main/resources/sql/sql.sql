@@ -57,3 +57,15 @@ create table if not exists product
 );
 
 comment on column product.code is '商品编码';
+
+create table domain_event
+(
+    id     serial
+        constraint domain_event_pk
+            primary key,
+    topic  varchar(32)       not null,
+    tag    varchar(32),
+    key    varchar(32),
+    body   text,
+    status integer default 0 not null
+);

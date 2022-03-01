@@ -15,6 +15,7 @@ import lombok.*;
 
 import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Diffable 会依赖重写的 hashCode() 和 equals()<br/>
@@ -116,8 +117,15 @@ public class Order extends BaseAggregateRoot {
      * 生单逻辑
      */
     public void placeOrder() {
+        events.add(new OrderPlacedDomainEvent(id.value(), listProductId().stream().map(ProductId::value).collect(Collectors.toList())));
+    }
 
-        events.add(new OrderPlacedDomainEvent(this.getId().value(), Collections.emptySet()));
+    /**
+     * 获取商品id
+     * @return
+     */
+    public Collection<ProductId> listProductId() {
+        return orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toList());
     }
 
     /**

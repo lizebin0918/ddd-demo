@@ -1,5 +1,8 @@
 package com.lzb.demo.domain.order.event;
 
+import lombok.Getter;
+
+import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
@@ -9,16 +12,17 @@ import java.util.Set;
  *
  * @author lizebin
  */
+@Getter
 public class OrderPlacedDomainEvent extends OrderDomainEvent {
 
     private final long orderId;
-    private final Set<Long> skuIds;
+    private final Collection<Long> skuIds;
 
     /**
      * @param orderId
      * @param skuIds
      */
-    public OrderPlacedDomainEvent(long orderId, Set<Long> skuIds) {
+    public OrderPlacedDomainEvent(long orderId, Collection<Long> skuIds) {
         this.orderId = orderId;
         this.skuIds = skuIds;
     }
