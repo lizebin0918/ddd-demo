@@ -62,7 +62,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         order.setUserId(new UserId(1L));
         order.setOrderDetails(orderDetailList);
 
-        order.placeOrder();
+        order.placeOrder(orderDetailList);
 
         orderRepository.add(order);
 

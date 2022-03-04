@@ -115,17 +115,15 @@ public class Order extends BaseAggregateRoot {
 
     /**
      * 生单逻辑
+     * @param orderDetails
      */
-    public void placeOrder() {
-        events.add(new OrderPlacedDomainEvent(id.value(), listProductId().stream().map(ProductId::value).collect(Collectors.toList())));
-    }
-
-    /**
-     * 获取商品id
-     * @return
-     */
-    public Collection<ProductId> listProductId() {
-        return orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toList());
+    public void placeOrder(Collection<OrderDetail> orderDetails) {
+        events.add(new OrderPlacedDomainEvent(
+                id.value(),
+                orderDetails.stream().
+                map(OrderDetail::getProductId).
+                map(ProductId::value)
+                .collect(Collectors.toList())));
     }
 
     /**
