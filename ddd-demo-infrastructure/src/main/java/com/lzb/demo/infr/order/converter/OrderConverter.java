@@ -1,19 +1,26 @@
 package com.lzb.demo.infr.order.converter;
 
 import com.lzb.demo.domain.order.aggregate.Order;
+import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
+import com.lzb.demo.domain.order.valobj.OrderProduct;
 import com.lzb.demo.domain.order.valobj.OrderProducts;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
+import com.lzb.demo.infr.product.gateway.ProductGateway;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,23 +29,26 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
+@Component
+@AllArgsConstructor
 public class OrderConverter {
+
+    private ProductGateway productGateway;
 
     /**
      * 订单聚合根转换
-     * @param orderDo
+     * @param orderPo
      * @param orderDetails
-     * @param productIdMap
      * @return
      */
-    public static Order toOrder(OrderPo orderDo, Collection<OrderDetailPo> orderDetailPos) {
+    public Order toOrder(OrderPo orderPo, OrderDetails orderDetails) {
         Order order = new Order();
-        order.setId(new OrderId(orderDo.getOrderId()));
-        order.setOrderStatus(OrderStatus.valueOf(orderDo.getStatus()));
-        order.setUserId(new UserId(orderDo.getUserId()));
-        order.setVersion(orderDo.getVersion());
-        order.setOrderDetails(toOrderDetails(orderDetailPos));
-        order.setPayMoney(new Money(orderDo.getPayMoney()));
+        order.setId(new OrderId(orderPo.getOrderId()));
+        order.setOrderStatus(OrderStatus.valueOf(orderPo.getStatus()));
+        order.setUserId(new UserId(orderPo.getUserId()));
+        order.setVersion(orderPo.getVersion());
+        order.setOrderDetails(orderDetails);
+        order.setPayMoney(new Money(orderPo.getPayMoney()));
         return order;
     }
 
@@ -47,7 +57,7 @@ public class OrderConverter {
      * @param orderDetailPo
      * @return
      */
-    public static OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
+    public OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailPo.getStatus()));
         orderDetail.setCount(orderDetailPo.getCount());
@@ -60,35 +70,47 @@ public class OrderConverter {
      * @param orderDetailPos
      * @return
      */
-    public static Collection<OrderDetail> toOrderDetails(Collection<OrderDetailPo> orderDetailPos) {
-        return orderDetailPos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
+    public Collection<OrderDetail> toOrderDetails(Collection<OrderDetailPo> orderDetailPos) {
+        return orderDetailPos.stream().map(this::toOrderDetail).collect(Collectors.toSet());
     }
 
     /**
      * 转do集合
      * @param order
-     * @param products 填充productCode
      * @return
      */
-    public static List<OrderDetailPo> toOrderDetailDos(Order order, OrderProducts products) {
-        return order.getOrderDetails().stream()
-                .map(item -> toOrderDetailDo(order.getId(), item, products))
+    public List<OrderDetailPo> toOrderDetailPos(Order order) {
+
+        Collection<OrderDetail> orderDetails = order.getOrderDetails().list();
+        Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
+        OrderProducts products = productGateway.getOrderProducts(productIds);
+
+        return order.getOrderDetails().list().stream()
+                .map(item -> toOrderDetailPo(order.getId(), item, products.get(item.getProductId().value())))
                 .collect(Collectors.toList());
     }
 
     /**
-     * 转do
+     * 转po
+     * @param orderId
      * @param orderDetail
-     * @param products
+     * @param productOpt
      * @return
      */
-    public static OrderDetailPo toOrderDetailDo(OrderId orderId, OrderDetail orderDetail, OrderProducts products) {
+    public OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Optional<OrderProduct> productOpt) {
         OrderDetailPo orderDetailPo = new OrderDetailPo();
         orderDetailPo.setOrderId(orderId.value());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailPo.setProductId(orderDetail.getProductId().value());
-        orderDetailPo.setProductCode(products.get(orderDetail.getProductId().value()).getProductCode());
+
+        // 设置商品属性:先从入参获取，如果没有再从数据库获取
+        ProductId productId = orderDetail.getProductId();
+        OrderProduct product = productOpt.orElseGet(() ->
+                productGateway.getOrderProducts(Set.of(productId)).get(productId.value())
+                        .orElseThrow(() -> new RuntimeException("无商品信息")));
+        orderDetailPo.setProductId(productId.value());
+        orderDetailPo.setProductCode(product.getProductCode());
+
         return orderDetailPo;
     }
 
@@ -97,7 +119,7 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public static OrderPo toOrderDo(Order order) {
+    public OrderPo toOrderPo(Order order) {
        OrderPo orderDo = new OrderPo();
        orderDo.setOrderId(order.getId().value());
        orderDo.setStatus(order.getOrderStatus().getValue());

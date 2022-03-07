@@ -1,24 +1,22 @@
 package com.lzb.demo.infr.order.repository;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
-import com.lzb.demo.domain.order.aggregate.Orders;
+import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.entity.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
-import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
+import com.lzb.demo.infr.order.repository.correlation.OrderDetailsImpl;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,17 +39,17 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     private ProductGateway productGateway;
 
+    private OrderConverter orderConverter;
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 
         // 保存主表
-        orderService.save(OrderConverter.toOrderDo(order));
+        orderService.save(orderConverter.toOrderPo(order));
 
         // 保存明细
-        Collection<OrderDetail> orderDetails = order.getOrderDetails();
-        Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.saveBatch(OrderConverter.toOrderDetailDos(order, productGateway.getOrderProducts(productIds)));
+        orderDetailService.saveBatch(orderConverter.toOrderDetailPos(order));
 
         // TODO:lizebin 是否做切面？
         order.getEvent().ifPresent(this::sendDomainEvent);
@@ -64,17 +62,20 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         long orderIdValue = orderId.value();
 
         // 订单
-        OrderPo orderDo = orderService.getById(orderIdValue);
+        OrderPo orderPo = orderService.getById(orderIdValue);
 
-        // 订单明细
-        Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
-                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
+        // 订单明细：改成注入关联集合实体 - updated by lizebin on 20220307
+        /*Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
+                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));*/
 
-        return OrderConverter.toOrder(orderDo, orderDetailPos);
+        return orderConverter.toOrder(
+                orderPo,
+                new OrderDetailsImpl(orderIdValue, orderConverter, orderDetailService)
+        );
     }
 
     @Override
-    public Orders getByOrderStatus(OrderStatus orderStatus) {
+    public OrderDetails getByOrderStatus(OrderStatus orderStatus) {
         return null;
     }
 
@@ -82,15 +83,15 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     public void update(Order order) {
 
         // 先锁主表
-        boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
+        boolean success = orderService.updateById(orderConverter.toOrderPo(order));
         if (!success) {
             throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getId());
         }
 
         // 更新明细
-        Collection<OrderDetail> orderDetails = order.getOrderDetails();
+        Collection<OrderDetail> orderDetails = order.getOrderDetails().list();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.updateBatchById(OrderConverter.toOrderDetailDos(order, productGateway.getOrderProducts(productIds)));
+        orderDetailService.updateBatchById(orderConverter.toOrderDetailPos(order));
 
     }
 

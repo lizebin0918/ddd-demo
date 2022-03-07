@@ -1,9 +1,8 @@
 package com.lzb.demo.domain.order.valobj;
 
-import lombok.Getter;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -13,19 +12,18 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-@Getter
 public class OrderProducts {
 
-    private final List<OrderProduct> products;
 
     private final Map<Long, OrderProduct> productMap;
 
     public OrderProducts(List<OrderProduct> products) {
-        this.products = products;
         this.productMap = products.stream().collect(Collectors.toMap(OrderProduct::getProductId, Function.identity()));
     }
 
-    public OrderProduct get(long productId) {
-        return productMap.get(productId);
+    public Optional<OrderProduct> get(long productId) {
+        return Optional.ofNullable(productMap.get(productId));
     }
+
+
 }

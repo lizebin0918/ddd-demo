@@ -62,6 +62,9 @@ public class OrderServiceImpl implements OrderService {
 
     }
 
+    /**
+     * TODO:lizebin 重试是否回滚
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
