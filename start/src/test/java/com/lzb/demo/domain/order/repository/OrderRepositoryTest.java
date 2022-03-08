@@ -5,7 +5,7 @@ import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.product.entity.ProductId;

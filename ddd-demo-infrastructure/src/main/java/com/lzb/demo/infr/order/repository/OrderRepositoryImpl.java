@@ -7,7 +7,7 @@ import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.Orders;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.product.entity.ProductId;
@@ -18,7 +18,6 @@ import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

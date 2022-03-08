@@ -6,7 +6,7 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.entity.OrderId;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.product.entity.ProductId;
