@@ -95,7 +95,7 @@ public class Order extends BaseAggregateRoot {
      * 新增订单明细
      * @param orderDetail
      */
-    public void addOrderDetail(OrderDetail orderDetail) {
+    public void addOrderDetail(ProductId productId, int count) {
         orderDetails.add(orderDetail);
     }
 
