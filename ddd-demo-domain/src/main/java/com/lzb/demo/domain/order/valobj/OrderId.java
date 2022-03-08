@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.entity;
+package com.lzb.demo.domain.order.valobj;
 
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
 import lombok.EqualsAndHashCode;
