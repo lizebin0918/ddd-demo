@@ -12,7 +12,6 @@ import java.io.*;
  *
  * @author lizebin
  */
-@Data
 public abstract class BaseAggregateRoot {
 
     @Getter
