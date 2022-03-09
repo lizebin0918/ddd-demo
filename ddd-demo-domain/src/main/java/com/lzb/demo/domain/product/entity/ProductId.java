@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.product.entity;
 
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
+import com.lzb.demo.domain.common.aggregate.EntityId;
 
 /**
  * <br/>
@@ -8,7 +8,7 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
  *
  * @author lizebin
  */
-public class ProductId extends BaseAggregateRootId {
+public class ProductId extends EntityId {
 
     public ProductId(long id) {
         super(id);

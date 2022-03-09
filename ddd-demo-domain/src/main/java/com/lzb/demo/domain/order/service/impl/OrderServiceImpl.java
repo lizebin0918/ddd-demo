@@ -4,22 +4,22 @@ import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.exception.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <br/>
@@ -41,7 +41,8 @@ public class OrderServiceImpl implements OrderService {
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
-        Order order = new Order();
+        // 随机id
+        Order order = orderRepository.create(OrderId.create(RandomUtils.nextLong(1, 1000000)));
         order.setId(OrderId.create(placeOrder.getOrderId()));
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
@@ -62,7 +63,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
-        Order order = orderRepository.getById(new OrderId(orderId));
+        Optional<Order> orderOpt = orderRepository.getById(new OrderId(orderId));
+        if (orderOpt.isEmpty()) {
+            return Result.failure("订单不存在");
+        }
+        Order order = orderOpt.get();
         order.cancel();
         orderRepository.update(order);
         return Result.success();

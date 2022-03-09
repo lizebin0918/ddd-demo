@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.common.aggregate;
 
 import com.alibaba.fastjson.JSON;
+import lombok.Data;
 import lombok.Getter;
 
 import java.io.*;
@@ -11,6 +12,7 @@ import java.io.*;
  *
  * @author lizebin
  */
+@Data
 public abstract class BaseAggregateRoot {
 
     @Getter
@@ -23,8 +25,6 @@ public abstract class BaseAggregateRoot {
      */
     public void snapshot() {
         String jsonString = JSON.toJSONString(this);
-        System.out.println(this.getClass());
-        System.out.println(jsonString);
         this.snapshot = JSON.parseObject(jsonString, this.getClass());
     }
 }

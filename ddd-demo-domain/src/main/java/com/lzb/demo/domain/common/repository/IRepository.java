@@ -2,7 +2,9 @@ package com.lzb.demo.domain.common.repository;
 
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
+import com.lzb.demo.domain.common.aggregate.EntityId;
+
+import java.util.Optional;
 
 /**
  * 基础仓储层<br/>
@@ -10,7 +12,13 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
  *
  * @author lizebin
  */
-public interface IRepository<T extends BaseAggregateRoot, K extends BaseAggregateRootId> {
+public interface IRepository<T extends BaseAggregateRoot, K extends EntityId> {
+
+    /**
+     * 创建聚合根（内存）
+     * @param aggregateRoot
+     */
+    T create(K id);
 
     /**
      * 新增聚合根
@@ -30,6 +38,6 @@ public interface IRepository<T extends BaseAggregateRoot, K extends BaseAggregat
      * @param id
      * @return
      */
-    T getById(K id);
+    Optional<T> getById(K id);
 
 }

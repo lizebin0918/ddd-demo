@@ -35,8 +35,7 @@ public class OrderConverter {
      * @return
      */
     public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
-        Order order = new Order();
-        order.setId(new OrderId(orderPo.getOrderId()));
+        Order order = new Order(new OrderId(orderPo.getOrderId()));
         order.setOrderStatus(OrderStatus.valueOf(orderPo.getStatus()));
         order.setUserId(new UserId(orderPo.getUserId()));
         order.setVersion(orderPo.getVersion());

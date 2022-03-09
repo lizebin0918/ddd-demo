@@ -38,7 +38,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(1L));
+        Order order = orderRepository.getById(new OrderId(39786L)).orElse(null);
         Assertions.assertThat(Objects.nonNull(order)).isEqualTo(true);
         System.out.println(JSON.toJSONString(order));
     }
@@ -48,7 +48,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
 
-        Order order = new Order();
+        Order order = orderRepository.create(OrderId.create(1L));
         order.setId(orderId);
         order.setOrderStatus(OrderStatus.SHIP);
         order.setPayMoney(new Money(new BigDecimal(0)));

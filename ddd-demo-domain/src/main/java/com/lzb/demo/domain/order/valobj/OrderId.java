@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.order.valobj;
 
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
+import com.lzb.demo.domain.common.aggregate.EntityId;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * @author lizebin
  */
 @EqualsAndHashCode(callSuper = true)
-public class OrderId extends BaseAggregateRootId {
+public class OrderId extends EntityId {
 
     public OrderId(long id) {
         super(id);

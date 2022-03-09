@@ -6,12 +6,10 @@ import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
-import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.valobj.Products;
-import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
@@ -22,9 +20,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <br/>
@@ -43,6 +42,13 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private ProductGateway productGateway;
 
     @Override
+    public Order create(OrderId id) {
+        Order order = new Order(id);
+        order.setOrderDetails(new OrderDetails(new ArrayList<>()));
+        return order;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 
@@ -58,18 +64,21 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     @Override
     @AggregateRootCreate
-    public Order getById(OrderId orderId) {
+    public Optional<Order> getById(OrderId orderId) {
 
         long orderIdValue = orderId.value();
 
         // 订单
         OrderPo orderPo = orderService.getById(orderIdValue);
+        if (Objects.isNull(orderPo)) {
+            return Optional.empty();
+        }
 
         // 订单明细
         Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
                 Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
 
-        return OrderConverter.toOrder(orderPo, orderDetailPos);
+        return Optional.of(OrderConverter.toOrder(orderPo, orderDetailPos));
     }
 
     @Override

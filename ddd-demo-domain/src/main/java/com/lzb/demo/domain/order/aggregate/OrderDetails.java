@@ -25,7 +25,7 @@ public class OrderDetails implements Iterable<OrderDetail> {
      * @return
      */
     public int count() {
-        return 0;
+        return orderDetails.size();
     };
 
     /**

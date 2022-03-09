@@ -25,8 +25,13 @@ import java.util.stream.Collectors;
  * @author lizebin
  */
 @Data
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Order extends BaseAggregateRoot {
+
+    public Order(OrderId orderId) {
+        this.id = orderId;
+    }
 
     /**
      * 订单号id
