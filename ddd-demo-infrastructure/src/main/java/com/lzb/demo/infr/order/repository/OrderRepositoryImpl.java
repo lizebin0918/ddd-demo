@@ -1,14 +1,13 @@
 package com.lzb.demo.infr.order.repository;
 
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderPo;
@@ -20,7 +19,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -56,17 +56,12 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     }
 
     @Override
-    @AggregateRootCreate
     public Order getById(OrderId orderId) {
 
         long orderIdValue = orderId.value();
 
         // 订单
         OrderPo orderPo = orderService.getById(orderIdValue);
-
-        // 订单明细：改成注入关联集合实体 - updated by lizebin on 20220307
-        /*Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
-                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));*/
 
         return orderConverter.toOrder(
                 orderPo,

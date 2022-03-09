@@ -2,20 +2,21 @@ package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.check.CheckValidation;
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
-import com.lzb.demo.domain.order.enums.OrderDetailStatus;
-import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
+import com.lzb.demo.domain.order.valobj.Money;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
-import lombok.*;
+import lombok.Data;
 
 import java.time.ZonedDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -25,8 +26,7 @@ import java.util.stream.Collectors;
  * @author lizebin
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Order extends BaseAggregateRoot {
+public class Order {
 
     /**
      * 订单号id
@@ -85,14 +85,6 @@ public class Order extends BaseAggregateRoot {
     private ZonedDateTime estShipDateTime;
 
     /**
-     * 获取订单明细
-     * @return
-     */
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
-    }
-
-    /**
      * 下单商品
      * @param orderDetail
      */
@@ -136,7 +128,6 @@ public class Order extends BaseAggregateRoot {
 
     /**
      * 生单逻辑
-     * @param orderDetails
      */
     public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(

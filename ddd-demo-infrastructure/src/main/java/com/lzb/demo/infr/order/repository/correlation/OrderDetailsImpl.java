@@ -1,5 +1,6 @@
 package com.lzb.demo.infr.order.repository.correlation;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
