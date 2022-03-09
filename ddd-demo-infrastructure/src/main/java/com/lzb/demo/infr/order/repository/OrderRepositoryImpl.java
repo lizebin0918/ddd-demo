@@ -7,8 +7,10 @@ import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
+import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.valobj.ProductId;
+import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderPo;
 import com.lzb.demo.infr.order.repository.correlation.OrderDetailsImpl;
@@ -19,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,14 +45,22 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private OrderConverter orderConverter;
 
     @Override
+    public Order create(OrderId id) {
+        Order order = new Order();
+        order.setId(id);
+        order.setOrderDetails(new OrderDetailsImpl(id.value(), orderConverter, orderDetailService));
+        return order;
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 
         // 保存主表
         orderService.save(orderConverter.toOrderPo(order));
 
-        // 保存明细
-        orderDetailService.saveBatch(orderConverter.toOrderDetailPos(order));
+        // 保存明细:OrderDetails 的操作已经保存过了
+        // orderDetailService.saveBatch(orderConverter.toOrderDetailPos(order));
 
         // TODO:lizebin 是否做切面？
         order.getEvent().ifPresent(this::sendDomainEvent);

@@ -12,6 +12,13 @@ import com.lzb.demo.domain.common.aggregate.BaseId;
 public interface IRepository<T, K extends BaseId> {
 
     /**
+     * 创建聚合根(内存)
+     * @param id
+     * @return
+     */
+    T create(K id);
+
+    /**
      * 新增聚合根
      * @param aggregateRoot
      */

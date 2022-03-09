@@ -44,7 +44,8 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
 
-        Order order = new Order();
+        // 创建订单聚合根
+        Order order = orderRepository.create(orderId);
         order.setId(orderId);
         order.setOrderStatus(OrderStatus.SHIP);
         order.setPayMoney(new Money(new BigDecimal(0)));
@@ -53,6 +54,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         // 添加商品
         order.orderProduct(ProductId.create(1L), 1);
 
+        // 生单
         order.placeOrder();
 
         orderRepository.add(order);
