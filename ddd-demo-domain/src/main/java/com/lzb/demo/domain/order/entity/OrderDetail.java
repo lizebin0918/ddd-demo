@@ -2,7 +2,7 @@ package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.valobj.OrderDetailId;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import lombok.Data;
 
 /**

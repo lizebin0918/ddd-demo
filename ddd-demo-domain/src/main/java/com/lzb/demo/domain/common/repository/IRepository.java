@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.common.repository;
 
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
+import com.lzb.demo.domain.common.aggregate.BaseId;
 
 /**
  * 基础仓储层<br/>
@@ -9,7 +9,7 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRootId;
  *
  * @author lizebin
  */
-public interface IRepository<T, K extends BaseAggregateRootId> {
+public interface IRepository<T, K extends BaseId> {
 
     /**
      * 新增聚合根

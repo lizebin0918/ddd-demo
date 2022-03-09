@@ -9,7 +9,7 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.Data;
 

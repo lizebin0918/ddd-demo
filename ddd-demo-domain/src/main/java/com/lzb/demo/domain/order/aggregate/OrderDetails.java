@@ -2,8 +2,8 @@ package com.lzb.demo.domain.order.aggregate;
 
 
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.product.entity.ProductId;
-import lombok.AllArgsConstructor;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -40,5 +40,12 @@ public interface OrderDetails extends Iterable<OrderDetail> {
      * @return
      */
     Optional<OrderDetail> get(ProductId productId);
+
+    /**
+     * 根据主键查询
+     * @param orderDetailId
+     * @return
+     */
+    Optional<OrderDetail> get(OrderDetailId orderDetailId);
 
 }

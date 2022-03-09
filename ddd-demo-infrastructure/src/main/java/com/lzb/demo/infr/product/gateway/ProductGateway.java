@@ -1,7 +1,7 @@
 package com.lzb.demo.infr.product.gateway;
 
 import com.lzb.demo.domain.order.valobj.Products;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 
 import java.util.Set;
 

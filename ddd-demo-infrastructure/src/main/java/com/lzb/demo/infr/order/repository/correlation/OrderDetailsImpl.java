@@ -1,12 +1,12 @@
 package com.lzb.demo.infr.order.repository.correlation;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.OrderDetail;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
@@ -58,6 +58,11 @@ public class OrderDetailsImpl implements OrderDetails {
         query.eq(OrderDetailPo::getProductId, productIdValue);
         List<OrderDetailPo> list = orderDetailService.list(query);
         return list.isEmpty() ? Optional.empty() : Optional.of(orderConverter.toOrderDetail(list.get(0)));
+    }
+
+    @Override
+    public Optional<OrderDetail> get(OrderDetailId orderDetailId) {
+        return Optional.ofNullable(orderConverter.toOrderDetail(orderDetailService.getById(orderDetailId.value())));
     }
 
     @Override

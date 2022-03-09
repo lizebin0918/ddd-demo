@@ -9,7 +9,7 @@ import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.order.valobj.Products;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;

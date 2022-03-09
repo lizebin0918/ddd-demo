@@ -8,7 +8,7 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderPo;
 import com.lzb.demo.infr.order.repository.correlation.OrderDetailsImpl;

@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.product.aggregate;
 
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import lombok.Getter;
 
 import java.util.List;

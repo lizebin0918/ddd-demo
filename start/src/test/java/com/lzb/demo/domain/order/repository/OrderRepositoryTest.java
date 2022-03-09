@@ -4,11 +4,9 @@ import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.valobj.Money;
-import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
 import org.assertj.core.api.Assertions;
@@ -16,8 +14,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 

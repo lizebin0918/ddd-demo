@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.order.valobj.Products;
-import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.domain.product.valobj.ProductId;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import com.lzb.demo.infr.product.po.ProductPo;
 import com.lzb.demo.infr.product.service.IProductService;
