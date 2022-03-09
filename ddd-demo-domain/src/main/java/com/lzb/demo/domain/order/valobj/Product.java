@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class OrderProduct {
+public class Product {
 
     private long productId;
     private String productCode;

@@ -10,6 +10,7 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.order.valobj.Products;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
@@ -41,17 +42,15 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     private ProductGateway productGateway;
 
-    private OrderConverter orderConverter;
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 
         // 保存主表
-        orderService.save(orderConverter.toOrderPo(order));
+        orderService.save(OrderConverter.toOrderPo(order));
 
         // 保存明细
-        orderDetailService.saveBatch(orderConverter.toOrderDetailPos(order));
+        orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
 
         // TODO:lizebin 是否做切面？
         order.getEvent().ifPresent(this::sendDomainEvent);
@@ -70,7 +69,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
                 Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
 
-        return orderConverter.toOrder(orderPo, orderDetailPos);
+        return OrderConverter.toOrder(orderPo, orderDetailPos);
     }
 
     @Override
@@ -82,15 +81,14 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     public void update(Order order) {
 
         // 先锁主表
-        boolean success = orderService.updateById(orderConverter.toOrderPo(order));
+        boolean success = orderService.updateById(OrderConverter.toOrderPo(order));
         if (!success) {
             throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getId());
         }
 
         // 更新明细
-        Collection<OrderDetail> orderDetails = order.getOrderDetails().list();
-        Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        orderDetailService.updateBatchById(orderConverter.toOrderDetailPos(order));
+        Products orderProducts = productGateway.getOrderProducts(order.productIds());
+        orderDetailService.updateBatchById(OrderConverter.toOrderDetailPos(order, orderProducts));
 
     }
 

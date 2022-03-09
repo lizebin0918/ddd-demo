@@ -12,16 +12,16 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-public class OrderProducts {
+public class Products {
 
 
-    private final Map<Long, OrderProduct> productMap;
+    private final Map<Long, Product> productMap;
 
-    public OrderProducts(List<OrderProduct> products) {
-        this.productMap = products.stream().collect(Collectors.toMap(OrderProduct::getProductId, Function.identity()));
+    public Products(List<Product> products) {
+        this.productMap = products.stream().collect(Collectors.toMap(Product::getProductId, Function.identity()));
     }
 
-    public Optional<OrderProduct> get(long productId) {
+    public Optional<Product> get(long productId) {
         return Optional.ofNullable(productMap.get(productId));
     }
 

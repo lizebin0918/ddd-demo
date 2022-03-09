@@ -49,27 +49,9 @@ public class Order extends BaseAggregateRoot {
     private UserId userId;
 
     /**
-     * 版本一：延迟加载多实体集合
-     * 延迟加载不适用实体，因为聚合根还要保存一份快照，如果考虑延迟加载，快照也要加载对应的实体，有点麻烦
-     * 如果是值对象，应该适用。持久化的时候，不用Diff
-     */
-    //private Supplier<Set<OrderDetail>> orderDetailSupplier;
-
-    /**
-     * 版本二：列表存储实体集合
-     */
-    //private Collection<OrderDetail> orderDetails;
-
-    /**
-     * 版本三：关联集合实体，体现业务意义，在订单聚合根下有意义。
+     * 集合实体
      */
     private OrderDetails orderDetails;
-
-    /**
-     * 下单地址、发货地址都是同一个数据库表，订单聚合根和包裹聚合根会关联相同的地址实体集合-Collection<Address>，但是用下面的集合表示，
-     * 表示这个地址是订单聚合根的下单地址
-     */
-    //private OrderAddresses orderAddresses;
 
     /**
      * 版本号
@@ -79,9 +61,8 @@ public class Order extends BaseAggregateRoot {
     private final List<DomainEvent> events = new ArrayList<>();
 
     /**
-     * 预计发货时间:采用Optional声明，不好序列化
+     * 预计发货时间
      */
-    // private Optional<ZonedDateTime> estShipDateTime = Optional.empty();
     private ZonedDateTime estShipDateTime;
 
     /**
@@ -170,6 +151,14 @@ public class Order extends BaseAggregateRoot {
                 .filter(item -> item.getProductId().equals(productId))
                 .findFirst().orElseThrow(() -> new BizException("找不到商品信息"));
 
+    }
+
+    /**
+     * 商品id
+     * @return
+     */
+    public Set<ProductId> productIds() {
+        return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
     }
 
 }
