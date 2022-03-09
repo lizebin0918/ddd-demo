@@ -4,6 +4,7 @@ import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
+import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.valobj.OrderId;
@@ -92,10 +93,14 @@ public class Order extends BaseAggregateRoot {
     }
 
     /**
-     * 新增订单明细
+     * 下单商品
      * @param orderDetail
      */
-    public void addOrderDetail(ProductId productId, int count) {
+    public void orderProduct(ProductId productId, int count) {
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
+        orderDetail.setCount(count);
+        orderDetail.setProductId(productId);
         orderDetails.add(orderDetail);
     }
 
@@ -133,10 +138,10 @@ public class Order extends BaseAggregateRoot {
      * 生单逻辑
      * @param orderDetails
      */
-    public void placeOrder(Collection<OrderDetail> orderDetails) {
+    public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(
                 id.value(),
-                orderDetails.stream().
+                orderDetails.list().stream().
                 map(OrderDetail::getProductId).
                 map(ProductId::value)
                 .collect(Collectors.toList())));

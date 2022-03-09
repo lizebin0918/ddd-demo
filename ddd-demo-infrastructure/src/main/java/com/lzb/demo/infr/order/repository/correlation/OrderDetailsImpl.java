@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -45,15 +46,23 @@ public class OrderDetailsImpl implements OrderDetails {
     @Override
     public void add(OrderDetail orderDetail) {
         OrderDetailPo orderDetailPo = orderConverter.toOrderDetailPo(OrderId.create(orderId), orderDetail, Optional.empty());
+        orderDetailService.save(orderDetailPo);
     }
 
     @Override
     public Optional<OrderDetail> get(ProductId productId) {
-        return Optional.empty();
+        long productIdValue = productId.value();
+        LambdaQueryWrapper<OrderDetailPo> query = Wrappers.lambdaQuery();
+        query.eq(OrderDetailPo::getOrderId, orderId);
+        query.eq(OrderDetailPo::getProductId, productIdValue);
+        List<OrderDetailPo> list = orderDetailService.list(query);
+        return list.isEmpty() ? Optional.empty() : Optional.of(orderConverter.toOrderDetail(list.get(0)));
     }
 
     @Override
     public Iterator<OrderDetail> iterator() {
-        return null;
+        LambdaQueryWrapper<OrderDetailPo> query = Wrappers.lambdaQuery();
+        query.eq(OrderDetailPo::getOrderId, orderId);
+        return orderConverter.toOrderDetails(orderDetailService.list(query)).iterator();
     }
 }

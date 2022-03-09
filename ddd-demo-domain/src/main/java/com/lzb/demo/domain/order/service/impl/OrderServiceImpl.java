@@ -47,13 +47,8 @@ public class OrderServiceImpl implements OrderService {
         order.setPayMoney(payMoney);
         order.setUserId(userId);
 
-        orderDetails.forEach(orderDetailReq -> {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
-            orderDetail.setCount(orderDetailReq.getCount());
-            orderDetail.setProductId(new ProductId(orderDetailReq.getProductId()));
-            order.addOrderDetail(orderDetail);
-        });
+        orderDetails.forEach(orderDetailReq ->
+                order.orderProduct(new ProductId(orderDetailReq.getProductId()), orderDetailReq.getCount()));
 
         orderRepository.add(order);
 

@@ -48,21 +48,16 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
 
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
-        orderDetail.setCount(1);
-        orderDetail.setProductId(ProductId.create(1L));
-        Collection<OrderDetail> orderDetailList = new HashSet<>();
-        orderDetailList.add(orderDetail);
-
         Order order = new Order();
         order.setId(orderId);
         order.setOrderStatus(OrderStatus.SHIP);
         order.setPayMoney(new Money(new BigDecimal(0)));
         order.setUserId(new UserId(1L));
-        order.setOrderDetails(orderDetailList);
 
-        order.placeOrder(orderDetailList);
+        // 添加商品
+        order.orderProduct(ProductId.create(1L), 1);
+
+        order.placeOrder();
 
         orderRepository.add(order);
 

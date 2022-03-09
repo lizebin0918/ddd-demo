@@ -7,8 +7,8 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.OrderProduct;
-import com.lzb.demo.domain.order.valobj.OrderProducts;
+import com.lzb.demo.domain.order.valobj.Product;
+import com.lzb.demo.domain.order.valobj.Products;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
@@ -83,7 +83,7 @@ public class OrderConverter {
 
         Collection<OrderDetail> orderDetails = order.getOrderDetails().list();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
-        OrderProducts products = productGateway.getOrderProducts(productIds);
+        Products products = productGateway.getProducts(productIds);
 
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, products.get(item.getProductId().value())))
@@ -97,7 +97,8 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Optional<OrderProduct> productOpt) {
+    public OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Optional<Product> productOpt) {
+
         OrderDetailPo orderDetailPo = new OrderDetailPo();
         orderDetailPo.setOrderId(orderId.value());
         orderDetailPo.setCount(orderDetail.getCount());
@@ -105,9 +106,10 @@ public class OrderConverter {
 
         // 设置商品属性:先从入参获取，如果没有再从数据库获取
         ProductId productId = orderDetail.getProductId();
-        OrderProduct product = productOpt.orElseGet(() ->
-                productGateway.getOrderProducts(Set.of(productId)).get(productId.value())
+        Product product = productOpt.orElseGet(() ->
+                productGateway.getProducts(Set.of(productId)).get(productId.value())
                         .orElseThrow(() -> new RuntimeException("无商品信息")));
+
         orderDetailPo.setProductId(productId.value());
         orderDetailPo.setProductCode(product.getProductCode());
 
