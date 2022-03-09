@@ -4,7 +4,7 @@ import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
-import com.lzb.demo.domain.order.entity.Money;
+import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;

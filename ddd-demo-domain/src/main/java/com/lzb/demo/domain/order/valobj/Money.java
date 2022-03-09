@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.entity;
+package com.lzb.demo.domain.order.valobj;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

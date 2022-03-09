@@ -3,7 +3,7 @@ package com.lzb.demo.domain.order.repository;
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
-import com.lzb.demo.domain.order.entity.Money;
+import com.lzb.demo.domain.order.valobj.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
