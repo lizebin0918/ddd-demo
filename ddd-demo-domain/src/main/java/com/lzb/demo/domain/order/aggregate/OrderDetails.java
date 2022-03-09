@@ -6,6 +6,7 @@ import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -14,31 +15,42 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-public interface OrderDetails extends Iterable<OrderDetail> {
+@AllArgsConstructor
+public class OrderDetails extends Iterable<OrderDetail> {
+
+    private List<OrderDetail> orderDetails;
 
     /**
      * 订单明细条数
      * @return
      */
-    int count();
+    public int count() {
+        return 0;
+    };
 
     /**
      * 订单明细列表
      * @return
      */
-    Collection<OrderDetail> list();
+    public Collection<OrderDetail> list() {
+        return orderDetails;
+    }
 
     /**
      * 添加订单明细
      * @param orderDetail
      */
-    void add(OrderDetail orderDetail);
+    public void add(OrderDetail orderDetail) {
+        orderDetails.add(orderDetail);
+    }
 
     /**
      * 根据商品id查询订单明细
      * @param productId
      * @return
      */
-    Optional<OrderDetail> get(ProductId productId);
+    public Optional<OrderDetail> get(ProductId productId) {
+        return Optional.empty();
+    }
 
 }
