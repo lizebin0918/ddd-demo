@@ -6,6 +6,7 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
+import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
@@ -93,9 +94,14 @@ public class Order extends BaseAggregateRoot {
 
     /**
      * 新增订单明细
-     * @param orderDetail
+     * @param productId 产品id
+     * @param count 数量
      */
-    public void addOrderDetail(ProductId productId, int count) {
+    public void orderProduct(ProductId productId, int count) {
+        OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setProductId(productId);
+        orderDetail.setCount(count);
+        orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
         orderDetails.add(orderDetail);
     }
 
@@ -133,13 +139,14 @@ public class Order extends BaseAggregateRoot {
      * 生单逻辑
      * @param orderDetails
      */
-    public void placeOrder(Collection<OrderDetail> orderDetails) {
+    public void placeOrder() {
         events.add(new OrderPlacedDomainEvent(
                 id.value(),
-                orderDetails.stream().
-                map(OrderDetail::getProductId).
-                map(ProductId::value)
-                .collect(Collectors.toList())));
+                orderDetails.list()
+                        .stream()
+                        .map(OrderDetail::getProductId)
+                        .map(ProductId::value)
+                        .collect(Collectors.toList())));
     }
 
     /**

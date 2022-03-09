@@ -4,10 +4,9 @@ package com.lzb.demo.domain.order.aggregate;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * 订单聚合根关联对象-订单明细<br/>
@@ -15,10 +14,11 @@ import java.util.Optional;
  *
  * @author lizebin
  */
+@Data
 @AllArgsConstructor
-public class OrderDetails extends Iterable<OrderDetail> {
+public class OrderDetails implements Iterable<OrderDetail> {
 
-    private List<OrderDetail> orderDetails;
+    private Collection<OrderDetail> orderDetails;
 
     /**
      * 订单明细条数
@@ -50,7 +50,11 @@ public class OrderDetails extends Iterable<OrderDetail> {
      * @return
      */
     public Optional<OrderDetail> get(ProductId productId) {
-        return Optional.empty();
+        return orderDetails.stream().filter(od -> Objects.equals(od.getProductId(), productId)).findFirst();
     }
 
+    @Override
+    public Iterator<OrderDetail> iterator() {
+        return orderDetails.iterator();
+    }
 }

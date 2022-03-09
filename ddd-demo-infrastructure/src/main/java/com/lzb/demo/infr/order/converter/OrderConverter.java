@@ -29,25 +29,22 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-@Component
 @AllArgsConstructor
 public class OrderConverter {
-
-    private ProductGateway productGateway;
 
     /**
      * 订单聚合根转换
      * @param orderPo
-     * @param orderDetails
+     * @param orderDetailPos
      * @return
      */
-    public Order toOrder(OrderPo orderPo, OrderDetails orderDetails) {
+    public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
         Order order = new Order();
         order.setId(new OrderId(orderPo.getOrderId()));
         order.setOrderStatus(OrderStatus.valueOf(orderPo.getStatus()));
         order.setUserId(new UserId(orderPo.getUserId()));
         order.setVersion(orderPo.getVersion());
-        order.setOrderDetails(orderDetails);
+        order.setOrderDetails(new OrderDetails(toOrderDetails(orderDetailPos)));
         order.setPayMoney(new Money(orderPo.getPayMoney()));
         return order;
     }
@@ -57,7 +54,7 @@ public class OrderConverter {
      * @param orderDetailPo
      * @return
      */
-    public OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
+    public static OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailPo.getStatus()));
         orderDetail.setCount(orderDetailPo.getCount());
@@ -70,8 +67,8 @@ public class OrderConverter {
      * @param orderDetailPos
      * @return
      */
-    public Collection<OrderDetail> toOrderDetails(Collection<OrderDetailPo> orderDetailPos) {
-        return orderDetailPos.stream().map(this::toOrderDetail).collect(Collectors.toSet());
+    public static Collection<OrderDetail> toOrderDetails(Collection<OrderDetailPo> orderDetailPos) {
+        return orderDetailPos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
     }
 
     /**
@@ -79,7 +76,7 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public List<OrderDetailPo> toOrderDetailPos(Order order) {
+    public static List<OrderDetailPo> toOrderDetailPos(Order order) {
 
         Collection<OrderDetail> orderDetails = order.getOrderDetails().list();
         Set<ProductId> productIds = orderDetails.stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
@@ -97,7 +94,7 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Optional<OrderProduct> productOpt) {
+    public OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, OrderProducts productOp) {
         OrderDetailPo orderDetailPo = new OrderDetailPo();
         orderDetailPo.setOrderId(orderId.value());
         orderDetailPo.setCount(orderDetail.getCount());
