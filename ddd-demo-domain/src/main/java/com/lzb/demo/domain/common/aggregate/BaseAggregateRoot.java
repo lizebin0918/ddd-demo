@@ -16,13 +16,17 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-@Data
 public abstract class BaseAggregateRoot<K extends EntityId> {
 
+    @Getter
     private BaseAggregateRoot<K> snapshot;
 
+    @Setter
+    @Getter
     protected int version;
 
+    @Setter
+    @Getter
     protected K id;
 
     /**

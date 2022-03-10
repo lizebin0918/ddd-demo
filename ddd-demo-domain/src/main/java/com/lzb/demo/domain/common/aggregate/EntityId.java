@@ -3,14 +3,14 @@ package com.lzb.demo.domain.common.aggregate;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.Objects;
+
 /**
  * 实体id基类，包含共用属性和方法<br/>
  * Created on : 2022-02-27 11:35
  *
  * @author lizebin
  */
-@Data
-@EqualsAndHashCode
 public abstract class EntityId {
 
     private final long value;

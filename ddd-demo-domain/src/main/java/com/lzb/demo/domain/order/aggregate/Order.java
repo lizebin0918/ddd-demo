@@ -102,6 +102,9 @@ public class Order extends BaseAggregateRoot<OrderId> {
 
         this.orderStatus = OrderStatus.CANCEL;
 
+        // 发送订单取消事件
+        //pushEvent();
+
     }
 
     /**
@@ -133,6 +136,15 @@ public class Order extends BaseAggregateRoot<OrderId> {
      */
     public Set<ProductId> productIds() {
         return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
+    }
+
+    public static void main(String[] args) {
+
+        Order order = new Order();
+
+
+        Order order1 = new Order();
+
     }
 
 }
