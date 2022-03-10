@@ -2,7 +2,9 @@ package com.lzb.demo.domain.common.aggregate;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.domain.common.event.DomainEvent;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -14,29 +16,19 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-public abstract class BaseAggregateRoot {
+@Data
+public abstract class BaseAggregateRoot<K extends EntityId> {
 
-    @Getter
-    private BaseAggregateRoot snapshot;
+    private BaseAggregateRoot<K> snapshot;
 
-    @Getter
-    private int version;
+    protected int version;
 
-    @Getter
-    private final EntityId id;
+    protected K id;
 
     /**
      * 领域事件
      */
     private final LinkedList<DomainEvent> events = new LinkedList<>();
-
-    /**
-     * 基类构造方法
-     * @param id
-     */
-    public BaseAggregateRoot(EntityId id) {
-        this.id = id;
-    }
 
     /**
      * 生成快照

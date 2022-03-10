@@ -23,14 +23,9 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-@Setter
-@Getter
-public class Order extends BaseAggregateRoot {
-
-    /**
-     * 订单号id
-     */
-    private OrderId id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class Order extends BaseAggregateRoot<OrderId> {
 
     /**
      * 支付金额
@@ -56,14 +51,6 @@ public class Order extends BaseAggregateRoot {
      * 预计发货时间
      */
     private ZonedDateTime estShipDateTime;
-
-    /**
-     * 默认构造方法
-     * @param id
-     */
-    public Order(OrderId id) {
-        super(id);
-    }
 
     /**
      * 获取订单明细

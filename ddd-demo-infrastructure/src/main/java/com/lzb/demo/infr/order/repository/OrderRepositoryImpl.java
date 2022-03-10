@@ -44,7 +44,8 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     @Override
     public Order create(OrderId id) {
-        Order order = new Order(id);
+        Order order = new Order();
+        order.setId(id);
         order.setOrderDetails(new OrderDetails(new ArrayList<>()));
         return order;
     }
@@ -58,6 +59,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
         // 保存明细
         orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
+
     }
 
     @Override

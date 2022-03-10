@@ -9,7 +9,7 @@ import com.lzb.demo.domain.common.aggregate.EntityId;
  *
  * @author lizebin
  */
-public interface CreateRepository<T extends BaseAggregateRoot, K extends EntityId> {
+public interface CreateRepository<T extends BaseAggregateRoot<K>, K extends EntityId> {
 
     /**
      * 创建聚合根（内存）

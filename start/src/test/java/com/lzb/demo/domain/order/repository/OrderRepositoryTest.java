@@ -49,7 +49,6 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
 
         Order order = orderRepository.create(OrderId.create(1L));
-        order.setId(orderId);
         order.setOrderStatus(OrderStatus.SHIP);
         order.setPayMoney(new Money(new BigDecimal(0)));
         order.setUserId(new UserId(1L));
