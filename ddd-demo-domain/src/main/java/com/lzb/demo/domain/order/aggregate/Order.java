@@ -138,13 +138,4 @@ public class Order extends BaseAggregateRoot<OrderId> {
         return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
     }
 
-    public static void main(String[] args) {
-
-        Order order = new Order();
-
-
-        Order order1 = new Order();
-
-    }
-
 }
