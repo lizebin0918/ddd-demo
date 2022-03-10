@@ -2,9 +2,9 @@ package com.lzb.demo.infr.product.gateway.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.domain.order.valobj.Products;
 import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.infr.order.dto.ProductDto;
+import com.lzb.demo.infr.order.dto.ProductDtos;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import com.lzb.demo.infr.product.po.ProductPo;
 import com.lzb.demo.infr.product.service.IProductService;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * <br/>
@@ -29,7 +28,7 @@ public class ProductGatewayImpl implements ProductGateway {
     private final IProductService productService;
 
     @Override
-    public Products getOrderProducts(Collection<ProductId> productIds) {
+    public ProductDtos getOrderProducts(Collection<ProductId> productIds) {
         List<Long> productDoIds = productIds.stream().map(ProductId::value).collect(Collectors.toList());
 
         LambdaQueryWrapper<ProductPo> query = Wrappers.lambdaQuery();
@@ -37,8 +36,8 @@ public class ProductGatewayImpl implements ProductGateway {
         query.select(ProductPo::getId, ProductPo::getCode);
         List<ProductPo> productPoList = productService.list(query);
 
-        return new Products(productPoList.stream().map(productPo -> {
-            return new Product(productPo.getId(), productPo.getCode());
+        return new ProductDtos(productPoList.stream().map(productPo -> {
+            return new ProductDto(productPo.getId(), productPo.getCode());
         }).collect(Collectors.toList()));
     }
 

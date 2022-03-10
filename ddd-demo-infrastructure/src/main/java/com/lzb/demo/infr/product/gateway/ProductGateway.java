@@ -1,7 +1,7 @@
 package com.lzb.demo.infr.product.gateway;
 
-import com.lzb.demo.domain.order.valobj.Products;
 import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.infr.order.dto.ProductDtos;
 
 import java.util.Collection;
 
@@ -18,6 +18,6 @@ public interface ProductGateway {
      * @param productIds
      * @return
      */
-    Products getOrderProducts(Collection<ProductId> productIds);
+    ProductDtos getOrderProducts(Collection<ProductId> productIds);
 
 }

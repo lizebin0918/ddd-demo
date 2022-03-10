@@ -9,10 +9,10 @@ import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.order.valobj.Products;
 import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
 import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
+import com.lzb.demo.infr.order.dto.ProductDtos;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
@@ -95,7 +95,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         }
 
         // 更新明细
-        Products orderProducts = productGateway.getOrderProducts(order.productIds());
+        ProductDtos orderProducts = productGateway.getOrderProducts(order.productIds());
         orderDetailService.updateBatchById(OrderConverter.toOrderDetailPos(order, orderProducts));
 
     }

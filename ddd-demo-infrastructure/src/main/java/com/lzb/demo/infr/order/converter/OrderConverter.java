@@ -1,23 +1,20 @@
 package com.lzb.demo.infr.order.converter;
 
-import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.domain.order.valobj.Products;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.infr.order.dto.ProductDto;
+import com.lzb.demo.infr.order.dto.ProductDtos;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
-import lombok.AllArgsConstructor;
 
 import java.util.Collection;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -70,7 +67,7 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, Products products) {
+    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, ProductDtos products) {
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, products))
                 .collect(Collectors.toList());
@@ -83,7 +80,7 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Products products) {
+    public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos products) {
 
         OrderDetailPo orderDetailPo = new OrderDetailPo();
         orderDetailPo.setOrderId(orderId.value());
@@ -92,7 +89,7 @@ public class OrderConverter {
 
         long productId = orderDetail.getProductId().value();
         orderDetailPo.setProductId(productId);
-        orderDetailPo.setProductCode(products.get(productId).map(Product::getProductCode).orElse(null));
+        orderDetailPo.setProductCode(products.get(productId).map(ProductDto::getProductCode).orElse(null));
 
         return orderDetailPo;
     }

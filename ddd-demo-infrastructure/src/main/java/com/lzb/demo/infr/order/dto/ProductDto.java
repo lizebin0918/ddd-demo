@@ -1,4 +1,4 @@
-package com.lzb.demo.domain.order.valobj;
+package com.lzb.demo.infr.order.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public class Product {
+public class ProductDto {
 
     private long productId;
     private String productCode;
