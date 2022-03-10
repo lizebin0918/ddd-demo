@@ -31,7 +31,10 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orderRepository;
+    /**
+     * 为什么叫这个名字？把Repository看成是聚合根的集合
+     */
+    private OrderRepository orders;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -42,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
         UserId userId = new UserId(placeOrder.getUserId());
 
         // 随机id
-        Order order = orderRepository.create(OrderId.create(RandomUtils.nextLong(1, 1000000)));
+        Order order = orders.create(OrderId.create(RandomUtils.nextLong(1, 1000000)));
         order.setId(OrderId.create(placeOrder.getOrderId()));
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
@@ -50,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderDetails.forEach(orderDetail -> order.orderProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
 
-        orderRepository.add(order);
+        orders.add(order);
 
         return Result.success();
 
@@ -63,13 +66,13 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
     public Result cancel(long orderId) {
-        Optional<Order> orderOpt = orderRepository.getById(new OrderId(orderId));
+        Optional<Order> orderOpt = orders.getById(new OrderId(orderId));
         if (orderOpt.isEmpty()) {
             return Result.failure("订单不存在");
         }
         Order order = orderOpt.get();
         order.cancel();
-        orderRepository.update(order);
+        orders.update(order);
         return Result.success();
     }
 
