@@ -3,7 +3,6 @@ package com.lzb.demo.domain.order.aggregate;
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
-import com.lzb.demo.domain.common.event.DomainEvent;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
@@ -127,11 +126,10 @@ public class Order extends BaseAggregateRoot {
      * @param productId
      * @return
      */
-    private OrderDetail getByProductId(ProductId productId) {
+    private Optional<OrderDetail> get(ProductId productId) {
         return orderDetails.list().stream()
                 .filter(item -> item.getProductId().equals(productId))
-                .findFirst().orElseThrow(() -> new BizException("找不到商品信息"));
-
+                .findFirst();
     }
 
     /**
