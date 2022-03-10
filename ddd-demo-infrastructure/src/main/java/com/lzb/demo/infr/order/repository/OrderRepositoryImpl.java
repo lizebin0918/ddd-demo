@@ -1,8 +1,8 @@
 package com.lzb.demo.infr.order.repository;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.domain.common.annotation.AggregateRootCreate;
 import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
@@ -10,6 +10,8 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.valobj.Products;
+import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
+import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
@@ -18,7 +20,6 @@ import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +50,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @DomainEventPush
     public void add(Order order) {
 
         // 保存主表
@@ -57,13 +58,10 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
         // 保存明细
         orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
-
-        // TODO:lizebin 是否做切面？
-        order.popEvent().ifPresent(this::sendDomainEvent);
     }
 
     @Override
-    @AggregateRootCreate
+    @AggregateRootSnapshot
     public Optional<Order> getById(OrderId orderId) {
 
         long orderIdValue = orderId.value();
@@ -75,8 +73,9 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         }
 
         // 订单明细
-        Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(
-                Wrappers.<OrderDetailPo>lambdaQuery().eq(OrderDetailPo::getOrderId, orderId.value()));
+        LambdaQueryWrapper<OrderDetailPo> query = Wrappers.lambdaQuery();
+        query.eq(OrderDetailPo::getOrderId, orderId.value());
+        Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(query);
 
         return Optional.of(OrderConverter.toOrder(orderPo, orderDetailPos));
     }

@@ -14,11 +14,13 @@ import javax.annotation.Resource;
  */
 public class BaseRepository {
 
+
+    /* 改成切面发送领域事件了，但是这个基类先留着
     @Resource
     private DomainEventSender sender;
 
     protected void sendDomainEvent(DomainEvent event) {
         sender.send(event);
-    }
+    }*/
 
 }
