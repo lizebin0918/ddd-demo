@@ -1,7 +1,7 @@
 package com.lzb.demo.domain.order.service.impl;
 
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.common.exception.Result;
+import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.enums.OrderStatus;

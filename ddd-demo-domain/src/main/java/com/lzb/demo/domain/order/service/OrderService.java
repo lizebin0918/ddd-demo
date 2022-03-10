@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.order.service;
 
-import com.lzb.demo.common.exception.Result;
+import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 
 /**

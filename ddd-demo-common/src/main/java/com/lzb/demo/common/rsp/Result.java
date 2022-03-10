@@ -1,4 +1,4 @@
-package com.lzb.demo.common.exception;
+package com.lzb.demo.common.rsp;
 
 /**
  * <br/>

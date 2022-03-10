@@ -1,5 +1,6 @@
 package com.lzb.demo.app.order;
 
+import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,5 +16,13 @@ import org.springframework.stereotype.Component;
 public class OrderQueryApplicationService {
 
     private OrderGateway orderGateway;
+
+    /**
+     * 分页查询，直接走Gateway，不经过domain
+     * @return
+     */
+    public Result listForPage() {
+        return null;
+    }
 
 }
