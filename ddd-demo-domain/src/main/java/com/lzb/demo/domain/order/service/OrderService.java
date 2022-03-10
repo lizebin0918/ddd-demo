@@ -2,6 +2,7 @@ package com.lzb.demo.domain.order.service;
 
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OrderId;
 
 /**
  * <br/>
@@ -22,6 +23,6 @@ public interface OrderService {
      * 取消订单id
      * @param orderId
      */
-    Result cancel(long orderId);
+    Result cancel(OrderId orderId);
 
 }

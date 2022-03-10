@@ -1,9 +1,14 @@
 package com.lzb.demo.app.order;
 
+import com.lzb.demo.app.order.assembler.OrderAssembler;
+import com.lzb.demo.app.order.cmd.CancelOrderCmd;
+import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,11 +25,21 @@ public class OrderApplicationService {
 
     /**
      * 下单
-     * @param orderReq
+     * @param placeOrderCmd
      * @return
      */
-    public Result order(PlaceOrderReq orderReq) {
-        return null;
+    public Result order(PlaceOrderCmd placeOrderCmd) {
+
+        // id生成器
+        long orderIdValue = RandomUtils.nextLong(1, 100000);
+
+        // 生单
+        PlaceOrderReq req = OrderAssembler.toPlaceOrderReq(orderIdValue, placeOrderCmd);
+        Result placeOrderResult = orderService.placeOrder(req);
+
+        // 锁库存
+
+        return Result.success();
     }
 
     /**
@@ -32,19 +47,8 @@ public class OrderApplicationService {
      * @param orderId
      * @return
      */
-    public Result cancelOrder(long orderId) {
-        return null;
-    }
-
-    /**
-     * 更换商品(不要吐槽没有用Dto)
-     * @param orderId
-     * @param productId
-     * @param newProductId
-     * @return
-     */
-    public Result changeProduct(long orderId, long productId, long newProductId) {
-        return null;
+    public Result cancelOrder(CancelOrderCmd cancelOrderCmd) {
+        return orderService.cancel(OrderId.create(cancelOrderCmd.getOrderId()));
     }
 
 }

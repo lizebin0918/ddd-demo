@@ -45,8 +45,7 @@ public class OrderServiceImpl implements OrderService {
         UserId userId = new UserId(placeOrder.getUserId());
 
         // 随机id
-        Order order = orders.create(OrderId.create(RandomUtils.nextLong(1, 1000000)));
-        order.setId(OrderId.create(placeOrder.getOrderId()));
+        Order order = orders.create(OrderId.create(placeOrder.getOrderId()));
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
         order.setUserId(userId);
@@ -65,8 +64,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
-    public Result cancel(long orderId) {
-        Optional<Order> orderOpt = orders.getById(new OrderId(orderId));
+    public Result cancel(OrderId orderId) {
+        Optional<Order> orderOpt = orders.getById(orderId);
         if (orderOpt.isEmpty()) {
             return Result.failure("订单不存在");
         }

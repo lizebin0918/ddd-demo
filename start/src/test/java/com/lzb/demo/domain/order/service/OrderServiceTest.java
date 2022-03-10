@@ -1,7 +1,9 @@
 package com.lzb.demo.domain.order.service;
 
 import com.lzb.demo.SpringbootTestBase;
+import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
  *
  * @author lizebin
  */
-public class OrderServiceTest  extends SpringbootTestBase {
+public class OrderServiceTest extends SpringbootTestBase {
 
     @Autowired
     private OrderService orderService;
@@ -27,14 +29,16 @@ public class OrderServiceTest  extends SpringbootTestBase {
         List<PlaceOrderReq.OrderDetail> orderDetails = new ArrayList<>();
         orderDetails.add(new PlaceOrderReq.OrderDetail(1, 1L));
         orderDetails.add(new PlaceOrderReq.OrderDetail(1, 2L));
-        PlaceOrderReq req = new PlaceOrderReq(ThreadLocalRandom.current().nextLong(10000000),
+
+        PlaceOrderReq req = new PlaceOrderReq(
+                ThreadLocalRandom.current().nextLong(10000000),
                 new BigDecimal(100), 1L, orderDetails);
-       Assertions.assertThat(orderService.placeOrder(req).isSuccess()).isEqualTo(true);
+        Assertions.assertThat(orderService.placeOrder(req).isSuccess()).isEqualTo(true);
     }
 
     @Test
     public void test_cancel() {
-       Assertions.assertThat(orderService.cancel(9324594L).isSuccess()).isEqualTo(true);
+        Assertions.assertThat(orderService.cancel(OrderId.create(9324594L)).isSuccess()).isEqualTo(true);
     }
 
 }

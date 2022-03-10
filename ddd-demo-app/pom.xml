@@ -21,6 +21,14 @@
             <groupId>com.lzb</groupId>
             <artifactId>ddd-demo-infrastructure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>ddd-demo-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
         <!-- JSR 303 Validation -->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
