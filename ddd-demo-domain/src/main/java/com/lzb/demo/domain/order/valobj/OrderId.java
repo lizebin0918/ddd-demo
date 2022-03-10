@@ -9,7 +9,6 @@ import lombok.EqualsAndHashCode;
  *
  * @author lizebin
  */
-@EqualsAndHashCode(callSuper = true)
 public class OrderId extends EntityId {
 
     public OrderId(long id) {

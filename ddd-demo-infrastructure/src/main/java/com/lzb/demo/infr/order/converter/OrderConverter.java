@@ -67,9 +67,9 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, ProductDtos products) {
+    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, ProductDtos productDtos) {
         return order.getOrderDetails().list().stream()
-                .map(item -> toOrderDetailPo(order.getId(), item, products))
+                .map(item -> toOrderDetailPo(order.getId(), item, productDtos))
                 .collect(Collectors.toList());
     }
 
@@ -80,7 +80,7 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos products) {
+    public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos productDtos) {
 
         OrderDetailPo orderDetailPo = new OrderDetailPo();
         orderDetailPo.setOrderId(orderId.value());
@@ -89,7 +89,7 @@ public class OrderConverter {
 
         long productId = orderDetail.getProductId().value();
         orderDetailPo.setProductId(productId);
-        orderDetailPo.setProductCode(products.get(productId).map(ProductDto::getProductCode).orElse(null));
+        orderDetailPo.setProductCode(productDtos.get(productId).map(ProductDto::getProductCode).orElse(null));
 
         return orderDetailPo;
     }

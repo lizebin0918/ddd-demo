@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.entity;
 
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class OrderDetail {
     /**
      * 主键:orderDetail和Order的关系是组合，同一声明周期的，对外无需暴露主键，而且主键是数据库的玩意。
      */
-    // private long orderDetailId;
+    private OrderDetailId orderDetailId;
 
     /**
      * 所有访问都通过外部的OrderId，明细无需关联OrderId
@@ -33,6 +34,9 @@ public class OrderDetail {
      */
     private ProductId productId;
 
+    /**
+     * 数量
+     */
     private int count;
 
 }
