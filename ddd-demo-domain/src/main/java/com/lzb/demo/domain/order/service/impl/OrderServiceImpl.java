@@ -39,7 +39,6 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Result placeOrder(PlaceOrderReq placeOrder) {
 
-        List<PlaceOrderReq.OrderDetail> orderDetails = placeOrder.getOrderDetails();
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
@@ -48,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
         order.setPayMoney(payMoney);
         order.setUserId(userId);
 
-        orderDetails.forEach(orderDetail -> order.addProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
+        order.placeOrder(placeOrder.getOrderDetails());
 
         orders.add(order);
 

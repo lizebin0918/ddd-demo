@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.entity.Money;
+import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.product.entity.ProductId;
@@ -14,6 +15,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -50,7 +52,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         order.setUserId(new UserId(1L));
         order.addProduct(ProductId.create(1L), 1);
 
-        order.placeOrder();
+        order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(1, 1L)));
 
         orderRepository.add(order);
 

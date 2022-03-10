@@ -1,6 +1,7 @@
 package com.lzb.demo.app.order;
 
 import com.lzb.demo.SpringbootTestBase;
+import com.lzb.demo.app.order.cmd.CancelOrderCmd;
 import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
 import org.assertj.core.api.Assertions;
@@ -10,6 +11,8 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * <br/>
@@ -36,8 +39,15 @@ public class OrderApplicationServiceTest extends SpringbootTestBase {
         PlaceOrderCmd placeOrderCmd = new PlaceOrderCmd(new BigDecimal(1), 1L, orderDetails);
         Result order = orderApplicationService.order(placeOrderCmd);
 
-        Assertions.assertThat(order.isSuccess()).isTrue();
+        assertThat(order.isSuccess()).isTrue();
 
+    }
+
+    @Test
+    public void cancel() {
+        CancelOrderCmd cancelOrderCmd = new CancelOrderCmd(19432L, 1L);
+        Result result = orderApplicationService.cancelOrder(cancelOrderCmd);
+        assertThat(result.isSuccess()).isTrue();
     }
 
 }

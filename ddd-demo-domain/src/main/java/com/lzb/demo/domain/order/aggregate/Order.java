@@ -6,6 +6,7 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
+import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
@@ -107,7 +108,10 @@ public class Order extends BaseAggregateRoot<OrderId> {
      * 生单逻辑
      * @param orderDetails
      */
-    public void placeOrder() {
+    public void placeOrder(List<PlaceOrderReq.OrderDetail> orderDetails) {
+
+        orderDetails.forEach(orderDetail -> addProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
+
         pushEvent(new OrderPlacedDomainEvent(id.value(),
                 productIds().stream().map(ProductId::value).collect(Collectors.toList())));
     }
