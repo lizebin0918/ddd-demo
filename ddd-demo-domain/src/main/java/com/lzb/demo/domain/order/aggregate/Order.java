@@ -65,7 +65,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
      * @param productId 产品id
      * @param count 数量
      */
-    public void orderProduct(ProductId productId, int count) {
+    public void addProduct(ProductId productId, int count) {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setProductId(productId);
         orderDetail.setCount(count);

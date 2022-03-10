@@ -12,7 +12,6 @@ import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.AllArgsConstructor;
-import org.apache.commons.lang3.RandomUtils;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -44,13 +43,12 @@ public class OrderServiceImpl implements OrderService {
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
-        // 随机id
         Order order = orders.create(OrderId.create(placeOrder.getOrderId()));
         order.setOrderStatus(OrderStatus.WAIT_REVIEW);
         order.setPayMoney(payMoney);
         order.setUserId(userId);
 
-        orderDetails.forEach(orderDetail -> order.orderProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
+        orderDetails.forEach(orderDetail -> order.addProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
 
         orders.add(order);
 
