@@ -1,10 +1,14 @@
 package com.lzb.demo.domain.common.aggregate;
 
 import com.alibaba.fastjson.JSON;
+import com.lzb.demo.domain.common.event.DomainEvent;
 import lombok.Data;
 import lombok.Getter;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 聚合根基类，包含共用属性和方法<br/>
@@ -17,6 +21,15 @@ public abstract class BaseAggregateRoot {
     @Getter
     private BaseAggregateRoot snapshot;
 
+
+    private final List<DomainEvent> events = new ArrayList<>();
+
+    /**
+     * 版本号
+     */
+    @Getter
+    private int version;
+
     /**
      * 生成快照
      *
@@ -25,5 +38,18 @@ public abstract class BaseAggregateRoot {
     public void snapshot() {
         String jsonString = JSON.toJSONString(this);
         this.snapshot = JSON.parseObject(jsonString, this.getClass());
+        this.version = this.snapshot.version;
     }
+
+    /**
+     * 每个动作只会产生一个领域事件，所以只取第一个元素
+     * @return
+     */
+    public Optional<DomainEvent> getEvent() {
+        if (events.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(events.get(0));
+    }
+
 }

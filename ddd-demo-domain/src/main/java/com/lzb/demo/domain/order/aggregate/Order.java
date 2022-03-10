@@ -59,13 +59,6 @@ public class Order extends BaseAggregateRoot {
     private OrderDetails orderDetails;
 
     /**
-     * 版本号
-     */
-    private int version;
-
-    private final List<DomainEvent> events = new ArrayList<>();
-
-    /**
      * 预计发货时间
      */
     private ZonedDateTime estShipDateTime;
@@ -133,17 +126,6 @@ public class Order extends BaseAggregateRoot {
                         .map(OrderDetail::getProductId)
                         .map(ProductId::value)
                         .collect(Collectors.toList())));
-    }
-
-    /**
-     * 每个动作只会产生一个领域事件，所以只取第一个元素
-     * @return
-     */
-    public Optional<DomainEvent> getEvent() {
-        if (events.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(events.get(0));
     }
 
     /**
