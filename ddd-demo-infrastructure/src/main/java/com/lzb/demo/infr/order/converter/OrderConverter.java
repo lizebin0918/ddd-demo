@@ -92,9 +92,7 @@ public class OrderConverter {
 
         long productId = orderDetail.getProductId().value();
         orderDetailPo.setProductId(productId);
-
-        Product product = products.get(productId).orElseThrow(() -> new BizException("无商品信息"));
-        orderDetailPo.setProductCode(product.getProductCode());
+        orderDetailPo.setProductCode(products.get(productId).map(Product::getProductCode).orElse(null));
 
         return orderDetailPo;
     }
