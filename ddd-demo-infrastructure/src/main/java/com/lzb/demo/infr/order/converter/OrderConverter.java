@@ -38,7 +38,6 @@ public class OrderConverter {
         Order order = new Order(new OrderId(orderPo.getOrderId()));
         order.setOrderStatus(OrderStatus.valueOf(orderPo.getStatus()));
         order.setUserId(new UserId(orderPo.getUserId()));
-        order.setVersion(orderPo.getVersion());
         order.setOrderDetails(new OrderDetails(toOrderDetails(orderDetailPos)));
         order.setPayMoney(new Money(orderPo.getPayMoney()));
         return order;

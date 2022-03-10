@@ -2,11 +2,9 @@ package com.lzb.demo.domain.common.aggregate;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.domain.common.event.DomainEvent;
-import lombok.Data;
 import lombok.Getter;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +20,7 @@ public abstract class BaseAggregateRoot {
     private BaseAggregateRoot snapshot;
 
 
-    private final List<DomainEvent> events = new ArrayList<>();
+    private final LinkedList<DomainEvent> events = new LinkedList<>();
 
     /**
      * 版本号
@@ -32,6 +30,7 @@ public abstract class BaseAggregateRoot {
 
     /**
      * 生成快照
+     * 设置版本号
      *
      * @param snapshot
      */
@@ -42,14 +41,22 @@ public abstract class BaseAggregateRoot {
     }
 
     /**
-     * 每个动作只会产生一个领域事件，所以只取第一个元素
+     * (领域事件)出队
      * @return
      */
-    public Optional<DomainEvent> getEvent() {
+    public Optional<DomainEvent> popEvent() {
         if (events.isEmpty()) {
             return Optional.empty();
         }
-        return Optional.of(events.get(0));
+        return Optional.of(events.pop());
+    }
+
+    /**
+     * (领域事件)入队
+     * @param event
+     */
+    protected void pushEvent(DomainEvent event) {
+        events.push(event);
     }
 
 }

@@ -59,7 +59,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
 
         // TODO:lizebin 是否做切面？
-        order.getEvent().ifPresent(this::sendDomainEvent);
+        order.popEvent().ifPresent(this::sendDomainEvent);
     }
 
     @Override

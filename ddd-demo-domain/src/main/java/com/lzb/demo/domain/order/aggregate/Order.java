@@ -119,13 +119,7 @@ public class Order extends BaseAggregateRoot {
      * @param orderDetails
      */
     public void placeOrder() {
-        events.add(new OrderPlacedDomainEvent(
-                id.value(),
-                orderDetails.list()
-                        .stream()
-                        .map(OrderDetail::getProductId)
-                        .map(ProductId::value)
-                        .collect(Collectors.toList())));
+        pushEvent(new OrderPlacedDomainEvent(id.value(), productIds().stream().map(ProductId::value).collect(Collectors.toList())));
     }
 
     /**
