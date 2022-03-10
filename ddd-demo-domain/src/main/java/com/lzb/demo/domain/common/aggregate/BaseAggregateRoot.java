@@ -19,14 +19,24 @@ public abstract class BaseAggregateRoot {
     @Getter
     private BaseAggregateRoot snapshot;
 
+    @Getter
+    private int version;
 
+    @Getter
+    private final EntityId id;
+
+    /**
+     * 领域事件
+     */
     private final LinkedList<DomainEvent> events = new LinkedList<>();
 
     /**
-     * 版本号
+     * 基类构造方法
+     * @param id
      */
-    @Getter
-    private int version;
+    public BaseAggregateRoot(EntityId id) {
+        this.id = id;
+    }
 
     /**
      * 生成快照

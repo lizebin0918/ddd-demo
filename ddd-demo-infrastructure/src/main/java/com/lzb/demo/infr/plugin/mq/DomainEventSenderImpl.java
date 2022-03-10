@@ -8,8 +8,6 @@ import com.lzb.demo.infr.plugin.mq.service.IDomainEventService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-
 /**
  * <br/>
  * Created on : 2022-03-01 13:49

@@ -23,14 +23,9 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-@Data
-@NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
+@Setter
+@Getter
 public class Order extends BaseAggregateRoot {
-
-    public Order(OrderId orderId) {
-        this.id = orderId;
-    }
 
     /**
      * 订单号id
@@ -61,6 +56,14 @@ public class Order extends BaseAggregateRoot {
      * 预计发货时间
      */
     private ZonedDateTime estShipDateTime;
+
+    /**
+     * 默认构造方法
+     * @param id
+     */
+    public Order(OrderId id) {
+        super(id);
+    }
 
     /**
      * 获取订单明细
@@ -118,7 +121,8 @@ public class Order extends BaseAggregateRoot {
      * @param orderDetails
      */
     public void placeOrder() {
-        pushEvent(new OrderPlacedDomainEvent(id.value(), productIds().stream().map(ProductId::value).collect(Collectors.toList())));
+        pushEvent(new OrderPlacedDomainEvent(id.value(),
+                productIds().stream().map(ProductId::value).collect(Collectors.toList())));
     }
 
     /**
