@@ -20,6 +20,7 @@ import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,6 +53,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     @Override
     @DomainEventPush
+    @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 
         // 保存主表
@@ -88,6 +90,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(Order order) {
 
         // 先锁主表
