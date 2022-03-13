@@ -3,6 +3,7 @@ package com.lzb.demo.domain.order.repository;
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.aggregate.Order;
+import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
@@ -15,6 +16,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,7 +38,10 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
+        Order order = orderRepository.getById(new OrderId(39786L)).orElse(null);
+
+        System.out.println("orderId:" + order.getId().value());
+
         Assertions.assertThat(Objects.nonNull(order)).isEqualTo(true);
         System.out.println(JSON.toJSONString(order));
     }
@@ -46,10 +51,13 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
 
-        Order order = orderRepository.create(OrderId.create(1L));
-        order.setOrderStatus(OrderStatus.SHIP);
-        order.setPayMoney(new Money(new BigDecimal(0)));
-        order.setUserId(new UserId(1L));
+        Order order = Order.builder()
+                .id(orderId)
+                .orderDetails(new OrderDetails(new ArrayList<>()))
+                .orderStatus(OrderStatus.SHIP)
+                .payMoney(new Money(new BigDecimal(0)))
+                .userId(new UserId(1L))
+                .build();
         order.addProduct(ProductId.create(1L), 1);
 
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(1, 1L)));

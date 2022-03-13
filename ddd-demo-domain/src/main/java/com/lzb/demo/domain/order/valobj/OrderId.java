@@ -1,7 +1,9 @@
 package com.lzb.demo.domain.order.valobj;
 
 import com.lzb.demo.domain.common.aggregate.EntityId;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * <br/>

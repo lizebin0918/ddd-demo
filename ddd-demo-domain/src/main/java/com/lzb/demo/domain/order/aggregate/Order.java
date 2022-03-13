@@ -13,6 +13,7 @@ import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -24,8 +25,8 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-@Data
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@SuperBuilder
 public class Order extends BaseAggregateRoot<OrderId> {
 
     /**

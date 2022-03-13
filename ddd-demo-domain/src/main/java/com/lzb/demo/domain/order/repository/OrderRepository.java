@@ -1,7 +1,6 @@
 package com.lzb.demo.domain.order.repository;
 
 import com.lzb.demo.domain.common.repository.AddRepository;
-import com.lzb.demo.domain.common.repository.CreateRepository;
 import com.lzb.demo.domain.common.repository.GetRepository;
 import com.lzb.demo.domain.common.repository.UpdateRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
@@ -15,14 +14,13 @@ import com.lzb.demo.domain.order.valobj.OrderId;
  *
  * @author lizebin
  */
-public interface OrderRepository extends AddRepository<Order>, CreateRepository<Order, OrderId>,
-        GetRepository<Order, OrderId>, UpdateRepository<Order, OrderId> {
+public interface OrderRepository extends AddRepository<Order>, GetRepository<Order, OrderId>, UpdateRepository<Order, OrderId> {
 
     /**
      * 根据订单状态查询
      * @param orderStatus
      * @return
      */
-    OrderDetails getByOrderStatus(OrderStatus orderStatus);
+    OrderDetails listByOrderStatus(OrderStatus orderStatus);
 
 }

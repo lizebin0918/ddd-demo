@@ -1,13 +1,12 @@
 package com.lzb.demo.domain.common.aggregate;
 
-import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
 import com.lzb.demo.domain.common.event.DomainEvent;
-import lombok.Data;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NonNull;
+import lombok.experimental.SuperBuilder;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,17 +15,19 @@ import java.util.Optional;
  *
  * @author lizebin
  */
+@SuperBuilder
 public abstract class BaseAggregateRoot<K extends EntityId> {
 
-    @Getter
-    private BaseAggregateRoot<K> snapshot;
+    private static final Gson GSON = new Gson();
 
-    @Setter
+    @Getter
+    protected BaseAggregateRoot<K> snapshot;
+
     @Getter
     protected int version;
 
-    @Setter
     @Getter
+    @NonNull
     protected K id;
 
     /**
@@ -41,8 +42,8 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      * @param snapshot
      */
     public void snapshot() {
-        String jsonString = JSON.toJSONString(this);
-        this.snapshot = JSON.parseObject(jsonString, this.getClass());
+        String jsonString = GSON.toJson(this);
+        this.snapshot = GSON.fromJson(jsonString, this.getClass());
         this.version = this.snapshot.version;
     }
 

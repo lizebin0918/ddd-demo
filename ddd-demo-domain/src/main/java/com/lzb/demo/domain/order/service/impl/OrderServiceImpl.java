@@ -3,6 +3,7 @@ package com.lzb.demo.domain.order.service.impl;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
+import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
@@ -17,6 +18,7 @@ import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +32,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
 
-    /**
-     * 为什么叫这个名字？把Repository看成是聚合根的集合
-     */
     private OrderRepository orders;
 
     @Override
@@ -42,10 +41,13 @@ public class OrderServiceImpl implements OrderService {
         Money payMoney = new Money(placeOrder.getPayMoney());
         UserId userId = new UserId(placeOrder.getUserId());
 
-        Order order = orders.create(OrderId.create(placeOrder.getOrderId()));
-        order.setOrderStatus(OrderStatus.WAIT_REVIEW);
-        order.setPayMoney(payMoney);
-        order.setUserId(userId);
+        Order order = Order.builder()
+                .id(OrderId.create(placeOrder.getOrderId()))
+                .orderDetails(new OrderDetails(new ArrayList<>()))
+                .orderStatus(OrderStatus.WAIT_REVIEW)
+                .payMoney(payMoney)
+                .userId(userId)
+                .build();
 
         order.placeOrder(placeOrder.getOrderDetails());
 

@@ -39,7 +39,7 @@ public class OrderApplicationService {
 
         // 锁库存
 
-        return Result.success();
+        return placeOrderResult;
     }
 
     /**

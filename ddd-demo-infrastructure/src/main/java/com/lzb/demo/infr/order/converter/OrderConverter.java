@@ -32,12 +32,13 @@ public class OrderConverter {
      * @return
      */
     public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
-        Order order = new Order();
-        order.setId(new OrderId(orderPo.getOrderId()));
-        order.setOrderStatus(OrderStatus.valueOf(orderPo.getStatus()));
-        order.setUserId(new UserId(orderPo.getUserId()));
-        order.setOrderDetails(new OrderDetails(toOrderDetails(orderDetailPos)));
-        order.setPayMoney(new Money(orderPo.getPayMoney()));
+        Order order = Order.builder()
+                .id(new OrderId(orderPo.getOrderId()))
+                .orderStatus(OrderStatus.valueOf(orderPo.getStatus()))
+                .userId(new UserId(orderPo.getUserId()))
+                .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
+                .payMoney(new Money(orderPo.getPayMoney()))
+                .build();
         return order;
     }
 

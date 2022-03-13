@@ -44,14 +44,6 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private ProductGateway productGateway;
 
     @Override
-    public Order create(OrderId id) {
-        Order order = new Order();
-        order.setId(id);
-        order.setOrderDetails(new OrderDetails(new ArrayList<>()));
-        return order;
-    }
-
-    @Override
     @DomainEventPush
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
@@ -85,7 +77,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     }
 
     @Override
-    public OrderDetails getByOrderStatus(OrderStatus orderStatus) {
+    public OrderDetails listByOrderStatus(OrderStatus orderStatus) {
         return null;
     }
 

@@ -2,6 +2,7 @@ package com.lzb.demo.domain.common.aggregate;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
  */
 public abstract class EntityId {
 
+    @Getter
     private final long value;
 
     public EntityId(long value) {
