@@ -1,11 +1,13 @@
 package com.lzb.demo.infr.order.converter;
 
+import com.alibaba.fastjson.JSON;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
@@ -14,6 +16,8 @@ import com.lzb.demo.infr.order.dto.ProductDtos;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -38,6 +42,7 @@ public class OrderConverter {
                 .userId(new UserId(orderPo.getUserId()))
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
                 .payMoney(new Money(orderPo.getPayMoney()))
+                .version(orderPo.getVersion())
                 .build();
         return order;
     }
@@ -52,6 +57,7 @@ public class OrderConverter {
         orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailPo.getStatus()));
         orderDetail.setCount(orderDetailPo.getCount());
         orderDetail.setProductId(new ProductId(orderDetailPo.getProductId()));
+        orderDetail.setOrderDetailId(OrderDetailId.create(orderDetailPo.getId()));
         return orderDetail;
     }
 
@@ -88,6 +94,7 @@ public class OrderConverter {
         orderDetailPo.setOrderId(orderId.value());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
+        orderDetailPo.setId(orderDetail.getOrderDetailId().value());
 
         long productId = orderDetail.getProductId().value();
         orderDetailPo.setProductId(productId);

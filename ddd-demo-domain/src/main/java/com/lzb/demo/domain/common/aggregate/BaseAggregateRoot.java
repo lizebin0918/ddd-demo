@@ -24,7 +24,8 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected BaseAggregateRoot<K> snapshot;
 
     @Getter
-    protected int version;
+    @NonNull
+    protected Integer version;
 
     @Getter
     @NonNull
@@ -41,6 +42,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      *
      * @param snapshot
      */
+    @SuppressWarnings("unchecked")
     public void snapshot() {
         String jsonString = GSON.toJson(this);
         this.snapshot = GSON.fromJson(jsonString, this.getClass());

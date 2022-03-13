@@ -54,7 +54,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         Order order = Order.builder()
                 .id(orderId)
                 .orderDetails(new OrderDetails(new ArrayList<>()))
-                .orderStatus(OrderStatus.SHIP)
+                .orderStatus(OrderStatus.PEDNING)
                 .payMoney(new Money(new BigDecimal(0)))
                 .userId(new UserId(1L))
                 .build();

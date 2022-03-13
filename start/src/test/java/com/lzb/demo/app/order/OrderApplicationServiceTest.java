@@ -45,7 +45,7 @@ public class OrderApplicationServiceTest extends SpringbootTestBase {
 
     @Test
     public void cancel() {
-        CancelOrderCmd cancelOrderCmd = new CancelOrderCmd(19432L, 1L);
+        CancelOrderCmd cancelOrderCmd = new CancelOrderCmd(168301L, 1L);
         Result result = orderApplicationService.cancelOrder(cancelOrderCmd);
         assertThat(result.isSuccess()).isTrue();
     }
