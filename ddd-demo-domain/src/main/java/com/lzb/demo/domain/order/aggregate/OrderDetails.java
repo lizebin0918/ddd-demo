@@ -5,6 +5,7 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 
 import java.util.*;
 
@@ -14,7 +15,7 @@ import java.util.*;
  *
  * @author lizebin
  */
-@Data
+@Getter
 @AllArgsConstructor
 public class OrderDetails implements Iterable<OrderDetail> {
 

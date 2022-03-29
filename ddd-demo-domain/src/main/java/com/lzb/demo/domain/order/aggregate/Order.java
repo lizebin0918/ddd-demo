@@ -7,6 +7,7 @@ import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OperatorId;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
@@ -27,32 +28,42 @@ import java.util.stream.Collectors;
  */
 @Getter
 @SuperBuilder
+@Builder
 public class Order extends BaseAggregateRoot<OrderId> {
 
     /**
      * 支付金额
      */
+    @NonNull
     private Money payMoney;
 
     /**
      * 订单状态
      */
+    @NonNull
     private OrderStatus orderStatus;
 
     /**
      * 用户id
      */
+    @NonNull
     private UserId userId;
 
     /**
      * 集合实体
      */
+    @NonNull
     private OrderDetails orderDetails;
 
     /**
      * 预计发货时间
      */
     private ZonedDateTime estShipDateTime;
+
+    /**
+     * 操作人
+     */
+    private OperatorId operatorId;
 
     /**
      * 获取订单明细
@@ -139,4 +150,11 @@ public class Order extends BaseAggregateRoot<OrderId> {
         return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
     }
 
+    /**
+     * 获取操作人
+     * @return
+     */
+    public Optional<OperatorId> getOperatorId() {
+        return Optional.ofNullable(operatorId);
+    }
 }
