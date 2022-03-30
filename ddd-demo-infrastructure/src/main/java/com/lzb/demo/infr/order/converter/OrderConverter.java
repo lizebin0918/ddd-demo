@@ -1,6 +1,5 @@
 package com.lzb.demo.infr.order.converter;
 
-import com.alibaba.fastjson.JSON;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
@@ -16,8 +15,6 @@ import com.lzb.demo.infr.order.dto.ProductDtos;
 import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -112,7 +109,7 @@ public class OrderConverter {
        OrderPo orderDo = new OrderPo();
        orderDo.setOrderId(order.getId().value());
        orderDo.setStatus(order.getOrderStatus().getValue());
-       orderDo.setPayMoney(order.getPayMoney().getValue());
+       orderDo.setPayMoney(order.getPayMoney().getAmount());
        orderDo.setUserId(order.getUserId().getValue());
        orderDo.setVersion(order.getVersion());
        return orderDo;
