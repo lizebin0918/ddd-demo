@@ -55,7 +55,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
                 .id(orderId)
                 .orderDetails(new OrderDetails(new ArrayList<>()))
                 .orderStatus(OrderStatus.PEDNING)
-                .payMoney(new Money(new BigDecimal(0)))
+                .payMoney(new Money(new BigDecimal(0), "CNY"))
                 .userId(new UserId(1L))
                 .build();
         order.addProduct(ProductId.create(1L), 1);

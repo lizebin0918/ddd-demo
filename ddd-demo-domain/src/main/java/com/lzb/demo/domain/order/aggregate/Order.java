@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
  */
 @Getter
 @SuperBuilder
-@Builder
 public class Order extends BaseAggregateRoot<OrderId> {
 
     /**
@@ -115,7 +114,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
         this.orderStatus = OrderStatus.CANCEL;
 
         // 发送订单取消事件
-        //pushEvent();
+        //addEvent();
 
     }
 
@@ -127,7 +126,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
 
         orderDetails.forEach(orderDetail -> addProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
 
-        pushEvent(new OrderPlacedDomainEvent(id.value(),
+        addEvent(new OrderPlacedDomainEvent(id.value(),
                 productIds().stream().map(ProductId::value).collect(Collectors.toList())));
     }
 

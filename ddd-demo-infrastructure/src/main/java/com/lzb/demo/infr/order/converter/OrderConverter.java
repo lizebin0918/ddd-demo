@@ -38,7 +38,7 @@ public class OrderConverter {
                 .orderStatus(OrderStatus.valueOf(orderPo.getStatus()))
                 .userId(new UserId(orderPo.getUserId()))
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
-                .payMoney(new Money(orderPo.getPayMoney()))
+                .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
                 .version(orderPo.getVersion())
                 .build();
         return order;

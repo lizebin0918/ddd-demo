@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(rollbackFor = Exception.class)
     public Result placeOrder(PlaceOrderReq placeOrder) {
 
-        Money payMoney = new Money(placeOrder.getPayMoney());
+        Money payMoney = new Money(placeOrder.getPayMoney(), "CNY");
         UserId userId = new UserId(placeOrder.getUserId());
 
         Order order = Order.builder()

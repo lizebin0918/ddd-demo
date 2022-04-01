@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Optional;
 
 /**
  * 聚合根基类，包含共用属性和方法<br/>
@@ -32,9 +32,10 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected K id;
 
     /**
-     * 领域事件
+     * 领域事件:下单时间 + 日志相关事件
      */
-    private final LinkedList<DomainEvent> events = new LinkedList<>();
+    @Getter
+    protected final Collection<DomainEvent> events = new LinkedList<>();
 
     /**
      * 生成快照
@@ -50,22 +51,11 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     }
 
     /**
-     * (领域事件)出队
-     * @return
-     */
-    public Optional<DomainEvent> popEvent() {
-        if (events.isEmpty()) {
-            return Optional.empty();
-        }
-        return Optional.of(events.pop());
-    }
-
-    /**
      * (领域事件)入队
      * @param event
      */
-    protected void pushEvent(DomainEvent event) {
-        events.push(event);
+    protected void addEvent(DomainEvent event) {
+        events.add(event);
     }
 
 }
