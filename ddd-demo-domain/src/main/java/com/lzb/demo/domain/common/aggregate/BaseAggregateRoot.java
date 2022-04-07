@@ -12,6 +12,10 @@ import java.util.LinkedList;
 /**
  * https://cloud.tencent.com/developer/article/1833609
  * 聚合根基类，包含共用属性和方法<br/>
+ *
+ * 注意：
+ * 每次update之后，应该把快照置空，表示更新过了，如果在同一个线程里面，同一个聚合根更新两次，第二次更新应该报错
+ *
  * Created on : 2022-02-24 22:49
  *
  * @author lizebin
