@@ -15,6 +15,14 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class Money {
 
-    private final BigDecimal value;
+    /**
+     * 数值
+     */
+    private final BigDecimal amount;
+
+    /**
+     * 币种
+     */
+    private final String currency;
 
 }
