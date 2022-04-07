@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 /**
+ * https://cloud.tencent.com/developer/article/1833609
  * 聚合根基类，包含共用属性和方法<br/>
  * Created on : 2022-02-24 22:49
  *
@@ -20,16 +21,17 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
 
     private static final Gson GSON = new Gson();
 
-    @Getter
-    protected BaseAggregateRoot<K> snapshot;
-
-    @Getter
     @NonNull
     protected Integer version;
 
     @Getter
     @NonNull
     protected K id;
+
+    /**
+     * 缓存聚合根快照（不能声明成static，static会导致内存异常）
+     */
+    private final ThreadLocal<BaseAggregateRoot<K>> AGGREGATE_ROOT_CONTEXT = new ThreadLocal<>();
 
     /**
      * 领域事件
@@ -39,14 +41,27 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     /**
      * 生成快照
      * 设置版本号
-     *
-     * @param snapshot
      */
     @SuppressWarnings("unchecked")
-    public void snapshot() {
+    public void initSnapshot() {
         String jsonString = GSON.toJson(this);
-        this.snapshot = GSON.fromJson(jsonString, this.getClass());
-        this.version = this.snapshot.version;
+        BaseAggregateRoot<K> snapshot = GSON.fromJson(jsonString, this.getClass());
+        AGGREGATE_ROOT_CONTEXT.set(snapshot);
+    }
+
+    /**
+     * 刷新快照
+     */
+    public void refreshSnapshot() {
+        clearSnapshot();
+        initSnapshot();
+    }
+
+    /**
+     * 清空快照
+     */
+    public void clearSnapshot() {
+        AGGREGATE_ROOT_CONTEXT.remove();
     }
 
     /**
@@ -66,6 +81,22 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      */
     protected void pushEvent(DomainEvent event) {
         events.push(event);
+    }
+
+    /**
+     * 获取版本号
+     * @return
+     */
+    public int getSnapshotVersion() {
+        return getSnapshot().version;
+    }
+
+    /**
+     * 获取快照
+     * @return
+     */
+    public BaseAggregateRoot<K> getSnapshot() {
+        return AGGREGATE_ROOT_CONTEXT.get();
     }
 
 }
