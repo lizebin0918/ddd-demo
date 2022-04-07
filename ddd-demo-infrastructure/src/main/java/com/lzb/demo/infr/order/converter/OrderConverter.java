@@ -111,7 +111,7 @@ public class OrderConverter {
        orderDo.setStatus(order.getOrderStatus().getValue());
        orderDo.setPayMoney(order.getPayMoney().getAmount());
        orderDo.setUserId(order.getUserId().getValue());
-       orderDo.setVersion(order.getSnapshotVersion());
+       orderDo.setVersion(order.getVersion());
        return orderDo;
     }
 

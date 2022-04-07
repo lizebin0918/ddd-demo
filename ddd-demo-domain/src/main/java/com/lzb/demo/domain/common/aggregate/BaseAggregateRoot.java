@@ -29,6 +29,12 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected K id;
 
     /**
+     * 快照
+     */
+    @Getter
+    protected BaseAggregateRoot<K> snapshot;
+
+    /**
      * 缓存聚合根快照（不能声明成static，static会导致内存异常）
      */
     private final ThreadLocal<BaseAggregateRoot<K>> AGGREGATE_ROOT_CONTEXT = new ThreadLocal<>();
@@ -46,7 +52,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     @SuppressWarnings("unchecked")
     public void initSnapshot() {
         String jsonString = GSON.toJson(this);
-        BaseAggregateRoot<K> snapshot = GSON.fromJson(jsonString, this.getClass());
+        snapshot = GSON.fromJson(jsonString, this.getClass());
         AGGREGATE_ROOT_CONTEXT.set(snapshot);
     }
 
@@ -63,6 +69,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      */
     public void clearSnapshot() {
         AGGREGATE_ROOT_CONTEXT.remove();
+        snapshot = null;
     }
 
     /**
@@ -77,16 +84,8 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      * 获取版本号
      * @return
      */
-    public int getSnapshotVersion() {
-        return getSnapshot().version;
-    }
-
-    /**
-     * 获取快照
-     * @return
-     */
-    public BaseAggregateRoot<K> getSnapshot() {
-        return AGGREGATE_ROOT_CONTEXT.get();
+    public int getVersion() {
+        return snapshot.version;
     }
 
 }
