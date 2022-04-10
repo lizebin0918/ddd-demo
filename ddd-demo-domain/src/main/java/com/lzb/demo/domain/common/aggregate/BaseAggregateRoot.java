@@ -16,6 +16,9 @@ import java.util.LinkedList;
  * 注意：
  * 每次update之后，应该把快照置空，表示更新过了，如果在同一个线程里面，同一个聚合根更新两次，第二次更新应该报错
  *
+ * 解决：
+ * 采用ThreadLocal缓存快照，每次update的时候判断，当前对象和快照的version是否一致，不一致直接报错...
+ *
  * Created on : 2022-02-24 22:49
  *
  * @author lizebin
