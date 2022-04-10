@@ -34,7 +34,7 @@ public class OrderDetails implements Iterable<OrderDetail> {
      * @return
      */
     public Collection<OrderDetail> list() {
-        return orderDetails;
+        return Collections.unmodifiableCollection(orderDetails);
     }
 
     /**
