@@ -17,6 +17,6 @@ public interface UpdateRepository<T extends BaseAggregateRoot<K>, K extends Enti
      * @param aggregateRoot
      * @throws ConcurrencyUpdateException 可能由于乐观锁版本更新，抛异常
      */
-    void update(T aggregateRoot) throws ConcurrencyUpdateException;
+    void update(T aggregateRoot);
 
 }

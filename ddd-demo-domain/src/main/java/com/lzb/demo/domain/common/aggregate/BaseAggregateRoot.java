@@ -5,6 +5,7 @@ import com.lzb.demo.domain.common.event.DomainEvent;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
+import lombok.val;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -73,8 +74,9 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      * 检查当前对象和快照版本，如果抛异常，表示当前线程获取两次聚合根，并且做了一次更新，版本号发生变化
      * @throws IllegalVersionException
      */
-    public void checkVersion() throws IllegalVersionException {
-        if (Objects.isNull(this.snapshot.get()) || this.version != this.snapshot.get().getVersion()) {
+    public void checkForVersion() throws IllegalVersionException {
+        BaseAggregateRoot<K> currentSnapshot = this.snapshot.get();
+        if (Objects.isNull(currentSnapshot) || this.version != currentSnapshot.getVersion()) {
             throw new IllegalVersionException("快照版本号发生变更");
         }
     }

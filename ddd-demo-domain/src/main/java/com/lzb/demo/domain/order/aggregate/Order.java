@@ -1,19 +1,21 @@
 package com.lzb.demo.domain.order.aggregate;
 
 import com.lzb.demo.common.exception.BizException;
-import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
+import com.lzb.demo.domain.common.check.CheckValidation;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
+import com.lzb.demo.domain.order.enums.OrderStatus;
+import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
+import com.lzb.demo.domain.order.event.OrderShippedDomainEvent;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OperatorId;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
 import java.time.ZonedDateTime;
@@ -51,7 +53,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
     /**
      * 集合实体
      */
-    private OrderDetails orderDetails;
+    private OrderDetails orderDetails = new OrderDetails(new ArrayList<>());
 
     /**
      * 预计发货时间
@@ -91,7 +93,6 @@ public class Order extends BaseAggregateRoot<OrderId> {
     public CheckValidation checkCancel() {
 
         CheckValidation checkValidation = CheckValidation.newInstance();
-
         if (OrderStatus.SHIP.equals(this.orderStatus)) {
             checkValidation.add("已发货订单不能取消");
         }
@@ -105,11 +106,9 @@ public class Order extends BaseAggregateRoot<OrderId> {
     public void cancel() {
 
         CheckValidation checkValidation = checkCancel();
-
         if (!checkValidation.canCancel()) {
             throw new BizException("取消异常:" + checkValidation);
         }
-
         this.orderStatus = OrderStatus.CANCEL;
 
         // 发送订单取消事件
@@ -161,5 +160,6 @@ public class Order extends BaseAggregateRoot<OrderId> {
      */
     public void shipped() {
         orderStatus = OrderStatus.SHIP;
+        addEvent(new OrderShippedDomainEvent(id.getValue()));
     }
 }

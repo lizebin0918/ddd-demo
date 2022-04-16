@@ -2,6 +2,7 @@ package com.lzb.demo.domain.order.repository;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
+import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
@@ -22,6 +23,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+
 
 /**
  * <br/>
@@ -40,18 +45,14 @@ public class OrderRepositoryTest extends SpringbootTestBase {
     @Test
     public void test_getById() {
         Order order = orderRepository.getById(new OrderId(39786L)).orElse(null);
-
         System.out.println("orderId:" + order.getId().value());
-
-        Assertions.assertThat(Objects.nonNull(order)).isEqualTo(true);
+        assertThat(Objects.nonNull(order)).isEqualTo(true);
         System.out.println(JSON.toJSONString(order));
     }
 
     @Test
     public void test_save() {
-
         OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
-
         Order order = Order.builder()
                 .id(orderId)
                 .orderDetails(new OrderDetails(new ArrayList<>()))
@@ -60,11 +61,8 @@ public class OrderRepositoryTest extends SpringbootTestBase {
                 .userId(new UserId(1L))
                 .build();
         order.addProduct(ProductId.create(1L), 1);
-
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(1, 1L)));
-
         orderRepository.add(order);
-
     }
 
     @Test
@@ -79,8 +77,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         System.out.println("更新前:" + JSON.toJSONString(order));
         orderRepository.update(order);
         System.out.println("更新后:" + JSON.toJSONString(order));
-
-
+        assertThrows(IllegalVersionException.class, () -> orderRepository.update(order));
     }
 
 }
