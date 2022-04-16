@@ -50,7 +50,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      * 生成快照
      * 设置版本号
      */
-    public void setSnapshot() {
+    public void loadSnapshot() {
         snapshot.set(this);
     }
 
@@ -63,11 +63,18 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     }
 
     /**
+     * 清空快照
+     */
+    public void unloadSnapshot() {
+        snapshot.remove();
+    }
+
+    /**
      * 检查当前对象和快照版本，如果抛异常，表示当前线程获取两次聚合根，并且做了一次更新，版本号发生变化
      * @throws IllegalVersionException
      */
     public void checkVersion() throws IllegalVersionException {
-        if (this.version != getSnapshot().getVersion()) {
+        if (Objects.isNull(this.snapshot.get()) || this.version != this.snapshot.get().getVersion()) {
             throw new IllegalVersionException("快照版本号发生变更");
         }
     }

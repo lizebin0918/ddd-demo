@@ -19,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -73,12 +74,13 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_update() {
-       /* Order order = Order.builder()
-                .orderId(new OrderId(2L))
-                .orderStatus(OrderStatus.SHIP)
-                .payMoney(new Money(new BigDecimal(0)))
-                .userId(new UserId(1L)).build();
-        orderRepository.update(order);*/
+        Order order = orderRepository.getById(new OrderId(207515L)).get();
+        order.shipped();
+        System.out.println("更新前:" + JSON.toJSONString(order));
+        orderRepository.update(order);
+        System.out.println("更新后:" + JSON.toJSONString(order));
+
+
     }
 
 }

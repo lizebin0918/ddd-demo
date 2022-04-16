@@ -19,7 +19,7 @@ import java.util.*;
 @AllArgsConstructor
 public class OrderDetails implements Iterable<OrderDetail> {
 
-    private Collection<OrderDetail> orderDetails;
+    private final Collection<OrderDetail> orderDetails;
 
     /**
      * 订单明细条数
@@ -27,7 +27,7 @@ public class OrderDetails implements Iterable<OrderDetail> {
      */
     public int count() {
         return orderDetails.size();
-    };
+    }
 
     /**
      * 订单明细列表

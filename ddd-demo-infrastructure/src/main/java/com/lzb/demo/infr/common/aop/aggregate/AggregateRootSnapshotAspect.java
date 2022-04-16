@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Aspect
 @Component
-public class AggregateRootCreateAspect {
+public class AggregateRootSnapshotAspect {
 
     /**
      * 支持方法 or 注解
@@ -21,7 +21,7 @@ public class AggregateRootCreateAspect {
             "|| @annotation(com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot)",
             returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) {
-        ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::setSnapshot);
+        ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::loadSnapshot);
     }
 
 }

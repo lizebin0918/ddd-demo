@@ -35,4 +35,11 @@ public class Snapshot<K extends EntityId> {
         return context.get();
     }
 
+    /**
+     * 移除快照
+     */
+    public void remove() {
+        context.remove();
+    }
+
 }

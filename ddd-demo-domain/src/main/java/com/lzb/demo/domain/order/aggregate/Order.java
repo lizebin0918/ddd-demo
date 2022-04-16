@@ -51,7 +51,6 @@ public class Order extends BaseAggregateRoot<OrderId> {
     /**
      * 集合实体
      */
-    @NonNull
     private OrderDetails orderDetails;
 
     /**
@@ -155,5 +154,12 @@ public class Order extends BaseAggregateRoot<OrderId> {
      */
     public Optional<OperatorId> getOperatorId() {
         return Optional.ofNullable(operatorId);
+    }
+
+    /**
+     * 发货
+     */
+    public void shipped() {
+        orderStatus = OrderStatus.SHIP;
     }
 }
