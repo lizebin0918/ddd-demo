@@ -9,6 +9,7 @@ import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
 import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.dto.ProductDtos;
@@ -42,7 +43,6 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private ProductGateway productGateway;
 
     @Override
-    @DomainEventPush
     @Transactional(rollbackFor = Exception.class)
     public void add(Order order) {
 

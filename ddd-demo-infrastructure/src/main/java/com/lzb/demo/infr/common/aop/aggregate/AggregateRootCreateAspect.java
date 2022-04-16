@@ -12,7 +12,14 @@ import java.util.Optional;
 @Component
 public class AggregateRootCreateAspect {
 
-    @AfterReturning(pointcut = "execution(* com.lzb.demo.domain.common.repository.GetRepository.getById(..))", returning = "returnVal")
+    /**
+     * 支持方法 or 注解
+     * @param pjp
+     * @param returnVal
+     */
+    @AfterReturning(pointcut = "execution(* com.lzb.demo.domain.common.repository.GetRepository.getById(..)) " +
+            "|| @annotation(com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot)",
+            returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) {
         ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::setSnapshot);
     }
