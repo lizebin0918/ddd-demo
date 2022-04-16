@@ -20,7 +20,7 @@ public class Snapshot<K extends EntityId> {
     /**
      * 设置快照
      */
-
+    @SuppressWarnings("unchecked")
     public void set(BaseAggregateRoot<K> root) {
         context.remove();
         String jsonString = GSON.toJson(root);
