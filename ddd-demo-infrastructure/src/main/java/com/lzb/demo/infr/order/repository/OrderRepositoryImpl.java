@@ -9,7 +9,6 @@ import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
 import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.dto.ProductDtos;
@@ -22,7 +21,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,7 +55,6 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     }
 
     @Override
-    @AggregateRootSnapshot
     public Optional<Order> getById(OrderId orderId) {
 
         long orderIdValue = orderId.value();

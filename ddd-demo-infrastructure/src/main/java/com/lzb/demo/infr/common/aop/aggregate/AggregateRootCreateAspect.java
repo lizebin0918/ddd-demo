@@ -12,7 +12,7 @@ import java.util.Optional;
 @Component
 public class AggregateRootCreateAspect {
 
-    @AfterReturning(pointcut = "@annotation(com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot)", returning = "returnVal")
+    @AfterReturning(pointcut = "execution(* com.lzb.demo.domain.common.repository.GetRepository.getById(..))", returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) {
         ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::setSnapshot);
     }
