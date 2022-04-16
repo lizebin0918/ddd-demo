@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.common.aggregate;
 
-import com.google.gson.Gson;
+import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import lombok.Getter;
 import lombok.NonNull;
@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * https://cloud.tencent.com/developer/article/1833609
@@ -26,8 +27,7 @@ import java.util.LinkedList;
 @SuperBuilder
 public abstract class BaseAggregateRoot<K extends EntityId> {
 
-    private static final Gson GSON = new Gson();
-
+    @Getter
     @NonNull
     protected Integer version;
 
@@ -36,40 +36,40 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected K id;
 
     /**
-     * 缓存聚合根快照（不能声明成static，static会导致内存异常）
-     */
-    private final ThreadLocal<BaseAggregateRoot<K>> AGGREGATE_ROOT_CONTEXT = new ThreadLocal<>();
-
-    /**
      * 领域事件:下单时间 + 日志相关事件
      */
     @Getter
     protected final Collection<DomainEvent> events = new LinkedList<>();
 
     /**
+     * 快照组件
+     */
+    private final Snapshot<K> snapshot = new Snapshot<>();
+
+    /**
      * 生成快照
      * 设置版本号
      */
-    @SuppressWarnings("unchecked")
-    public void initSnapshot() {
-        String jsonString = GSON.toJson(this);
-        BaseAggregateRoot<K> snapshot = GSON.fromJson(jsonString, this.getClass());
-        AGGREGATE_ROOT_CONTEXT.set(snapshot);
+    public void setSnapshot() {
+        snapshot.set(this);
     }
 
     /**
-     * 刷新快照
+     * 获取快照
+     * @return
      */
-    public void refreshSnapshot() {
-        clearSnapshot();
-        initSnapshot();
+    public BaseAggregateRoot<K> getSnapshot() {
+        return snapshot.get();
     }
 
     /**
-     * 清空快照
+     * 检查当前对象和快照版本，如果抛异常，表示当前线程获取两次聚合根，并且做了一次更新，版本号发生变化
+     * @throws IllegalVersionException
      */
-    public void clearSnapshot() {
-        AGGREGATE_ROOT_CONTEXT.remove();
+    public void checkVersion() throws IllegalVersionException {
+        if (this.version != getSnapshot().getVersion()) {
+            throw new IllegalVersionException("快照版本号发生变更");
+        }
     }
 
     /**
@@ -78,22 +78,6 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
      */
     protected void addEvent(DomainEvent event) {
         events.add(event);
-    }
-
-    /**
-     * 获取版本号
-     * @return
-     */
-    public int getSnapshotVersion() {
-        return getSnapshot().version;
-    }
-
-    /**
-     * 获取快照
-     * @return
-     */
-    public BaseAggregateRoot<K> getSnapshot() {
-        return AGGREGATE_ROOT_CONTEXT.get();
     }
 
 }

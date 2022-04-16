@@ -14,7 +14,7 @@ public class AggregateRootCreateAspect {
 
     @AfterReturning(pointcut = "@annotation(com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot)", returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) {
-        ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::initSnapshot);
+        ((Optional<BaseAggregateRoot>) returnVal).ifPresent(BaseAggregateRoot::setSnapshot);
     }
 
 }
