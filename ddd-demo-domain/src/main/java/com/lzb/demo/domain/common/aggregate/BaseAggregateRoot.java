@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 /**
- * https://cloud.tencent.com/developer/article/1833609
  * 聚合根基类，包含共用属性和方法<br/>
  *
  * 注意：
@@ -20,6 +19,9 @@ import java.util.Objects;
  *
  * 解决：
  * 采用ThreadLocal缓存快照，每次update的时候判断，当前对象和快照的version是否一致，不一致直接报错...
+ *
+ * 参考:
+ * https://cloud.tencent.com/developer/article/1833609
  *
  * Created on : 2022-02-24 22:49
  *
@@ -30,7 +32,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
 
     @Getter
     @NonNull
-    protected Integer version;
+    protected int version;
 
     @Getter
     @NonNull

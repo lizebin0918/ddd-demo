@@ -10,6 +10,9 @@ import com.google.gson.Gson;
  */
 public class Snapshot<K extends EntityId> {
 
+    /**
+     * 反序列化无需通过无参构造函数
+     */
     private static final Gson GSON = new Gson();
 
     /**

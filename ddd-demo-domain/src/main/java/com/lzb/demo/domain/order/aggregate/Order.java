@@ -17,6 +17,7 @@ import com.lzb.demo.domain.user.entity.UserId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
+import lombok.experimental.Tolerate;
 
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -53,6 +54,7 @@ public class Order extends BaseAggregateRoot<OrderId> {
     /**
      * 集合实体
      */
+    @Getter
     private OrderDetails orderDetails = new OrderDetails(new ArrayList<>());
 
     /**
@@ -64,14 +66,6 @@ public class Order extends BaseAggregateRoot<OrderId> {
      * 操作人
      */
     private OperatorId operatorId;
-
-    /**
-     * 获取订单明细
-     * @return
-     */
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
-    }
 
     /**
      * 新增订单明细
