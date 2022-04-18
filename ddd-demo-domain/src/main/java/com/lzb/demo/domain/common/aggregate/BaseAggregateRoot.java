@@ -1,11 +1,11 @@
 package com.lzb.demo.domain.common.aggregate;
 
+import com.google.gson.annotations.Expose;
 import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.common.event.DomainEvent;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
-import lombok.val;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -45,8 +45,9 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected final Collection<DomainEvent> events = new LinkedList<>();
 
     /**
-     * 快照组件
+     * 快照组件:自身无需保存快照，提出序列化、反序列化
      */
+    @Expose
     private final Snapshot<K> snapshot = new Snapshot<>();
 
     /**
