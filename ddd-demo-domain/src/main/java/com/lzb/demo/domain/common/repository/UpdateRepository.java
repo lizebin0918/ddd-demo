@@ -10,13 +10,13 @@ import com.lzb.demo.domain.common.aggregate.EntityId;
  *
  * @author lizebin
  */
-public interface UpdateRepository<T extends BaseAggregateRoot<K>, K extends EntityId> {
+public interface UpdateRepository<R extends BaseAggregateRoot<K>, K extends EntityId> {
 
     /**
      * 更新聚合根
      * @param aggregateRoot
      * @throws ConcurrencyUpdateException 可能由于乐观锁版本更新，抛异常
      */
-    void update(T aggregateRoot);
+    void update(R aggregateRoot);
 
 }

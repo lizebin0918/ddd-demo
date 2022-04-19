@@ -8,12 +8,12 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
  *
  * @author lizebin
  */
-public interface AddRepository<T extends BaseAggregateRoot<?>> {
+public interface AddRepository<R extends BaseAggregateRoot<?>> {
 
     /**
      * 新增聚合根
      * @param aggregateRoot
      */
-    void add(T aggregateRoot);
+    void add(R aggregateRoot);
 
 }
