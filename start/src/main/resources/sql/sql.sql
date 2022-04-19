@@ -69,3 +69,8 @@ create table domain_event
     body   text,
     status integer default 0 not null
 );
+
+alter table ddd."order"
+    add shipped_date_time timestamptz;
+
+comment on column ddd."order".shipped_date_time is '发货时间';

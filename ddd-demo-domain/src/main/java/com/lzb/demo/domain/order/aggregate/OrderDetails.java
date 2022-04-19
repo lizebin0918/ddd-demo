@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -17,7 +18,7 @@ import java.util.*;
  */
 @Getter
 @AllArgsConstructor
-public class OrderDetails implements Iterable<OrderDetail> {
+public class OrderDetails implements Iterable<OrderDetail>, Serializable {
 
     private final Collection<OrderDetail> orderDetails;
 

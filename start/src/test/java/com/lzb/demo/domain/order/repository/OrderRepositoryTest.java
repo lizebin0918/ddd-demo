@@ -30,8 +30,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 /**
@@ -54,8 +53,9 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
         System.out.println("orderId:" + order.getId().value());
         assertThat(Objects.nonNull(order)).isEqualTo(true);
-        System.out.println(JSON.toJSONString(order));
-        assertTrue(Objects.isNull(order.getSnapshot().getSnapshot()));
+        order.shipped();
+        assertTrue(Objects.nonNull(order.getSnapshot()));
+        assertNotEquals(order.getOrderStatus(), ((Order) order.getSnapshot()).getOrderStatus());
     }
 
     @Test

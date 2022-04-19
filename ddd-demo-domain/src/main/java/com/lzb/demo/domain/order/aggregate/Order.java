@@ -19,6 +19,7 @@ import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 import lombok.experimental.Tolerate;
 
+import java.time.OffsetDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,9 +59,9 @@ public class Order extends BaseAggregateRoot<OrderId> {
     private OrderDetails orderDetails = new OrderDetails(new ArrayList<>());
 
     /**
-     * 预计发货时间
+     * 发货时间
      */
-    private ZonedDateTime estShipDateTime;
+    private OffsetDateTime shippedDateTime;
 
     /**
      * 操作人

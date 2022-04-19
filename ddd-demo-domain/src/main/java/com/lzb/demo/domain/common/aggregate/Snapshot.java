@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.common.aggregate;
 
-import com.google.gson.Gson;
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  * <br/>
@@ -11,9 +11,9 @@ import com.google.gson.Gson;
 public class Snapshot<K extends EntityId> {
 
     /**
-     * 反序列化无需通过无参构造函数
+     * 反序列化无需通过无参构造函数:OffsetDateTime 通过字符串序列化/反序列化有误
      */
-    private static final Gson GSON = new Gson();
+    /*private static final Gson GSON = new Gson();*/
 
     /**
      * 缓存聚合根快照（不能声明成static，static会导致内存异常）
@@ -26,8 +26,7 @@ public class Snapshot<K extends EntityId> {
     @SuppressWarnings("unchecked")
     public void set(BaseAggregateRoot<K> root) {
         context.remove();
-        String jsonString = GSON.toJson(root);
-        context.set(GSON.fromJson(jsonString, root.getClass()));
+        context.set(SerializationUtils.clone(root));
     }
 
     /**

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Objects;
  *
  * @author lizebin
  */
-public abstract class EntityId {
+public abstract class EntityId implements Serializable {
 
     @Getter
     private final long value;

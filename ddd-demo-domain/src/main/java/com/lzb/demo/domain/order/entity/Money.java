@@ -3,6 +3,7 @@ package com.lzb.demo.domain.order.entity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
@@ -13,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Getter
 @RequiredArgsConstructor
-public class Money {
+public class Money implements Serializable {
 
     /**
      * 数值

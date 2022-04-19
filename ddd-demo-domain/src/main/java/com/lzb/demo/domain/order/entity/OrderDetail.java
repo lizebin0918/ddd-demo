@@ -5,6 +5,8 @@ import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * <br/>
  * Created on : 2022-02-14 17:24
@@ -12,7 +14,7 @@ import lombok.Data;
  * @author lizebin
  */
 @Data
-public class OrderDetail {
+public class OrderDetail implements Serializable {
 
     /**
      * 主键:orderDetail和Order的关系是组合，同一声明周期的，对外无需暴露主键，而且主键是数据库的玩意。

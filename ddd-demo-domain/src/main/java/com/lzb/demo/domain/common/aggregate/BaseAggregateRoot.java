@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -28,7 +29,7 @@ import java.util.Objects;
  * @author lizebin
  */
 @SuperBuilder
-public abstract class BaseAggregateRoot<K extends EntityId> {
+public abstract class BaseAggregateRoot<K extends EntityId> implements Serializable {
 
     @Getter
     @NonNull
@@ -45,10 +46,9 @@ public abstract class BaseAggregateRoot<K extends EntityId> {
     protected final Collection<DomainEvent> events = new LinkedList<>();
 
     /**
-     * 快照组件:自身无需保存快照，提出序列化、反序列化
+     * 快照组件:自身无需保存快照，无需序列化、反序列化
      */
-    @Expose
-    private final Snapshot<K> snapshot = new Snapshot<>();
+    private final transient Snapshot<K> snapshot = new Snapshot<>();
 
     /**
      * 生成快照

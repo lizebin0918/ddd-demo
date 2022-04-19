@@ -40,6 +40,7 @@ public class OrderConverter {
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
                 .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
                 .version(orderPo.getVersion())
+                .shippedDateTime(orderPo.getShippedDateTime().orElse(null))
                 .build();
     }
 
@@ -105,13 +106,12 @@ public class OrderConverter {
      * @return
      */
     public static OrderPo toOrderPo(Order order) {
-       OrderPo orderDo = new OrderPo();
-       orderDo.setOrderId(order.getId().value());
-       orderDo.setStatus(order.getOrderStatus().getValue());
-       orderDo.setPayMoney(order.getPayMoney().getAmount());
-       orderDo.setUserId(order.getUserId().getValue());
-       orderDo.setVersion(order.getVersion());
-       return orderDo;
+       return OrderPo.builder()
+               .orderId(order.getId().value())
+               .status(order.getOrderStatus().getValue())
+               .payMoney(order.getPayMoney().getAmount())
+               .userId(order.getUserId().getValue())
+               .version(order.getVersion()).build();
     }
 
 }
