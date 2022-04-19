@@ -18,7 +18,7 @@ public abstract class EntityId implements Serializable {
     @Getter
     private final long value;
 
-    public EntityId(long value) {
+    protected EntityId(long value) {
         this.value = value;
     }
 

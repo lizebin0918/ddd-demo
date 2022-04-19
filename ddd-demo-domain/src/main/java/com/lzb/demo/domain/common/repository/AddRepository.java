@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.common.repository;
 
 import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
+import com.lzb.demo.domain.common.aggregate.EntityId;
 
 /**
  * 新增聚合<br/>
@@ -8,12 +9,12 @@ import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
  *
  * @author lizebin
  */
-public interface AddRepository<R extends BaseAggregateRoot<?>> {
+public interface AddRepository<R extends BaseAggregateRoot<R, K>, K extends EntityId> {
 
     /**
      * 新增聚合根
      * @param aggregateRoot
      */
-    void add(R aggregateRoot);
+    K add(R aggregateRoot);
 
 }

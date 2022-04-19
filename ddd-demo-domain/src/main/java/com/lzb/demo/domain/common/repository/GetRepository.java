@@ -11,7 +11,7 @@ import java.util.Optional;
  *
  * @author lizebin
  */
-public interface GetRepository<R extends BaseAggregateRoot<K>, K extends EntityId> {
+public interface GetRepository<R extends BaseAggregateRoot<R, K>, K extends EntityId> {
 
     /**
      * 根据id查询

@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class OrderDetail implements Serializable {
 
     /**
-     * 主键:orderDetail和Order的关系是组合，同一声明周期的，对外无需暴露主键，而且主键是数据库的玩意。
+     * 主键:orderDetail和Order的关系是组合，同一声明周期的，对外无需暴露主键，而且主键是数据库的玩意。同一个商品拍平，为了区分不同的明细？
      */
     private OrderDetailId orderDetailId;
 

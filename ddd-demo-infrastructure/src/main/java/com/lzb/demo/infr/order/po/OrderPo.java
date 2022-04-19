@@ -50,14 +50,12 @@ public class OrderPo {
     /**
      * 创建时间
      */
-    @NonNull
     @TableField(fill = FieldFill.INSERT)
     LocalDateTime createDateTime;
 
     /**
      * 更新时间
      */
-    @NonNull
     @TableField(fill = FieldFill.INSERT_UPDATE)
     LocalDateTime updateDateTime;
 
@@ -73,39 +71,4 @@ public class OrderPo {
      */
     OffsetDateTime shippedDateTime;
 
-    ///////////////////////////////////////////////////////////////////////////
-    // getter 方法
-    ///////////////////////////////////////////////////////////////////////////
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public BigDecimal getPayMoney() {
-        return payMoney;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public Optional<OffsetDateTime> getShippedDateTime() {
-        return Optional.ofNullable(shippedDateTime);
-    }
 }

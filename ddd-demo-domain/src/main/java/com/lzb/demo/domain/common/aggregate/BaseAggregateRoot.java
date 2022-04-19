@@ -29,7 +29,7 @@ import java.util.Objects;
  * @author lizebin
  */
 @SuperBuilder
-public abstract class BaseAggregateRoot<K extends EntityId> implements Serializable {
+public abstract class BaseAggregateRoot<R extends BaseAggregateRoot<R, K>, K extends EntityId> implements Serializable {
 
     @Getter
     @NonNull
@@ -40,7 +40,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> implements Serializa
     protected K id;
 
     /**
-     * 领域事件:下单时间 + 日志相关事件
+     * 领域事件
      */
     @Getter
     protected final Collection<DomainEvent> events = new LinkedList<>();
@@ -48,21 +48,20 @@ public abstract class BaseAggregateRoot<K extends EntityId> implements Serializa
     /**
      * 快照组件:自身无需保存快照，无需序列化、反序列化
      */
-    private final transient Snapshot<K> snapshot = new Snapshot<>();
+    private final transient Snapshot<R> snapshot = new Snapshot<>();
 
     /**
      * 生成快照
-     * 设置版本号
      */
     public void loadSnapshot() {
-        snapshot.set(this);
+        snapshot.set((R) this);
     }
 
     /**
      * 获取快照
      * @return
      */
-    public BaseAggregateRoot<K> getSnapshot() {
+    public R getSnapshot() {
         return snapshot.get();
     }
 
@@ -78,7 +77,7 @@ public abstract class BaseAggregateRoot<K extends EntityId> implements Serializa
      * @throws IllegalVersionException
      */
     public void checkForVersion() throws IllegalVersionException {
-        BaseAggregateRoot<K> currentSnapshot = this.snapshot.get();
+        R currentSnapshot = this.snapshot.get();
         if (Objects.isNull(currentSnapshot) || this.version != currentSnapshot.getVersion()) {
             throw new IllegalVersionException("快照版本号发生变更");
         }

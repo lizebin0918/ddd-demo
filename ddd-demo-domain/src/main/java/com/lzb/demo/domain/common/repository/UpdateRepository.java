@@ -10,7 +10,7 @@ import com.lzb.demo.domain.common.aggregate.EntityId;
  *
  * @author lizebin
  */
-public interface UpdateRepository<R extends BaseAggregateRoot<K>, K extends EntityId> {
+public interface UpdateRepository<R extends BaseAggregateRoot<R, K>, K extends EntityId> {
 
     /**
      * 更新聚合根

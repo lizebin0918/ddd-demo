@@ -14,7 +14,7 @@ import com.lzb.demo.domain.order.valobj.OrderId;
  *
  * @author lizebin
  */
-public interface OrderRepository extends AddRepository<Order>, GetRepository<Order, OrderId>, UpdateRepository<Order, OrderId> {
+public interface OrderRepository extends AddRepository<Order, OrderId>, GetRepository<Order, OrderId>, UpdateRepository<Order, OrderId> {
 
     /**
      * 根据订单状态查询

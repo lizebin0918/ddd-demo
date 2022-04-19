@@ -19,6 +19,7 @@ public class AggregateRootUpdateAroundAspect {
 
     /**
      * 支持方法 or 注解
+     *
      * @param pjp
      * @param returnVal
      */
@@ -29,9 +30,9 @@ public class AggregateRootUpdateAroundAspect {
         if (Objects.nonNull(paramValues) && paramValues.length > 0) {
             Object aggregateRoot = paramValues[0];
             if (aggregateRoot instanceof BaseAggregateRoot) {
-                ((BaseAggregateRoot<?>) aggregateRoot).checkForVersion();
+                ((BaseAggregateRoot<?, ?>) aggregateRoot).checkForVersion();
                 result = proceedingJoinPoint.proceed(paramValues);
-                ((BaseAggregateRoot<?>)aggregateRoot).unloadSnapshot();
+                ((BaseAggregateRoot<?, ?>) aggregateRoot).unloadSnapshot();
             }
         }
         return result;

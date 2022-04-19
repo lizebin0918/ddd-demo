@@ -44,14 +44,12 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void add(Order order) {
-
+    public OrderId add(Order order) {
         // 保存主表
         orderService.save(OrderConverter.toOrderPo(order));
-
         // 保存明细
         orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
-
+        return order.getId();
     }
 
     @Override

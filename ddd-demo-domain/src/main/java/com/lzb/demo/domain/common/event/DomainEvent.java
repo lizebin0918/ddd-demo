@@ -3,10 +3,11 @@ package com.lzb.demo.domain.common.event;
 import com.lzb.demo.common.datetime.DateTimeUtils;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 
 @Getter
-public abstract class DomainEvent {
+public abstract class DomainEvent implements Serializable {
 
     private final String topic;
     private final String createDateTime = DateTimeUtils.zonedDateTimeToUtcString(ZonedDateTime.now());

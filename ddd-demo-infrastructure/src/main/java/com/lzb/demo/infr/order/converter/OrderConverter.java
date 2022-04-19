@@ -16,6 +16,7 @@ import com.lzb.demo.infr.order.po.OrderDetailPo;
 import com.lzb.demo.infr.order.po.OrderPo;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -40,7 +41,7 @@ public class OrderConverter {
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
                 .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
                 .version(orderPo.getVersion())
-                .shippedDateTime(orderPo.getShippedDateTime().orElse(null))
+                .shippedDateTime(orderPo.getShippedDateTime())
                 .build();
     }
 
@@ -91,7 +92,11 @@ public class OrderConverter {
         orderDetailPo.setOrderId(orderId.value());
         orderDetailPo.setCount(orderDetail.getCount());
         orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
-        orderDetailPo.setId(orderDetail.getOrderDetailId().value());
+
+        OrderDetailId orderDetailId = orderDetail.getOrderDetailId();
+        if (Objects.nonNull(orderDetailId)) {
+            orderDetailPo.setId(orderDetailId.value());
+        }
 
         long productId = orderDetail.getProductId().value();
         orderDetailPo.setProductId(productId);

@@ -35,7 +35,7 @@ public class DomainEventPushAspect {
         if (Objects.nonNull(paramValues) && paramValues.length > 0) {
             Object aggregateRoot = paramValues[0];
             if (aggregateRoot instanceof BaseAggregateRoot) {
-                ((BaseAggregateRoot<?>)aggregateRoot).getEvents().forEach(sender::send);
+                ((BaseAggregateRoot<?, ?>)aggregateRoot).getEvents().forEach(sender::send);
             }
         }
     }

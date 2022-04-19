@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 @SuperBuilder
-public class Order extends BaseAggregateRoot<OrderId> {
+public class Order extends BaseAggregateRoot<Order, OrderId> {
 
     /**
      * 支付金额
