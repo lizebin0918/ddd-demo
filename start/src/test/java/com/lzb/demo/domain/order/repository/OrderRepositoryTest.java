@@ -7,9 +7,10 @@ import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.enums.OrderStatus;
+import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
+import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
@@ -22,7 +23,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,7 +30,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 
 /**
@@ -50,7 +51,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(39786L)).orElse(null);
+        Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
         assertThat(Objects.nonNull(order)).isEqualTo(true);
         order.shipped();
         assertTrue(Objects.nonNull(order.getSnapshot()));
@@ -69,8 +70,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
                 .payMoney(new Money(new BigDecimal(0), "CNY"))
                 .userId(new UserId(1L))
                 .build();
-        order.addProduct(ProductId.create(1L), 1);
-        order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(1, 1L)));
+        order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(100000), 1, 1L)));
         orderRepository.add(order);
     }
 

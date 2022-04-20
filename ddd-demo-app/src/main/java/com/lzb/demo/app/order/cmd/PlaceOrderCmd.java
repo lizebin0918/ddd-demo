@@ -19,6 +19,10 @@ public class PlaceOrderCmd {
     @AllArgsConstructor
     public static class OrderDetail {
         /**
+         * 明细id
+         */
+        private long id;
+        /**
          * 数量
          */
         private Integer count;

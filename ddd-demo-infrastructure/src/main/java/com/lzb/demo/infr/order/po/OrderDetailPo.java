@@ -1,51 +1,56 @@
 package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Value
+@Builder
+@AllArgsConstructor
 @TableName("order_detail")
 public class OrderDetailPo {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @NonNull
+    @TableId(type = IdType.INPUT)
+    Long id;
 
     /**
      * 订单号
      */
-    private Long orderId;
+    @NonNull
+    Long orderId;
 
     /**
      * 数量
      */
-    private Integer count;
+    @NonNull
+    Integer count;
 
     /**
      * 商品id
      */
-    private Long productId;
+    @NonNull
+    Long productId;
 
     /**
      * 商品编码
      */
-    private String productCode;
+    String productCode;
 
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createDateTime;
+    LocalDateTime createDateTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateDateTime;
+    LocalDateTime updateDateTime;
 
     /**
      * 订单明细状态
      */
-    private Integer status;
+    @NonNull
+    Integer status;
 
 }

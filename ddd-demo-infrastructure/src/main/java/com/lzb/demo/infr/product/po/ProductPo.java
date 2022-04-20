@@ -3,24 +3,26 @@ package com.lzb.demo.infr.product.po;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Value
+@Builder
+@AllArgsConstructor
 @TableName("product")
 public class ProductPo {
-
-    private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
+    @NonNull
     @TableId(type = IdType.AUTO)
-    private Long id;
+    Long id;
 
     /**
      * 商品编码
      */
-    private String code;
+    @NonNull
+    String code;
 
 
 }

@@ -27,8 +27,8 @@ public class OrderServiceTest extends SpringbootTestBase {
     @Test
     public void test_placeOrder() {
         List<PlaceOrderReq.OrderDetail> orderDetails = new ArrayList<>();
-        orderDetails.add(new PlaceOrderReq.OrderDetail(1, 1L));
-        orderDetails.add(new PlaceOrderReq.OrderDetail(1, 2L));
+        orderDetails.add(new PlaceOrderReq.OrderDetail(1L, 1, 1L));
+        orderDetails.add(new PlaceOrderReq.OrderDetail(1L, 1, 2L));
 
         PlaceOrderReq req = new PlaceOrderReq(
                 ThreadLocalRandom.current().nextLong(10000000),

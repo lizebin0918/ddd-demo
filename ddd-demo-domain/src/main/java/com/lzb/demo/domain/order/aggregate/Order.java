@@ -11,16 +11,15 @@ import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
 import com.lzb.demo.domain.order.event.OrderShippedDomainEvent;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OperatorId;
+import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
-import lombok.experimental.Tolerate;
 
 import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -70,11 +69,13 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
 
     /**
      * 新增订单明细
+     * @param orderDetailId
      * @param productId 产品id
      * @param count 数量
      */
-    public void addProduct(ProductId productId, int count) {
+    public void addProduct(OrderDetailId orderDetailId, ProductId productId, int count) {
         OrderDetail orderDetail = new OrderDetail();
+        orderDetail.setOrderDetailId(orderDetailId);
         orderDetail.setProductId(productId);
         orderDetail.setCount(count);
         orderDetail.setOrderDetailStatus(OrderDetailStatus.ORDER);
@@ -117,7 +118,11 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      */
     public void placeOrder(List<PlaceOrderReq.OrderDetail> orderDetails) {
 
-        orderDetails.forEach(orderDetail -> addProduct(ProductId.create(orderDetail.getProductId()), orderDetail.getCount()));
+        orderDetails.forEach(orderDetail -> addProduct(
+                OrderDetailId.create(orderDetail.getId()),
+                ProductId.create(orderDetail.getProductId()),
+                orderDetail.getCount()
+        ));
 
         addEvent(new OrderPlacedDomainEvent(id.value(),
                 productIds().stream().map(ProductId::value).collect(Collectors.toList())));

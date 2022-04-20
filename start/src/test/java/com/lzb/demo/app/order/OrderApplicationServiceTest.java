@@ -33,8 +33,8 @@ public class OrderApplicationServiceTest extends SpringbootTestBase {
 
         List<PlaceOrderCmd.OrderDetail> orderDetails = new ArrayList<>();
 
-        orderDetails.add(new PlaceOrderCmd.OrderDetail(1, 1L));
-        orderDetails.add(new PlaceOrderCmd.OrderDetail(1, 2L));
+        orderDetails.add(new PlaceOrderCmd.OrderDetail(1L, 1, 1L));
+        orderDetails.add(new PlaceOrderCmd.OrderDetail(1L, 1, 2L));
 
         PlaceOrderCmd placeOrderCmd = new PlaceOrderCmd(new BigDecimal(1), 1L, orderDetails);
         Result order = orderApplicationService.order(placeOrderCmd);

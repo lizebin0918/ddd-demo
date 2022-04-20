@@ -88,21 +88,21 @@ public class OrderConverter {
      */
     public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos productDtos) {
 
-        OrderDetailPo orderDetailPo = new OrderDetailPo();
-        orderDetailPo.setOrderId(orderId.value());
-        orderDetailPo.setCount(orderDetail.getCount());
-        orderDetailPo.setStatus(orderDetail.getOrderDetailStatus().getValue());
+        OrderDetailPo.OrderDetailPoBuilder orderDetailPoBuilder = OrderDetailPo.builder()
+                .orderId(orderId.value())
+                .count(orderDetail.getCount())
+                .status(orderDetail.getOrderDetailStatus().getValue());
 
         OrderDetailId orderDetailId = orderDetail.getOrderDetailId();
         if (Objects.nonNull(orderDetailId)) {
-            orderDetailPo.setId(orderDetailId.value());
+            orderDetailPoBuilder.id(orderDetailId.value());
         }
 
         long productId = orderDetail.getProductId().value();
-        orderDetailPo.setProductId(productId);
-        orderDetailPo.setProductCode(productDtos.get(productId).map(ProductDto::getProductCode).orElse(null));
+        orderDetailPoBuilder.productId(productId);
+        orderDetailPoBuilder.productCode(productDtos.get(productId).map(ProductDto::getProductCode).orElse(null));
 
-        return orderDetailPo;
+        return orderDetailPoBuilder.build();
     }
 
     /**

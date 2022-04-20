@@ -1,10 +1,7 @@
 package com.lzb.demo.domain.order.service.req;
 
-import com.lzb.demo.domain.order.entity.Money;
-import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Value;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -15,42 +12,48 @@ import java.util.List;
  *
  * @author lizebin
  */
-@Getter
+@Value
 public class PlaceOrderReq {
 
-    @Getter
+    @Value
     @AllArgsConstructor
     public static class OrderDetail {
+
+        /**
+         * 外部id
+         */
+        long id;
+
         /**
          * 数量
          */
-        private int count;
+        int count;
 
         /**
          * 商品id
          */
-        private long productId;
+        long productId;
     }
 
     /**
      * 订单号
      */
-    private final long orderId;
+    long orderId;
 
     /**
      * 支付金额
      */
-    private final BigDecimal payMoney;
+    BigDecimal payMoney;
 
     /**
      * 下单用户
      */
-    private final long userId;
+    long userId;
 
     /**
      * 订单明细
      */
-    private final List<OrderDetail> orderDetails;
+    List<OrderDetail> orderDetails;
 
     public PlaceOrderReq(long orderId, BigDecimal payMoney, Long userId, List<OrderDetail> orderDetails) {
         this.orderId = orderId;
