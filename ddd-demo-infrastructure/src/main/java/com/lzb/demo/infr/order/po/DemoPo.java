@@ -2,10 +2,7 @@ package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.*;
 
 import java.util.Optional;
 
@@ -18,7 +15,8 @@ import java.util.Optional;
 @Value // 所有字段都是final/getter
 @Builder // 方便手动创建
 //@TableName("\"user\"")
-@AllArgsConstructor// mybatis自动装配
+//@AllArgsConstructor// mybatis自动装配
+@RequiredArgsConstructor
 public class DemoPo {
 
     /**
@@ -59,5 +57,8 @@ public class DemoPo {
      */
     public enum Status {
 
+    }
+
+    public static void main(String[] args) {
     }
 }

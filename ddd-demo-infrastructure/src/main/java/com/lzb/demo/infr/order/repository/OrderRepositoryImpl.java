@@ -9,6 +9,7 @@ import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
 import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
@@ -19,12 +20,15 @@ import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * <br/>
@@ -33,14 +37,22 @@ import java.util.Optional;
  * @author lizebin
  */
 @Repository
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
 
+    @NonNull
     private IOrderService orderService;
 
+    @NonNull
     private IOrderDetailService orderDetailService;
 
+    @NonNull
     private ProductGateway productGateway;
+
+    /**
+     * 获取商品
+     */
+    private final Function<Collection<ProductId>, ProductDtos> productDtosGetter = ids -> productGateway.getOrderProducts(ids);
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -48,7 +60,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         // 保存主表
         orderService.save(OrderConverter.toOrderPo(order));
         // 保存明细
-        orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productGateway.getOrderProducts(order.productIds())));
+        orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, productDtosGetter));
         return order.getId();
     }
 
@@ -87,8 +99,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         }
 
         // 更新明细
-        ProductDtos orderProducts = productGateway.getOrderProducts(order.productIds());
-        orderDetailService.updateBatchById(OrderConverter.toOrderDetailPos(order, orderProducts));
+        orderDetailService.updateBatchById(OrderConverter.toOrderDetailPos(order, productDtosGetter));
 
     }
 

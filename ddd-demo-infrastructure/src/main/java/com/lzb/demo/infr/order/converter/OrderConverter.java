@@ -17,6 +17,7 @@ import com.lzb.demo.infr.order.po.OrderPo;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -71,9 +72,11 @@ public class OrderConverter {
     /**
      * 转po集合
      * @param order
+     * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, ProductDtos productDtos) {
+    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, Function<Collection<ProductId>, ProductDtos> productDtosGetter) {
+        ProductDtos productDtos = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, productDtos))
                 .collect(Collectors.toList());
