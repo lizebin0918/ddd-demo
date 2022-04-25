@@ -11,3 +11,6 @@
 * 内部数据流转对象（`Dto-data transfer object`）
 * 返回给前端对象（`Info`）
 * 值对象（`Vo-value object`）：ddd的值对象，不定义view object，用Info代替
+
+## 值对象
+* 值对象要重写hashcode()和equals()
