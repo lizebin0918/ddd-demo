@@ -11,6 +11,7 @@ import lombok.Getter;
  *
  * @author lizebin
  */
+@EqualsAndHashCode(callSuper = false)
 public class OrderId extends EntityId {
 
     public OrderId(long id) {

@@ -1,5 +1,8 @@
 package com.lzb.demo.domain.user.entity;
 
+import com.lzb.demo.domain.common.aggregate.EntityId;
+import com.lzb.demo.domain.order.valobj.OrderId;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -12,9 +15,14 @@ import java.io.Serializable;
  * @author lizebin
  */
 @Getter
-@RequiredArgsConstructor
-public class UserId implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+public class UserId extends EntityId {
 
-    private final Long value;
+    public UserId(long id) {
+        super(id);
+    }
 
+    public static UserId create(long id) {
+        return new UserId(id);
+    }
 }

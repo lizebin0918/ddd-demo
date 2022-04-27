@@ -144,7 +144,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * @return
      */
     public Set<ProductId> productIds() {
-        return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toSet());
+        return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toUnmodifiableSet());
     }
 
     /**
