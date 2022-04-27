@@ -1,12 +1,7 @@
 package com.lzb.demo.domain.order.enums;
 
+import com.lzb.demo.common.enumaration.ValueEnum;
 import lombok.Getter;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 订单状态枚举<br/>
@@ -15,7 +10,7 @@ import java.util.stream.Collectors;
  * @author lizebin
  */
 @Getter
-public enum OrderStatus {
+public enum OrderStatus implements ValueEnum<Integer> {
 
     /**
      * 已取消
@@ -40,11 +35,4 @@ public enum OrderStatus {
         this.value = value;
     }
 
-    private static final Map<Integer, OrderStatus> ENUM_MAP = Arrays.stream(OrderStatus.values())
-            .collect(Collectors.toMap(OrderStatus::getValue, Function.identity()));
-
-
-    public static OrderStatus valueOf(int value) {
-        return ENUM_MAP.get(value);
-    }
 }

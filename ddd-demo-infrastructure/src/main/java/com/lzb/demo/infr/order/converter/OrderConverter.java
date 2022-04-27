@@ -37,7 +37,7 @@ public class OrderConverter {
     public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
         return Order.builder()
                 .id(new OrderId(orderPo.getOrderId()))
-                .orderStatus(OrderStatus.valueOf(orderPo.getStatus()))
+                .orderStatus(orderPo.getStatus())
                 .userId(new UserId(orderPo.getUserId()))
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
                 .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
@@ -116,7 +116,7 @@ public class OrderConverter {
     public static OrderPo toOrderPo(Order order) {
        return OrderPo.builder()
                .orderId(order.getId().value())
-               .status(order.getOrderStatus().getValue())
+               .status(order.getOrderStatus())
                .payMoney(order.getPayMoney().getAmount())
                .userId(order.getUserId().getValue())
                .version(order.getVersion()).build();

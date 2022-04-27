@@ -1,6 +1,7 @@
 package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.lzb.demo.domain.order.enums.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NonNull;
@@ -44,7 +45,7 @@ public class OrderPo {
      * 订单状态
      */
     @NonNull
-    Integer status;
+    OrderStatus status;
 
     /**
      * 创建时间
