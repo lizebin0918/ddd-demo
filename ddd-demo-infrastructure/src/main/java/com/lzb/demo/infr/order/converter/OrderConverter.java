@@ -1,5 +1,6 @@
 package com.lzb.demo.infr.order.converter;
 
+import com.lzb.demo.common.enumaration.EnumUtils;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
@@ -37,7 +38,7 @@ public class OrderConverter {
     public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
         return Order.builder()
                 .id(new OrderId(orderPo.getOrderId()))
-                .orderStatus(orderPo.getStatus())
+                .orderStatus(EnumUtils.getByValue(OrderStatus.class, orderPo.getStatus()).orElseThrow())
                 .userId(new UserId(orderPo.getUserId()))
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
                 .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
@@ -116,7 +117,7 @@ public class OrderConverter {
     public static OrderPo toOrderPo(Order order) {
        return OrderPo.builder()
                .orderId(order.getId().value())
-               .status(order.getOrderStatus())
+               .status(order.getOrderStatus().getValue())
                .payMoney(order.getPayMoney().getAmount())
                .userId(order.getUserId().getValue())
                .version(order.getVersion()).build();

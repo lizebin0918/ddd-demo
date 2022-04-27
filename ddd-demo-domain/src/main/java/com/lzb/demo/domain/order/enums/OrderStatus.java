@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.enums;
 
 import com.lzb.demo.common.enumaration.ValueEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
@@ -9,7 +10,6 @@ import lombok.Getter;
  *
  * @author lizebin
  */
-@Getter
 public enum OrderStatus implements ValueEnum<Integer> {
 
     /**
@@ -35,4 +35,8 @@ public enum OrderStatus implements ValueEnum<Integer> {
         this.value = value;
     }
 
+    @Override
+    public Integer getValue() {
+        return value;
+    }
 }
