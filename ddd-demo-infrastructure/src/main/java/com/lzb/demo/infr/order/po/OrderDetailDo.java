@@ -1,7 +1,10 @@
 package com.lzb.demo.infr.order.po;
 
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.Value;
 
 import java.time.LocalDateTime;
 
@@ -9,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @TableName("order_detail")
-public class OrderDetailPo {
+public class OrderDetailDo {
 
     /**
      * 主键

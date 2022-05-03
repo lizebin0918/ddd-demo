@@ -6,10 +6,10 @@
 * app层说明做什么，domain层说明怎么做
 
 ## 实体命名
-* 持久化对象（`Po-persisten object`）：字段与数据库一一对应
+* 数据对象（`Do-data object`）：字段与数据库一一对应，类型也是一一对应
 * 外部传参（`Query-查询;Cmd-更新`）
 * 内部数据流转对象（`Dto-data transfer object`）
-* 返回给前端对象（`Info`）
+* 返回给前端对象（`Info` or `View`）
 * 值对象（`Vo-value object`）：ddd的值对象，不定义view object，用Info代替
 
 ## 值对象

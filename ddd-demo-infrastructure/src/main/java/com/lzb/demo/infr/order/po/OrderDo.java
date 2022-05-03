@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 @Builder
 @AllArgsConstructor
 @TableName("\"order\"")
-public class OrderPo {
+public class OrderDo {
 
     /**
      * 订单号

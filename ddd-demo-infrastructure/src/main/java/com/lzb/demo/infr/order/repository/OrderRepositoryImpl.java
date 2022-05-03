@@ -10,16 +10,13 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.infr.common.aop.aggregate.annotation.AggregateRootSnapshot;
-import com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.dto.ProductDtos;
-import com.lzb.demo.infr.order.po.OrderDetailPo;
-import com.lzb.demo.infr.order.po.OrderPo;
+import com.lzb.demo.infr.order.po.OrderDetailDo;
+import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.product.gateway.ProductGateway;
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -70,17 +67,17 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         long orderIdValue = orderId.value();
 
         // 订单
-        OrderPo orderPo = orderService.getById(orderIdValue);
-        if (Objects.isNull(orderPo)) {
+        OrderDo orderDo = orderService.getById(orderIdValue);
+        if (Objects.isNull(orderDo)) {
             return Optional.empty();
         }
 
         // 订单明细
-        LambdaQueryWrapper<OrderDetailPo> query = Wrappers.lambdaQuery();
-        query.eq(OrderDetailPo::getOrderId, orderId.value());
-        Collection<OrderDetailPo> orderDetailPos = orderDetailService.list(query);
+        LambdaQueryWrapper<OrderDetailDo> query = Wrappers.lambdaQuery();
+        query.eq(OrderDetailDo::getOrderId, orderId.value());
+        Collection<OrderDetailDo> orderDetailDos = orderDetailService.list(query);
 
-        return Optional.of(OrderConverter.toOrder(orderPo, orderDetailPos));
+        return Optional.of(OrderConverter.toOrder(orderDo, orderDetailDos));
     }
 
     @Override

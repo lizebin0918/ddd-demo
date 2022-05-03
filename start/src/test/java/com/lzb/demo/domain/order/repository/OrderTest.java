@@ -1,12 +1,10 @@
 package com.lzb.demo.domain.order.repository;
 
 import com.alibaba.fastjson.JSON;
-import com.lzb.demo.infr.order.po.OrderPo;
+import com.lzb.demo.infr.order.po.OrderDo;
 import org.junit.Test;
 
-import javax.validation.constraints.AssertTrue;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import static org.junit.Assert.assertEquals;
@@ -21,7 +19,7 @@ public class OrderTest {
 
     @Test
     public void test() {
-        OrderPo orderPo = new OrderPo(1L,
+        OrderDo orderDo = new OrderDo(1L,
                 BigDecimal.ONE,
                 1L,
                 1,
@@ -29,10 +27,10 @@ public class OrderTest {
                 null,
                 1,
                 OffsetDateTime.now());
-        String orderJson = JSON.toJSONString(orderPo);
+        String orderJson = JSON.toJSONString(orderDo);
         System.out.println(orderJson);
-        OrderPo orderPo1 = JSON.parseObject(orderJson, OrderPo.class);
-        assertEquals(orderPo.getOrderId(), orderPo1.getOrderId());
+        OrderDo orderDo1 = JSON.parseObject(orderJson, OrderDo.class);
+        assertEquals(orderDo.getOrderId(), orderDo1.getOrderId());
     }
 
 }

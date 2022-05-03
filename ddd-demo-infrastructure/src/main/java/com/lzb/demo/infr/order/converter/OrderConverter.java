@@ -13,8 +13,8 @@ import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import com.lzb.demo.infr.order.dto.ProductDto;
 import com.lzb.demo.infr.order.dto.ProductDtos;
-import com.lzb.demo.infr.order.po.OrderDetailPo;
-import com.lzb.demo.infr.order.po.OrderPo;
+import com.lzb.demo.infr.order.po.OrderDetailDo;
+import com.lzb.demo.infr.order.po.OrderDo;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -31,43 +31,43 @@ public class OrderConverter {
 
     /**
      * 订单聚合根转换
-     * @param orderPo
-     * @param orderDetailPos
+     * @param orderDo
+     * @param orderDetailDos
      * @return
      */
-    public static Order toOrder(OrderPo orderPo, Collection<OrderDetailPo> orderDetailPos) {
+    public static Order toOrder(OrderDo orderDo, Collection<OrderDetailDo> orderDetailDos) {
         return Order.builder()
-                .id(new OrderId(orderPo.getOrderId()))
-                .orderStatus(EnumUtils.getByValue(OrderStatus.class, orderPo.getStatus()).orElseThrow())
-                .userId(new UserId(orderPo.getUserId()))
-                .orderDetails(new OrderDetails(toOrderDetails(orderDetailPos)))
-                .payMoney(new Money(orderPo.getPayMoney(), "CNY"))
-                .version(orderPo.getVersion())
-                .shippedDateTime(orderPo.getShippedDateTime())
+                .id(new OrderId(orderDo.getOrderId()))
+                .orderStatus(EnumUtils.getByValue(OrderStatus.class, orderDo.getStatus()).orElseThrow())
+                .userId(new UserId(orderDo.getUserId()))
+                .orderDetails(new OrderDetails(toOrderDetails(orderDetailDos)))
+                .payMoney(new Money(orderDo.getPayMoney(), "CNY"))
+                .version(orderDo.getVersion())
+                .shippedDateTime(orderDo.getShippedDateTime())
                 .build();
     }
 
     /**
      * 订单明细装换
-     * @param orderDetailPo
+     * @param orderDetailDo
      * @return
      */
-    public static OrderDetail toOrderDetail(OrderDetailPo orderDetailPo) {
+    public static OrderDetail toOrderDetail(OrderDetailDo orderDetailDo) {
         OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailPo.getStatus()));
-        orderDetail.setCount(orderDetailPo.getCount());
-        orderDetail.setProductId(new ProductId(orderDetailPo.getProductId()));
-        orderDetail.setOrderDetailId(OrderDetailId.create(orderDetailPo.getId()));
+        orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailDo.getStatus()));
+        orderDetail.setCount(orderDetailDo.getCount());
+        orderDetail.setProductId(new ProductId(orderDetailDo.getProductId()));
+        orderDetail.setOrderDetailId(OrderDetailId.create(orderDetailDo.getId()));
         return orderDetail;
     }
 
     /**
      * 订单明细列表转换
-     * @param orderDetailPos
+     * @param orderDetailDos
      * @return
      */
-    public static Collection<OrderDetail> toOrderDetails(Collection<OrderDetailPo> orderDetailPos) {
-        return orderDetailPos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
+    public static Collection<OrderDetail> toOrderDetails(Collection<OrderDetailDo> orderDetailDos) {
+        return orderDetailDos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
     }
 
     /**
@@ -76,7 +76,7 @@ public class OrderConverter {
      * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailPo> toOrderDetailPos(Order order, Function<Collection<ProductId>, ProductDtos> productDtosGetter) {
+    public static Collection<OrderDetailDo> toOrderDetailPos(Order order, Function<Collection<ProductId>, ProductDtos> productDtosGetter) {
         ProductDtos productDtos = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, productDtos))
@@ -90,9 +90,9 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public static OrderDetailPo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos productDtos) {
+    public static OrderDetailDo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos productDtos) {
 
-        OrderDetailPo.OrderDetailPoBuilder orderDetailPoBuilder = OrderDetailPo.builder()
+        OrderDetailDo.OrderDetailDoBuilder orderDetailPoBuilder = OrderDetailDo.builder()
                 .orderId(orderId.value())
                 .count(orderDetail.getCount())
                 .status(orderDetail.getOrderDetailStatus().getValue());
@@ -114,8 +114,8 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public static OrderPo toOrderPo(Order order) {
-       return OrderPo.builder()
+    public static OrderDo toOrderPo(Order order) {
+       return OrderDo.builder()
                .orderId(order.getId().value())
                .status(order.getOrderStatus().getValue())
                .payMoney(order.getPayMoney().getAmount())
