@@ -166,7 +166,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
     }
 
     /**
-     * 这个方法只是示例，返回的不是
+     * 这个方法只是示例，返回的不是聚合根
      * 体现封装？如果像以前的做法是直接传:ProductGateway进来，在getProducts内部一顿操作，这样的写法就表示
      * 我只要查询商品，但是我不想知道怎么查的，我有productIds，直接让我查到即可
      * @param productGetter
