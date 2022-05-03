@@ -9,10 +9,10 @@ import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
-import com.lzb.demo.infr.order.dto.ProductDto;
-import com.lzb.demo.infr.order.dto.ProductDtos;
+import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
 
@@ -76,10 +76,10 @@ public class OrderConverter {
      * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailDo> toOrderDetailPos(Order order, Function<Collection<ProductId>, ProductDtos> productDtosGetter) {
-        ProductDtos productDtos = productDtosGetter.apply(order.productIds());
+    public static Collection<OrderDetailDo> toOrderDetailPos(Order order, Function<Collection<ProductId>, Products> productDtosGetter) {
+        Products products = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
-                .map(item -> toOrderDetailPo(order.getId(), item, productDtos))
+                .map(item -> toOrderDetailPo(order.getId(), item, products))
                 .collect(Collectors.toList());
     }
 
@@ -90,7 +90,7 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public static OrderDetailDo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, ProductDtos productDtos) {
+    public static OrderDetailDo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Products products) {
 
         OrderDetailDo.OrderDetailDoBuilder orderDetailPoBuilder = OrderDetailDo.builder()
                 .orderId(orderId.value())
@@ -104,7 +104,7 @@ public class OrderConverter {
 
         long productId = orderDetail.getProductId().value();
         orderDetailPoBuilder.productId(productId);
-        orderDetailPoBuilder.productCode(productDtos.get(productId).map(ProductDto::getProductCode).orElse(null));
+        orderDetailPoBuilder.productCode(products.get(productId).map(Product::getProductCode).orElse(null));
 
         return orderDetailPoBuilder.build();
     }

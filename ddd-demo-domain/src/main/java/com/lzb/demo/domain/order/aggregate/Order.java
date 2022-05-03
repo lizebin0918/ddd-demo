@@ -13,6 +13,7 @@ import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OperatorId;
 import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.entity.UserId;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.OffsetDateTime;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -161,5 +163,16 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
     public void shipped() {
         orderStatus = OrderStatus.SHIP;
         addEvent(new OrderShippedDomainEvent(id.getValue()));
+    }
+
+    /**
+     * 这个方法只是示例，返回的不是
+     * 体现封装？如果像以前的做法是直接传:ProductGateway进来，在getProducts内部一顿操作，这样的写法就表示
+     * 我只要查询商品，但是我不想知道怎么查的，我有productIds，直接让我查到即可
+     * @param productGetter
+     * @return
+     */
+    public Collection<Product> getProducts(Function<Collection<ProductId>, Collection<Product>> productGetter) {
+        return productGetter.apply(productIds());
     }
 }
