@@ -1,25 +1,20 @@
 package com.lzb.demo;
 
 import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 /**
- * @author : wh
- * @date : 2021/6/2 17:25
- * @description: 单元测试继承该类即可
+ * @author : lizebin
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
-@WebAppConfiguration
-@EnableWebMvc
 public class SpringbootTestBase {
 
     @Before
     public void setup()throws Exception {
+        MockitoAnnotations.openMocks(this);
     }
 }
