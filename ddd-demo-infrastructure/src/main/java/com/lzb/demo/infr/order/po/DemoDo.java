@@ -17,7 +17,7 @@ import java.util.Optional;
 //@TableName("\"user\"")
 //@AllArgsConstructor// mybatis自动装配
 @RequiredArgsConstructor
-public class DemoPo {
+public class DemoDo {
 
     /**
      * id 主键
@@ -30,7 +30,7 @@ public class DemoPo {
      * 状态
      */
     @NonNull
-    Status status;
+    int status;
 
     /**
      * 手机号
@@ -41,7 +41,7 @@ public class DemoPo {
         return id;
     }
 
-    public Status getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -49,16 +49,4 @@ public class DemoPo {
         return Optional.ofNullable(phone);
     }
 
-    /**
-     * <br/>
-     * Created on : 2022-04-19 17:07
-     *
-     * @author lizebin
-     */
-    public enum Status {
-
-    }
-
-    public static void main(String[] args) {
-    }
 }
