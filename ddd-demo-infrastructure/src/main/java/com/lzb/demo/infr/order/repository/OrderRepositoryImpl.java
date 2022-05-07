@@ -3,13 +3,13 @@ package com.lzb.demo.infr.order.repository;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.domain.common.repository.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.product.entity.ProductId;
+import com.lzb.demo.infr.common.repository.BaseRepository;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
@@ -22,9 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -35,7 +33,7 @@ import java.util.function.Function;
  */
 @Repository
 @RequiredArgsConstructor
-public class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
+public class OrderRepositoryImpl extends BaseRepository<Order, OrderId> implements OrderRepository {
 
     @NonNull
     private IOrderService orderService;
@@ -49,12 +47,19 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private final Function<Collection<ProductId>, Products> getProducts = ids -> productGateway.getOrderProducts(ids);
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    // @Transactional(rollbackFor = Exception.class) 不开启事务，可能请求第三方RPC
     public OrderId add(Order order) {
+
         // 保存主表
-        orderService.save(OrderConverter.toOrderPo(order));
-        // 保存明细
-        orderDetailService.saveBatch(OrderConverter.toOrderDetailPos(order, getProducts));
+        OrderDo orderDo = OrderConverter.toOrderDo(order);
+        Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
+
+        // 执行事务、发送领域事件
+        executeTransaction(() -> {
+            orderService.save(orderDo);
+            orderDetailService.saveBatch(orderDetails);
+        });
+
         return order.getId();
     }
 
@@ -87,13 +92,15 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     public void update(Order order) {
 
         // 先锁主表
-        boolean success = orderService.updateById(OrderConverter.toOrderPo(order));
+        boolean success = orderService.updateById(OrderConverter.toOrderDo(order));
         if (!success) {
             throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getId());
         }
 
         // 更新明细
-        orderDetailService.updateBatchById(OrderConverter.toOrderDetailPos(order, getProducts));
+        Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
+
+        executeTransaction(() -> orderDetailService.updateBatchById(orderDetails));
 
     }
 

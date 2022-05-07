@@ -76,7 +76,7 @@ public class OrderConverter {
      * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailDo> toOrderDetailPos(Order order, Function<Collection<ProductId>, Products> productDtosGetter) {
+    public static Collection<OrderDetailDo> toOrderDetailDos(Order order, Function<Collection<ProductId>, Products> productDtosGetter) {
         Products products = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, products))
@@ -114,7 +114,7 @@ public class OrderConverter {
      * @param order
      * @return
      */
-    public static OrderDo toOrderPo(Order order) {
+    public static OrderDo toOrderDo(Order order) {
        return OrderDo.builder()
                .orderId(order.getId().value())
                .status(order.getOrderStatus().getValue())

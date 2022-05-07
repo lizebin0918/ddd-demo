@@ -23,19 +23,18 @@ public class DomainEventPushAspect {
 
     /**
      * 支持 add/update/注解
+     *
      * @param pjp
      * @param returnVal
      */
-    @AfterReturning(pointcut = "execution (* com.lzb.demo.domain.common.repository.AddRepository.add(..)) " +
-            "|| execution(* com.lzb.demo.domain.common.repository.UpdateRepository.update(..)) " +
-            "|| @annotation(com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush)",
-            returning = "returnVal")
+    @AfterReturning(pointcut = "@annotation(com.lzb.demo.infr.common.aop.event.annotation.DomainEventPush)",
+        returning = "returnVal")
     public void handleRequestMethod(JoinPoint pjp, Object returnVal) {
         Object[] paramValues = pjp.getArgs();
         if (Objects.nonNull(paramValues) && paramValues.length > 0) {
             Object aggregateRoot = paramValues[0];
             if (aggregateRoot instanceof BaseAggregateRoot) {
-                ((BaseAggregateRoot<?, ?>)aggregateRoot).getEvents().forEach(sender::send);
+                ((BaseAggregateRoot<?, ?>) aggregateRoot).getEvents().forEach(sender::send);
             }
         }
     }
