@@ -1,11 +1,11 @@
 package com.lzb.demo.domain.order.service;
 
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import org.assertj.core.api.Assertions;
-import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -25,10 +25,11 @@ public class OrderServiceTest extends SpringbootTestBase {
     private OrderService orderService;
 
     @Test
+    @DisplayName("生单")
     public void test_placeOrder() {
         List<PlaceOrderReq.OrderDetail> orderDetails = new ArrayList<>();
-        orderDetails.add(new PlaceOrderReq.OrderDetail(1L, 1, 1L));
-        orderDetails.add(new PlaceOrderReq.OrderDetail(1L, 1, 2L));
+        orderDetails.add(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(10000000), 1, 1L));
+        orderDetails.add(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(10000000), 1, 2L));
 
         PlaceOrderReq req = new PlaceOrderReq(
                 ThreadLocalRandom.current().nextLong(10000000),

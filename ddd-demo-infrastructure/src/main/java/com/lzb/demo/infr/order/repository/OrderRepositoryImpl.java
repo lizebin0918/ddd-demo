@@ -56,6 +56,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
 
         // 执行事务、发送领域事件
         commit(() -> {
+            System.out.println("开启事务..................");
             orderService.save(orderDo);
             orderDetailService.saveBatch(orderDetails);
         });
