@@ -33,7 +33,7 @@ import java.util.function.Function;
  */
 @Repository
 @RequiredArgsConstructor
-public class OrderRepositoryImpl extends BaseRepository<Order, OrderId> implements OrderRepository {
+public class OrderRepositoryImpl extends BaseRepository implements OrderRepository {
 
     @NonNull
     private IOrderService orderService;
@@ -55,7 +55,7 @@ public class OrderRepositoryImpl extends BaseRepository<Order, OrderId> implemen
         Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
 
         // 执行事务、发送领域事件
-        executeTransaction(() -> {
+        commit(() -> {
             orderService.save(orderDo);
             orderDetailService.saveBatch(orderDetails);
         });
@@ -88,7 +88,6 @@ public class OrderRepositoryImpl extends BaseRepository<Order, OrderId> implemen
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public void update(Order order) {
 
         // 先锁主表
@@ -97,10 +96,10 @@ public class OrderRepositoryImpl extends BaseRepository<Order, OrderId> implemen
             throw new ConcurrencyUpdateException("订单更新失败,订单号=" + order.getId());
         }
 
-        // 更新明细
         Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
 
-        executeTransaction(() -> orderDetailService.updateBatchById(orderDetails));
+        // 更新明细
+        commit(() -> orderDetailService.updateBatchById(orderDetails));
 
     }
 
