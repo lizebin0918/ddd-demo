@@ -10,8 +10,7 @@ import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.domain.user.valobj.UserId;
 import lombok.AllArgsConstructor;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**

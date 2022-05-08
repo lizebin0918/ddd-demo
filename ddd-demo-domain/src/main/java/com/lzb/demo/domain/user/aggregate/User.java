@@ -1,4 +1,6 @@
-package com.lzb.demo.domain.user.entity;
+package com.lzb.demo.domain.user.aggregate;
+
+import com.lzb.demo.domain.user.valobj.UserId;
 
 /**
  * <br/>

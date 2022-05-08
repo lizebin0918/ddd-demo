@@ -11,7 +11,7 @@ import com.lzb.demo.domain.order.valobj.OrderDetailId;
 import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.domain.user.valobj.UserId;
 import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;

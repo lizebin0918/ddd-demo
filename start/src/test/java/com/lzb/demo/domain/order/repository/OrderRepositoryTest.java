@@ -10,7 +10,7 @@ import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.user.entity.UserId;
+import com.lzb.demo.domain.user.valobj.UserId;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
