@@ -1,12 +1,8 @@
-package com.lzb.demo.domain.user.entity;
+package com.lzb.demo.domain.user.valobj;
 
 import com.lzb.demo.domain.common.aggregate.EntityId;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import java.io.Serializable;
 
 /**
  * <br/>
