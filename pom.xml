@@ -27,6 +27,8 @@
         <module>ddd-demo-infrastructure</module>
         <module>start</module>
         <module>ddd-demo-common</module>
+        <module>order</module>
+        <module>product</module>
     </modules>
 
     <dependencyManagement>
