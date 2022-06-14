@@ -16,11 +16,10 @@ import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
-import com.lzb.demo.infr.product.gateway.ProductGateway;
+import com.lzb.demo.infr.product.ProductGateway;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.function.Function;

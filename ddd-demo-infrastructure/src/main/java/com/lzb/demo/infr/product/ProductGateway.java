@@ -1,4 +1,4 @@
-package com.lzb.demo.infr.product.gateway;
+package com.lzb.demo.infr.product;
 
 import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.dto.Products;
@@ -19,5 +19,7 @@ public interface ProductGateway {
      * @return
      */
     Products getOrderProducts(Collection<ProductId> productIds);
+
+    void listBy(ProductId productId);
 
 }

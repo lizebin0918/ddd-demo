@@ -1,4 +1,4 @@
-package com.lzb.demo.infr.product.po;
+package com.lzb.demo.infr.product;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @TableName("product")
-public class ProductPo {
+class ProductPo {
 
     /**
      * 主键
