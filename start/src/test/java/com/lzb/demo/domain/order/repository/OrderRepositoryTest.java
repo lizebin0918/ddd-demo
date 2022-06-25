@@ -10,8 +10,10 @@ import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.domain.user.valobj.UserId;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
+import com.lzb.demo.infr.product.ProductGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -113,6 +115,14 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         }
         countDownLatch.await();
         System.out.println("done " + successCount.get() + "," + failCount.get());
+    }
+
+    @Autowired
+    private ProductGateway productGateway;
+
+    @Test
+    public void should_no_throw_exception() {
+        productGateway.listBy(ProductId.create(1L));
     }
 
 }

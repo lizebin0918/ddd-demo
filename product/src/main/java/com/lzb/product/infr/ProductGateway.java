@@ -7,6 +7,6 @@ package com.lzb.product.infr;
  * @author lizebin
  */
 // public interface ProductGateway {
-interface ProductGateway {
+public interface ProductGateway {
 
 }
