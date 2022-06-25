@@ -4,7 +4,7 @@ package com.lzb.demo.common.enumaration;
  * 枚举的值
  * @param <T>
  */
-public interface ValueEnum<T> {
+public interface EnumValue<T> {
 
     /**
      * 获取枚举值

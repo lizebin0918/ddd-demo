@@ -1,17 +1,27 @@
 package com.lzb.demo.domain.order.service;
 
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.order.valobj.OrderId;
+import com.lzb.demo.infr.order.po.OrderDo;
+import com.lzb.demo.infr.order.service.IOrderService;
+import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 /**
  * <br/>
@@ -23,6 +33,9 @@ public class OrderServiceTest extends SpringbootTestBase {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private IOrderService dbOrderService;
 
     @Test
     @DisplayName("生单")
@@ -40,6 +53,48 @@ public class OrderServiceTest extends SpringbootTestBase {
     @Test
     public void test_cancel() {
         Assertions.assertThat(orderService.cancel(OrderId.create(9324594L)).isSuccess()).isEqualTo(true);
+    }
+
+    @Data
+    public static class SimpleOrder {
+        private long oid;
+        private BigDecimal payMoney;
+    }
+
+    @Test
+    public void should_simple_order() {
+        LambdaQueryWrapper<OrderDo> orderQuery = Wrappers.lambdaQuery();
+        orderQuery.eq(OrderDo::getOrderId, 1L);
+        List<Map<String, Object>> maps = dbOrderService.listMaps(orderQuery);
+        List<SimpleOrder> list = maps.stream().map(map -> {
+            return toBean(map, SimpleOrder.class);
+        }).collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(list));
+    }
+
+    public static <T> T toBean(Map<String, Object> beanPropMap, Class<T> type) {
+        try {
+            T beanInstance = type.getConstructor().newInstance();
+            for (String k : beanPropMap.keySet()) {
+                String key = k;
+                Object value = beanPropMap.get(k);
+                if (value != null) {
+                    try {
+                        Field field = type.getDeclaredField(key);
+                        field.setAccessible(true);
+                        field.set(beanInstance, value);
+                        field.setAccessible(false);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+
+                    }
+                }
+            }
+            return beanInstance;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

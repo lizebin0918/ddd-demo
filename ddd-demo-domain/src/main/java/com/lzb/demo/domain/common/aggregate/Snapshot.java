@@ -1,5 +1,6 @@
 package com.lzb.demo.domain.common.aggregate;
 
+import org.apache.commons.lang3.CharUtils;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
@@ -44,6 +45,15 @@ public class Snapshot<R extends Serializable> {
      */
     public void remove() {
         context.remove();
+    }
+
+    private boolean containsNotAscii(String input) {
+        for (char c : input.toCharArray()) {
+            if (!CharUtils.isAscii(c)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

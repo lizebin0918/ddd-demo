@@ -1,8 +1,6 @@
 package com.lzb.demo.domain.order.enums;
 
-import com.lzb.demo.common.enumaration.ValueEnum;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.lzb.demo.common.enumaration.EnumValue;
 
 /**
  * 订单状态枚举<br/>
@@ -10,7 +8,7 @@ import lombok.Getter;
  *
  * @author lizebin
  */
-public enum OrderStatus implements ValueEnum<Integer> {
+public enum OrderStatus implements EnumValue<Integer> {
 
     /**
      * 已取消

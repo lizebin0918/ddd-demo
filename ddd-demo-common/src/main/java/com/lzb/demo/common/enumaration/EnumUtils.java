@@ -26,9 +26,9 @@ public final class EnumUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Enum<? extends ValueEnum<V>>, V> Optional<E> getByValue(E[] enums, V value) {
+    public static <E extends Enum<? extends EnumValue<V>>, V> Optional<E> getByValue(E[] enums, V value) {
         for (E e : enums) {
-            if (((ValueEnum<V>) e).getValue().equals(value)) {
+            if (((EnumValue<V>) e).getValue().equals(value)) {
                 return Optional.of(e);
             }
         }
@@ -45,9 +45,9 @@ public final class EnumUtils {
      * @return 对应枚举
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Enum<? extends ValueEnum<V>>, V> Optional<E> getByValue(E[] enums, V value, Comparator<V> comparator) {
+    public static <E extends Enum<? extends EnumValue<V>>, V> Optional<E> getByValue(E[] enums, V value, Comparator<V> comparator) {
         for (E e : enums) {
-            if (comparator.compare(((ValueEnum<V>) e).getValue(), value) == 0) {
+            if (comparator.compare(((EnumValue<V>) e).getValue(), value) == 0) {
                 return Optional.of(e);
             }
         }
@@ -60,7 +60,7 @@ public final class EnumUtils {
      * @param enumClass 枚举class
      * @return 枚举对象
      */
-    public static <E extends Enum<? extends ValueEnum<V>>, V> Optional<E> getByValue(Class<E> enumClass, V value) {
+    public static <E extends Enum<? extends EnumValue<V>>, V> Optional<E> getByValue(Class<E> enumClass, V value) {
         return getByValue(enumClass.getEnumConstants(), value);
     }
 
@@ -73,7 +73,7 @@ public final class EnumUtils {
      * @param <V>
      * @return
      */
-    public static <E extends Enum<? extends ValueEnum<V>>, V> Optional<E> getByValue(Class<E> enumClass, V value, Comparator<V> comparator) {
+    public static <E extends Enum<? extends EnumValue<V>>, V> Optional<E> getByValue(Class<E> enumClass, V value, Comparator<V> comparator) {
         return getByValue(enumClass.getEnumConstants(), value, comparator);
     }
 }
