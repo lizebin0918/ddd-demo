@@ -1,4 +1,4 @@
-create table "order"
+create table if not exists "order"
 (
     order_id          bigserial         not null
         constraint t_order_pk
@@ -8,10 +8,10 @@ create table "order"
     status            integer           not null,
     create_date_time  timestamp         not null,
     update_date_time  timestamp         not null,
-    "version"           integer default 1 not null,
+    "version"         integer default 1 not null,
     shipped_date_time timestamp with time zone
 );
-create table order_detail
+create table if not exists order_detail
 (
     id               bigserial
         constraint order_detail_pk
@@ -25,7 +25,7 @@ create table order_detail
     product_code     text
 );
 
-create table product
+create table if not exists product
 (
     id   bigserial
         constraint product_pk
@@ -33,14 +33,14 @@ create table product
     code text not null
 );
 
-create table domain_event
+create table if not exists domain_event
 (
     id     serial
         constraint domain_event_pk
             primary key,
     topic  varchar(32)       not null,
-    "tag"    varchar(32),
-    "key"    varchar(32),
+    "tag"  varchar(32),
+    "key"  varchar(32),
     body   text,
     status integer default 0 not null
 );
