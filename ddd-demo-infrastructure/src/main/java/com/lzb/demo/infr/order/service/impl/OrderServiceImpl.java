@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lzb.demo.infr.order.mapper.OrderMapper;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 /**

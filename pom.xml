@@ -27,8 +27,6 @@
         <module>ddd-demo-infrastructure</module>
         <module>start</module>
         <module>ddd-demo-common</module>
-        <module>order</module>
-        <module>product</module>
     </modules>
 
     <dependencyManagement>
@@ -57,16 +55,6 @@
             <dependency>
                 <groupId>com.lzb</groupId>
                 <artifactId>ddd-demo-infrastructure</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.lzb</groupId>
-                <artifactId>product</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.lzb</groupId>
-                <artifactId>order</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!--Project modules End-->

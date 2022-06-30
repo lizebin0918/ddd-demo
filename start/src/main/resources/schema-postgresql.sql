@@ -33,7 +33,7 @@ create table if not exists product
     code text not null
 );
 
-/*create table domain_event
+create table if not exists domain_event
 (
     id     serial
         constraint domain_event_pk
@@ -43,4 +43,4 @@ create table if not exists product
     "key"    varchar(32),
     body   text,
     status integer default 0 not null
-);*/
+);

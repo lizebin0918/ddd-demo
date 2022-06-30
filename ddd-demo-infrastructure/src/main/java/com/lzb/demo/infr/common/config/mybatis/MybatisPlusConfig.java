@@ -8,25 +8,25 @@ import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.type.JdbcType;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.*;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
 public class MybatisPlusConfig {
 
-    @Autowired
+    @Resource
     DataSource dataSource;
 
     @Bean
-    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean (MybatisPlusInterceptor interceptor) throws Exception{
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean () throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
-        factoryBean.setPlugins(interceptor);
+        factoryBean.setPlugins(mybatisPlusInterceptor());
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         factoryBean.setMapperLocations(resolver.getResources("classpath:/mapper/**/*.xml"));
         factoryBean.setTypeHandlersPackage("com.lzb.demo.infr.common.config");
