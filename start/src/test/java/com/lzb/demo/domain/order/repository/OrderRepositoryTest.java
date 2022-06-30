@@ -24,8 +24,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 /**
@@ -45,13 +44,11 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
-        assertTrue(Objects.nonNull(order));
-        order.shipped();
-        assertTrue(Objects.nonNull(order.getSnapshot()));
-
-        System.out.println("order:" + JSON.toJSONString(order));
-        System.out.println("order.snapshot:" + JSON.toJSONString(order.getSnapshot()));
+        assertDoesNotThrow(() -> {
+            Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
+            System.out.println(JSON.toJSONString(order));
+            return order;
+        });
     }
 
     @Test
