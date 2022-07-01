@@ -8,7 +8,7 @@ import org.springframework.retry.annotation.EnableRetry;
  * @author lizebin
  */
 @EnableRetry
-@SpringBootApplication(scanBasePackages = {"com.lzb.demo"})
+@SpringBootApplication
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
