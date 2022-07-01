@@ -20,23 +20,11 @@
         </dependency>
         <dependency>
             <groupId>com.lzb</groupId>
-            <artifactId>ddd-demo-infrastructure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lzb</groupId>
             <artifactId>ddd-demo-client</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lzb</groupId>
             <artifactId>ddd-demo-domain</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lzb</groupId>
-            <artifactId>ddd-demo-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lzb</groupId>
-            <artifactId>ddd-demo-app</artifactId>
         </dependency>
 
         <dependency>
