@@ -19,6 +19,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * @author lizebin
  */
 @Slf4j
+// @Sql({"classpath:sql/schema-h2.sql"})
 public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Autowired
@@ -47,11 +49,10 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        assertDoesNotThrow(() -> {
-            Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
-            System.out.println(JSON.toJSONString(order));
-            return order;
-        });
+        Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
+        System.out.println("测试----------------------------");
+        System.out.println(JSON.toJSONString(order));
+        System.out.println("测试----------------------------");
     }
 
     @Test
@@ -66,6 +67,10 @@ public class OrderRepositoryTest extends SpringbootTestBase {
                 .build();
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(100000), 1, 1L)));
         orderRepository.add(order);
+
+        order = orderRepository.getById(orderId).orElse(null);
+        System.out.println("新增:" + JSON.toJSONString(order));
+
     }
 
     @Test
