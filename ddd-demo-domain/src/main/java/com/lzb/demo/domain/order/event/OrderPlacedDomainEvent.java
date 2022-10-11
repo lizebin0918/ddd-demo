@@ -28,12 +28,7 @@ public class OrderPlacedDomainEvent extends OrderDomainEvent {
     }
 
     @Override
-    public String tag() {
-        return "order_placed";
-    }
-
-    @Override
-    public String key() {
-        return Objects.toString(orderId);
+    protected String getTag() {
+        return null;
     }
 }

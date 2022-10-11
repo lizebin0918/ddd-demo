@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderService;
 import lombok.Data;
@@ -17,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -52,7 +50,7 @@ public class OrderServiceTest extends SpringbootTestBase {
 
     @Test
     public void test_cancel() {
-        Assertions.assertThat(orderService.cancel(OrderId.create(9324594L)).isSuccess()).isEqualTo(true);
+        Assertions.assertThat(orderService.cancel(9324594L).isSuccess()).isEqualTo(true);
     }
 
     @Data

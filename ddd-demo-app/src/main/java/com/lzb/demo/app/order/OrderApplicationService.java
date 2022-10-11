@@ -6,7 +6,6 @@ import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Component;
@@ -48,7 +47,7 @@ public class OrderApplicationService {
      * @return
      */
     public Result cancelOrder(CancelOrderCmd cancelOrderCmd) {
-        return orderService.cancel(OrderId.create(cancelOrderCmd.getOrderId()));
+        return orderService.cancel(cancelOrderCmd.getOrderId());
     }
 
 }

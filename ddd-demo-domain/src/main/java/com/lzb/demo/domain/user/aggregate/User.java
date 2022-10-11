@@ -1,7 +1,6 @@
 package com.lzb.demo.domain.user.aggregate;
 
 import com.lzb.demo.domain.user.valobj.MyOrders;
-import com.lzb.demo.domain.user.valobj.UserId;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
@@ -15,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class User {
 
-    private UserId userId;
+    private Long userId;
 
     private MyOrders myOrders;
 

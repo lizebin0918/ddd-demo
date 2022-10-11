@@ -1,24 +1,18 @@
 package com.lzb.demo.domain.order.aggregate;
 
-import com.lzb.demo.common.exception.BizException;
-import com.lzb.demo.domain.common.aggregate.BaseAggregateRoot;
-import com.lzb.demo.domain.common.check.CheckValidation;
+import com.lzb.demo.common.aggregate.BaseAggregate;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.event.OrderPlacedDomainEvent;
-import com.lzb.demo.domain.order.event.OrderShippedDomainEvent;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.order.valobj.OperatorId;
-import com.lzb.demo.domain.order.valobj.OrderDetailId;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.valobj.UserId;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.OffsetDateTime;
 import java.util.*;
@@ -31,9 +25,11 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
+@Slf4j
 @Getter
 @SuperBuilder
-public class Order extends BaseAggregateRoot<Order, OrderId> {
+@NoArgsConstructor
+public class Order extends BaseAggregate<Order> {
 
     /**
      * 支付金额
@@ -51,7 +47,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * 用户id
      */
     @NonNull
-    private UserId userId;
+    private Long userId;
 
     /**
      * 集合实体
@@ -67,7 +63,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
     /**
      * 操作人
      */
-    private OperatorId operatorId;
+    private long operatorId;
 
     /**
      * 新增订单明细
@@ -75,7 +71,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * @param productId 产品id
      * @param count 数量
      */
-    public void addProduct(OrderDetailId orderDetailId, ProductId productId, int count) {
+    public void addProduct(long orderDetailId, long productId, int count) {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderDetailId(orderDetailId);
         orderDetail.setProductId(productId);
@@ -84,29 +80,12 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
         orderDetails.add(orderDetail);
     }
 
-    /**
-     * 是否能取消
-     * @return
-     */
-    public CheckValidation checkCancel() {
-
-        CheckValidation checkValidation = CheckValidation.newInstance();
-        if (OrderStatus.SHIP.equals(this.orderStatus)) {
-            checkValidation.add("已发货订单不能取消");
-        }
-
-        return checkValidation;
-    }
 
     /**
      * 取消订单
      */
     public void cancel() {
 
-        CheckValidation checkValidation = checkCancel();
-        if (!checkValidation.canCancel()) {
-            throw new BizException("取消异常:" + checkValidation);
-        }
         this.orderStatus = OrderStatus.CANCEL;
 
         // 发送订单取消事件
@@ -121,13 +100,12 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
     public void placeOrder(List<PlaceOrderReq.OrderDetail> orderDetails) {
 
         orderDetails.forEach(orderDetail -> addProduct(
-                OrderDetailId.create(orderDetail.getId()),
-                ProductId.create(orderDetail.getProductId()),
+                orderDetail.getId(),
+                orderDetail.getProductId(),
                 orderDetail.getCount()
         ));
 
-        addEvent(new OrderPlacedDomainEvent(id.value(),
-                productIds().stream().map(ProductId::value).collect(Collectors.toList())));
+        addEvent(new OrderPlacedDomainEvent(id, productIds()));
     }
 
     /**
@@ -135,9 +113,9 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * @param productId
      * @return
      */
-    private Optional<OrderDetail> get(ProductId productId) {
+    private Optional<OrderDetail> get(long productId) {
         return orderDetails.list().stream()
-                .filter(item -> item.getProductId().equals(productId))
+                .filter(item -> item.getProductId() == productId)
                 .findFirst();
     }
 
@@ -145,7 +123,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * 商品id
      * @return
      */
-    public Set<ProductId> productIds() {
+    public Set<Long> productIds() {
         return orderDetails.list().stream().map(OrderDetail::getProductId).collect(Collectors.toUnmodifiableSet());
     }
 
@@ -153,7 +131,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * 获取操作人
      * @return
      */
-    public Optional<OperatorId> getOperatorId() {
+    public Optional<Long> getOperatorId() {
         return Optional.ofNullable(operatorId);
     }
 
@@ -162,7 +140,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      */
     public void shipped() {
         orderStatus = OrderStatus.SHIP;
-        addEvent(new OrderShippedDomainEvent(id.getValue()));
+        addEvent(new OrderShippedDomainEvent(id));
     }
 
     /**
@@ -172,7 +150,7 @@ public class Order extends BaseAggregateRoot<Order, OrderId> {
      * @param productGetter
      * @return
      */
-    public Collection<Product> getProducts(Function<Collection<ProductId>, Collection<Product>> productGetter) {
+    public Collection<Product> getProducts(Function<Collection<Long>, Collection<Product>> productGetter) {
         return productGetter.apply(productIds());
     }
 }

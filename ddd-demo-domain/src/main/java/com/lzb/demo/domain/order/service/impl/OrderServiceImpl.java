@@ -1,6 +1,6 @@
 package com.lzb.demo.domain.order.service.impl;
 
-import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
@@ -9,8 +9,6 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import com.lzb.demo.domain.order.valobj.OrderId;
-import com.lzb.demo.domain.user.valobj.UserId;
 import lombok.AllArgsConstructor;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
@@ -37,10 +35,10 @@ public class OrderServiceImpl implements OrderService {
     public Result placeOrder(PlaceOrderReq placeOrder) {
 
         Money payMoney = new Money(placeOrder.getPayMoney(), "CNY");
-        UserId userId = new UserId(placeOrder.getUserId());
+        long userId = placeOrder.getUserId();
 
         Order order = Order.builder()
-                .id(OrderId.create(placeOrder.getOrderId()))
+                .id(placeOrder.getOrderId())
                 .orderDetails(new OrderDetails(new ArrayList<>()))
                 .orderStatus(OrderStatus.WAIT_REVIEW)
                 .payMoney(payMoney)
@@ -61,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     @Retryable(value = ConcurrencyUpdateException.class, maxAttempts = 5, backoff = @Backoff(delay = 50L, multiplier = 1.5))
-    public Result cancel(OrderId orderId) {
+    public Result cancel(long orderId) {
         Optional<Order> orderOpt = orders.getById(orderId);
         if (orderOpt.isEmpty()) {
             return Result.failure("订单不存在");

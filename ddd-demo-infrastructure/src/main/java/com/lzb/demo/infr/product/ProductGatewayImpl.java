@@ -3,11 +3,7 @@ package com.lzb.demo.infr.product;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.domain.product.entity.ProductId;
 import com.lzb.demo.infr.order.dto.Products;
-import com.lzb.demo.infr.product.ProductGateway;
-import com.lzb.demo.infr.product.ProductPo;
-import com.lzb.demo.infr.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

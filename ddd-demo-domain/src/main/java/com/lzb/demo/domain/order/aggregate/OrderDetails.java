@@ -2,9 +2,7 @@ package com.lzb.demo.domain.order.aggregate;
 
 
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import com.lzb.demo.domain.product.entity.ProductId;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -51,7 +49,7 @@ public class OrderDetails implements Iterable<OrderDetail>, Serializable {
      * @param productId
      * @return
      */
-    public Optional<OrderDetail> get(ProductId productId) {
+    public Optional<OrderDetail> get(long productId) {
         return orderDetails.stream().filter(od -> Objects.equals(od.getProductId(), productId)).findFirst();
     }
 

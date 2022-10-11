@@ -1,17 +1,13 @@
 package com.lzb.demo.infr.order.converter;
 
-import com.lzb.demo.common.enumaration.EnumUtils;
+import com.lzb.demo.common.common.utils.enums.EnumUtils;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
-import com.lzb.demo.domain.order.valobj.OrderDetailId;
-import com.lzb.demo.domain.order.valobj.OrderId;
 import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.domain.product.entity.ProductId;
-import com.lzb.demo.domain.user.valobj.UserId;
 import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
@@ -37,7 +33,7 @@ public class OrderConverter {
      */
     public static Order toOrder(OrderDo orderDo, Collection<OrderDetailDo> orderDetailDos) {
         return Order.builder()
-                .id(new OrderId(orderDo.getOrderId()))
+                .id(orderDo.getOrderId())
                 .orderStatus(EnumUtils.getByValue(OrderStatus.class, orderDo.getStatus()).orElseThrow())
                 .userId(new UserId(orderDo.getUserId()))
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailDos)))
@@ -56,8 +52,8 @@ public class OrderConverter {
         OrderDetail orderDetail = new OrderDetail();
         orderDetail.setOrderDetailStatus(OrderDetailStatus.valueOf(orderDetailDo.getStatus()));
         orderDetail.setCount(orderDetailDo.getCount());
-        orderDetail.setProductId(new ProductId(orderDetailDo.getProductId()));
-        orderDetail.setOrderDetailId(OrderDetailId.create(orderDetailDo.getId()));
+        orderDetail.setProductId(orderDetailDo.getProductId());
+        orderDetail.setOrderDetailId(orderDetailDo.getId());
         return orderDetail;
     }
 
@@ -76,7 +72,7 @@ public class OrderConverter {
      * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailDo> toOrderDetailDos(Order order, Function<Collection<ProductId>, Products> productDtosGetter) {
+    public static Collection<OrderDetailDo> toOrderDetailDos(Order order, Function<Collection<Long>, Products> productDtosGetter) {
         Products products = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, products))
@@ -90,16 +86,16 @@ public class OrderConverter {
      * @param productOpt
      * @return
      */
-    public static OrderDetailDo toOrderDetailPo(OrderId orderId, OrderDetail orderDetail, Products products) {
+    public static OrderDetailDo toOrderDetailPo(long orderId, OrderDetail orderDetail, Products products) {
 
         OrderDetailDo.OrderDetailDoBuilder orderDetailPoBuilder = OrderDetailDo.builder()
-                .orderId(orderId.value())
+                .orderId(orderId)
                 .count(orderDetail.getCount())
                 .status(orderDetail.getOrderDetailStatus().getValue());
 
-        OrderDetailId orderDetailId = orderDetail.getOrderDetailId();
+        long orderDetailId = orderDetail.getOrderDetailId();
         if (Objects.nonNull(orderDetailId)) {
-            orderDetailPoBuilder.id(orderDetailId.value());
+            orderDetailPoBuilder.id(orderDetailId);
         }
 
         long productId = orderDetail.getProductId().value();

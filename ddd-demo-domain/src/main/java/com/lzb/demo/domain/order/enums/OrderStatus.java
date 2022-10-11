@@ -1,6 +1,7 @@
 package com.lzb.demo.domain.order.enums;
 
-import com.lzb.demo.common.enumaration.EnumValue;
+
+import com.lzb.demo.common.common.utils.enums.EnumValue;
 
 /**
  * 订单状态枚举<br/>

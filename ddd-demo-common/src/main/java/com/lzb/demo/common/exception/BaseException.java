@@ -1,9 +1,12 @@
 package com.lzb.demo.common.exception;
 
+
 /**
  * Base Exception is the parent of all exceptions
  */
 public abstract class BaseException extends RuntimeException {
+
+    private static final long serialVersionUID = 1L;
 
     private String code;
 
