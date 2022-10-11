@@ -25,7 +25,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import javax.validation.constraints.NotNull;
 import java.util.function.Consumer;
 
-//@Service
+@Service
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class RocketMqDomainEventSender implements DomainEventSender {

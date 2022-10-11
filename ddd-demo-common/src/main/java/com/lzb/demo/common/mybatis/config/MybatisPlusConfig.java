@@ -23,7 +23,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(value = {"com.lzb.demo.**.mapper"}, sqlSessionFactoryRef = MybatisPlusConfig.MASTER_SQL_SESSION_FACTORY)
+@MapperScan(value = {"com.lzb.**.mapper"}, sqlSessionFactoryRef = MybatisPlusConfig.MASTER_SQL_SESSION_FACTORY)
 public class MybatisPlusConfig {
 
     public static final String MASTER_SQL_SESSION_FACTORY = "masterSqlSessionFactory";
@@ -64,9 +64,13 @@ public class MybatisPlusConfig {
 
     @Bean(MASTER_DATA_SOURCE)
     @Primary
-    @ConfigurationProperties(prefix = "")
     public DataSource dataSource() {
-        return DataSourceBuilder.create().build();
+        return DataSourceBuilder.create()
+                .driverClassName("org.h2.Driver")
+                .url("jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH")
+                .username("")
+                .password("")
+                .build();
     }
 
     @Bean

@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS leaf_alloc;
+create table leaf_alloc
+(
+    biz_tag     varchar(128)                       not null
+        primary key,
+    max_id      bigint   default 1                 not null,
+    step        int                                not null,
+    description varchar(256)                       null,
+    update_time datetime default CURRENT_TIMESTAMP null
+);
+
 create table if not exists "order"
 (
     order_id          bigserial         not null

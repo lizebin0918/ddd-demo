@@ -1,5 +1,6 @@
 package com.lzb.demo;
 
+import com.lzb.demo.common.env.Local;
 import org.junit.Before;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * @author : lizebin
  */
+@ActiveProfiles("local")
 @Transactional
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Application.class)
