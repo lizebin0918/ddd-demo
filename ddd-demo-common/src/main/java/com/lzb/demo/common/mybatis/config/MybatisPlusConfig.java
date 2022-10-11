@@ -23,7 +23,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(value = {"com.lzb.**.mapper"}, sqlSessionFactoryRef = MybatisPlusConfig.MASTER_SQL_SESSION_FACTORY)
+@MapperScan(value = {"com.lzb.demo.**.mapper"}, sqlSessionFactoryRef = MybatisPlusConfig.MASTER_SQL_SESSION_FACTORY)
 public class MybatisPlusConfig {
 
     public static final String MASTER_SQL_SESSION_FACTORY = "masterSqlSessionFactory";

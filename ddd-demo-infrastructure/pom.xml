@@ -23,15 +23,15 @@
     <artifactId>ddd-demo-infrastructure</artifactId>
     <packaging>jar</packaging>
     <name>ddd-demo-infrastructure</name>
-    <properties>
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
-        <pagehelper-spring-boot-starter.version>1.3.0</pagehelper-spring-boot-starter.version>
-    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.lzb</groupId>
             <artifactId>ddd-demo-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>ddd-demo-common</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -48,7 +48,6 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

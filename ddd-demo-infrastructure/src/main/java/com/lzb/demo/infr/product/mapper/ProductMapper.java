@@ -1,4 +1,4 @@
-package com.lzb.demo.infr.product;
+package com.lzb.demo.infr.product.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lzb.demo.infr.product.ProductPo;
@@ -13,6 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2022-02-14
  */
 @Mapper
-interface ProductMapper extends BaseMapper<ProductPo> {
+public interface ProductMapper extends BaseMapper<ProductPo> {
 
 }

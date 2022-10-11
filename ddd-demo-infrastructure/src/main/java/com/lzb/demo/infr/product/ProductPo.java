@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @TableName("product")
-class ProductPo {
+public class ProductPo {
 
     /**
      * 主键
