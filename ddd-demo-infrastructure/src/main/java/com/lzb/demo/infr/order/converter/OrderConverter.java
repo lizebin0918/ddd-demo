@@ -35,7 +35,7 @@ public class OrderConverter {
         return Order.builder()
                 .id(orderDo.getOrderId())
                 .orderStatus(EnumUtils.getByValue(OrderStatus.class, orderDo.getStatus()).orElseThrow())
-                .userId(new UserId(orderDo.getUserId()))
+                .userId(orderDo.getUserId())
                 .orderDetails(new OrderDetails(toOrderDetails(orderDetailDos)))
                 .payMoney(new Money(orderDo.getPayMoney(), "CNY"))
                 .version(orderDo.getVersion())
@@ -98,7 +98,7 @@ public class OrderConverter {
             orderDetailPoBuilder.id(orderDetailId);
         }
 
-        long productId = orderDetail.getProductId().value();
+        long productId = orderDetail.getProductId();
         orderDetailPoBuilder.productId(productId);
         orderDetailPoBuilder.productCode(products.get(productId).map(Product::getProductCode).orElse(null));
 
@@ -112,10 +112,10 @@ public class OrderConverter {
      */
     public static OrderDo toOrderDo(Order order) {
        return OrderDo.builder()
-               .orderId(order.getId().value())
+               .orderId(order.getId())
                .status(order.getOrderStatus().getValue())
                .payMoney(order.getPayMoney().getAmount())
-               .userId(order.getUserId().getValue())
+               .userId(order.getUserId())
                .version(order.getVersion()).build();
     }
 

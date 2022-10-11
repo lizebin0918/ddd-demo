@@ -24,11 +24,10 @@ class ProductGatewayImpl implements ProductGateway {
     private final IProductService productService;
 
     @Override
-    public Products getOrderProducts(Collection<ProductId> productIds) {
-        List<Long> productDoIds = productIds.stream().map(ProductId::value).collect(Collectors.toList());
+    public Products getOrderProducts(Collection<Long> productIds) {
 
         LambdaQueryWrapper<ProductPo> query = Wrappers.lambdaQuery();
-        query.in(ProductPo::getId, productDoIds);
+        query.in(ProductPo::getId, productIds);
         query.select(ProductPo::getId, ProductPo::getCode);
         List<ProductPo> productPoList = productService.list(query);
 
@@ -40,7 +39,7 @@ class ProductGatewayImpl implements ProductGateway {
     }
 
     @Override
-    public void listBy(ProductId productId) {
+    public void listBy(long productId) {
         productService.listBy(productId);
     }
 

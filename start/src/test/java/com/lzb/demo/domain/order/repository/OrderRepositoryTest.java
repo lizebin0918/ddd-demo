@@ -2,8 +2,8 @@ package com.lzb.demo.domain.order.repository;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.common.exception.IllegalVersionException;
+import com.lzb.demo.common.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;
@@ -19,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
@@ -44,7 +46,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_getById() {
-        Order order = orderRepository.getById(new OrderId(1L)).orElse(null);
+        Order order = orderRepository.getById(1L).orElse(null);
         System.out.println("测试----------------------------");
         System.out.println(JSON.toJSONString(order));
         System.out.println("测试----------------------------");
@@ -52,13 +54,13 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_save() {
-        OrderId orderId = new OrderId(ThreadLocalRandom.current().nextLong(1000000));
+        long orderId = ThreadLocalRandom.current().nextLong(1000000);
         Order order = Order.builder()
                 .id(orderId)
                 .orderDetails(new OrderDetails(new ArrayList<>()))
                 .orderStatus(OrderStatus.PEDNING)
                 .payMoney(new Money(new BigDecimal(0), "CNY"))
-                .userId(new UserId(1L))
+                .userId(1L)
                 .build();
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(100000), 1, 1L)));
         orderRepository.add(order);
@@ -75,7 +77,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_update() {
-        Order order = orderRepository.getById(new OrderId(207515L)).get();
+        Order order = orderRepository.getById(207515L).get();
         order.shipped();
         System.out.println("更新前:" + JSON.toJSONString(order));
         orderRepository.update(order);
@@ -97,7 +99,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         for (int i = 0; i < times; i++) {
             executorService.execute(() -> {
                 try {
-                    Order order = orderRepository.getById(new OrderId(207515L)).get();
+                    Order order = orderRepository.getById(207515L).get();
                     order.shipped();
                     orderRepository.update(order);
                     successCount.incrementAndGet();
@@ -122,7 +124,7 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void should_no_throw_exception() {
-        productGateway.listBy(ProductId.create(1L));
+        productGateway.listBy(1L);
     }
 
 }

@@ -21,7 +21,11 @@ public abstract class DomainEvent implements Serializable {
     protected DomainEvent() {
     }
 
-    protected abstract String getTag();
+    public abstract String getTag();
+
+    public abstract String getTopic();
+
+    public abstract String getKey();
 
     public void setBizUniqueId(String bizUniqueId) {
         this.bizUniqueId = bizUniqueId;

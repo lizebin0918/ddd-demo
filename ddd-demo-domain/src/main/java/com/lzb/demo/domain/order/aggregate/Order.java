@@ -140,7 +140,6 @@ public class Order extends BaseAggregate<Order> {
      */
     public void shipped() {
         orderStatus = OrderStatus.SHIP;
-        addEvent(new OrderShippedDomainEvent(id));
     }
 
     /**

@@ -27,4 +27,14 @@ public class PlacedOrderEvent extends DomainEvent {
         return "PlacedOrderEvent";
     }
 
+    @Override
+    public String getTopic() {
+        return "topic";
+    }
+
+    @Override
+    public String getKey() {
+        return "key";
+    }
+
 }

@@ -17,8 +17,8 @@ public interface ProductGateway {
      * @param productIds
      * @return
      */
-    Products getOrderProducts(Collection<ProductId> productIds);
+    Products getOrderProducts(Collection<Long> productIds);
 
-    void listBy(ProductId productId);
+    void listBy(long productId);
 
 }

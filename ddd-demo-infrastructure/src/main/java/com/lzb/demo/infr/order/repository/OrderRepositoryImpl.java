@@ -2,12 +2,12 @@ package com.lzb.demo.infr.order.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.repository.base.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
-import com.lzb.demo.infr.common.repository.BaseRepository;
 import com.lzb.demo.infr.order.converter.OrderConverter;
 import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
@@ -19,7 +19,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -41,40 +43,38 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     @NonNull
     private ProductGateway productGateway;
 
-    private final Function<Collection<ProductId>, Products> getProducts = ids -> productGateway.getOrderProducts(ids);
+    private final Function<Collection<Long>, Products> getProducts = ids -> productGateway.getOrderProducts(ids);
 
     @Override
     // @Transactional(rollbackFor = Exception.class) 不开启事务，可能请求第三方RPC
-    public OrderId add(Order order) {
+    public long add(Order order) {
 
         // 保存主表
         OrderDo orderDo = OrderConverter.toOrderDo(order);
         Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
 
         // 执行事务、发送领域事件
-        commit(() -> {
+        /*commit(() -> {
             System.out.println("开启事务..................");
             orderService.save(orderDo);
             orderDetailService.saveBatch(orderDetails);
-        });
+        });*/
 
         return order.getId();
     }
 
     @Override
-    public Optional<Order> getById(OrderId orderId) {
-
-        long orderIdValue = orderId.value();
+    public Optional<Order> getById(long orderId) {
 
         // 订单
-        OrderDo orderDo = orderService.getById(orderIdValue);
+        OrderDo orderDo = orderService.getById(orderId);
         if (Objects.isNull(orderDo)) {
             return Optional.empty();
         }
 
         // 订单明细
         LambdaQueryWrapper<OrderDetailDo> query = Wrappers.lambdaQuery();
-        query.eq(OrderDetailDo::getOrderId, orderId.value());
+        query.eq(OrderDetailDo::getOrderId, orderId);
         Collection<OrderDetailDo> orderDetailDos = orderDetailService.list(query);
 
         return Optional.of(OrderConverter.toOrder(orderDo, orderDetailDos));
@@ -97,7 +97,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
         Collection<OrderDetailDo> orderDetails = OrderConverter.toOrderDetailDos(order, getProducts);
 
         // 更新明细
-        commit(() -> orderDetailService.updateBatchById(orderDetails));
+        // commit(() -> orderDetailService.updateBatchById(orderDetails));
 
     }
 

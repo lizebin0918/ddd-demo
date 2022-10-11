@@ -1,8 +1,8 @@
 package com.lzb.demo.infr.plugin.mq;
 
 import com.alibaba.fastjson.JSON;
-import com.lzb.demo.domain.common.event.DomainEvent;
-import com.lzb.demo.domain.common.event.DomainEventSender;
+import com.lzb.demo.common.repository.event.DomainEvent;
+import com.lzb.demo.common.repository.event.DomainEventSender;
 import com.lzb.demo.infr.plugin.mq.po.DomainEventPo;
 import com.lzb.demo.infr.plugin.mq.service.IDomainEventService;
 import lombok.AllArgsConstructor;
@@ -27,8 +27,8 @@ public class DomainEventSenderImpl implements DomainEventSender {
     public void send(DomainEvent event) {
 
         String topic = event.getTopic(),
-                tag = event.tag(),
-                key = event.key(),
+                tag = event.getTag(),
+                key = event.getKey(),
                 body = JSON.toJSONString(event);
 
         DomainEventPo eventPo = new DomainEventPo();

@@ -11,7 +11,7 @@ class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductPo> implement
     }
 
     @Override
-    public void listBy(ProductId productId) {
+    public void listBy(long productId) {
         System.out.println("根据productId查询:" + productId);
     }
 }

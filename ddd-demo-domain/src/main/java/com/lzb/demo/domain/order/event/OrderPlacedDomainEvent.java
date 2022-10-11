@@ -28,7 +28,17 @@ public class OrderPlacedDomainEvent extends OrderDomainEvent {
     }
 
     @Override
-    protected String getTag() {
+    public String getTag() {
+        return null;
+    }
+
+    @Override
+    public String getTopic() {
+        return null;
+    }
+
+    @Override
+    public String getKey() {
         return null;
     }
 }
