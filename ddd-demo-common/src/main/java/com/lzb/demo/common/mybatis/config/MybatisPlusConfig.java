@@ -9,32 +9,27 @@ import com.lzb.demo.common.mybatis.enums.MyEnumTypeHandler;
 import com.lzb.demo.common.mybatis.methods.MySqlInjector;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(value = {"com.lzb.**.mapper"}, sqlSessionFactoryRef = MybatisPlusConfig.MASTER_SQL_SESSION_FACTORY)
+@MapperScan(value = {"com.lzb.**.mapper"})
 public class MybatisPlusConfig {
 
-    public static final String MASTER_SQL_SESSION_FACTORY = "masterSqlSessionFactory";
-    public static final String MASTER_SQL_SESSION_TEMPLATE = "masterSqlSessionTemplate";
-    public static final String MASTER_DATA_SOURCE = "masterDataSource";
+    @Resource
+    private DataSource dataSource;
 
-    @Primary
-    @Bean(name = MASTER_SQL_SESSION_FACTORY)
+    @Bean
     public SqlSessionFactory masterSqlSessionFactory() throws Exception {
         MybatisSqlSessionFactoryBean factoryBean = new MybatisSqlSessionFactoryBean();
-        factoryBean.setDataSource(dataSource());
+        factoryBean.setDataSource(dataSource);
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         factoryBean.setMapperLocations(resolver.getResources("classpath*:/mapper/**/*.xml"));
         factoryBean.setTypeHandlersPackage("com.lzb.demo.common.mybatis.handler");
@@ -62,26 +57,9 @@ public class MybatisPlusConfig {
         return interceptor;
     }
 
-    @Bean(MASTER_DATA_SOURCE)
-    @Primary
-    public DataSource dataSource() {
-        return DataSourceBuilder.create()
-                .driverClassName("org.h2.Driver")
-                .url("jdbc:h2:mem:test;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH")
-                .username("")
-                .password("")
-                .build();
-    }
-
     @Bean
-    @Primary
     public DataSourceTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(dataSource());
+        return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = MASTER_SQL_SESSION_TEMPLATE)
-    @Primary
-    public SqlSessionTemplate masterSqlSessionTemplate() throws Exception {
-        return new SqlSessionTemplate(masterSqlSessionFactory());
-    }
 }
