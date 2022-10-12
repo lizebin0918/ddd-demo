@@ -27,6 +27,11 @@ import java.util.*;
 @NoArgsConstructor
 public class BaseAggregate<R extends BaseAggregate<R>> implements Serializable {
 
+    /**
+     * 默认版本号
+     */
+    public static final int DEFAULT_VERSION = 1;
+
     @NonNull
     protected Long id;
 

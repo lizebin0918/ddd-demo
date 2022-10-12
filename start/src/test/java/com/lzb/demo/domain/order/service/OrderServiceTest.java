@@ -7,6 +7,7 @@ import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderService;
+import com.lzb.demo.infr.product.mapper.ProductMapper;
 import lombok.Data;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +21,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * <br/>
@@ -35,6 +39,9 @@ public class OrderServiceTest extends SpringbootTestBase {
     @Autowired
     private IOrderService dbOrderService;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Test
     @DisplayName("生单")
     public void test_placeOrder() {
@@ -45,12 +52,17 @@ public class OrderServiceTest extends SpringbootTestBase {
         PlaceOrderReq req = new PlaceOrderReq(
                 ThreadLocalRandom.current().nextLong(10000000),
                 new BigDecimal(100), 1L, orderDetails);
-        Assertions.assertThat(orderService.placeOrder(req).isSuccess()).isEqualTo(true);
+        assertTrue(orderService.placeOrder(req).isSuccess());
+    }
+
+    @Test
+    void should_list_product() {
+        assertNotNull(productMapper.selectById(1L));
     }
 
     @Test
     public void test_cancel() {
-        Assertions.assertThat(orderService.cancel(9324594L).isSuccess()).isEqualTo(true);
+        assertTrue(orderService.cancel(9324594L).isSuccess());
     }
 
     @Data

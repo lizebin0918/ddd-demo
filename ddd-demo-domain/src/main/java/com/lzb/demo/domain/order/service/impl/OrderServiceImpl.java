@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import static com.lzb.demo.common.aggregate.BaseAggregate.DEFAULT_VERSION;
+
 /**
  * <br/>
  * Created on : 2022-02-14 18:54
@@ -39,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = Order.builder()
                 .id(placeOrder.getOrderId())
+                .version(DEFAULT_VERSION)
                 .orderDetails(new OrderDetails(new ArrayList<>()))
                 .orderStatus(OrderStatus.WAIT_REVIEW)
                 .payMoney(payMoney)
