@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.utils.reflection;
+package com.lzb.demo.common.utils.reflection;
 
 import java.io.Serializable;
 import java.util.function.Function;

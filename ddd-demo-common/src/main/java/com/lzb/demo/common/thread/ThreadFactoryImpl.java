@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common;
+package com.lzb.demo.common.thread;
 
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;

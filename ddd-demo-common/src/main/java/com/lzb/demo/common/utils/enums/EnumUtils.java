@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.utils.enums;
+package com.lzb.demo.common.utils.enums;
 
 import java.util.Comparator;
 import java.util.List;

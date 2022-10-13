@@ -2,8 +2,8 @@ package com.lzb.demo.domain.order.repository;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.common.common.exception.ConcurrencyUpdateException;
-import com.lzb.demo.common.common.exception.IllegalVersionException;
+import com.lzb.demo.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;

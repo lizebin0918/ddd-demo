@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.constant;
+package com.lzb.demo.common.constant;
 
 /**
  * 常量<br/>

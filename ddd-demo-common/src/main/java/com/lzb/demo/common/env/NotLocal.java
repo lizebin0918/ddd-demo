@@ -4,8 +4,8 @@ import org.springframework.context.annotation.Profile;
 
 import java.lang.annotation.*;
 
-import static com.lzb.demo.common.common.helper.EnvHelper.LOCAL;
-import static com.lzb.demo.common.common.helper.EnvHelper.NOT;
+import static com.lzb.demo.common.helper.EnvHelper.LOCAL;
+import static com.lzb.demo.common.helper.EnvHelper.NOT;
 
 /**
  * 非local环境

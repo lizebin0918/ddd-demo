@@ -1,7 +1,7 @@
 package com.lzb.demo.common.aggregate;
 
-import com.lzb.demo.common.common.utils.DataUtils;
-import com.lzb.demo.common.common.utils.reflection.ReflectionUtils;
+import com.lzb.demo.common.utils.DataUtils;
+import com.lzb.demo.common.utils.reflection.ReflectionUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.javers.core.Javers;
 import org.javers.core.JaversBuilder;

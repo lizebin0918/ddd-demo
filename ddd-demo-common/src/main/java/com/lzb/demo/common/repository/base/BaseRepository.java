@@ -1,6 +1,6 @@
 package com.lzb.demo.common.repository.base;
 
-import com.lzb.demo.common.common.helper.TransactionHelper;
+import com.lzb.demo.common.helper.TransactionHelper;
 import com.lzb.demo.common.log.service.ILogService;
 import com.lzb.demo.common.log.service.dto.OperationLog;
 import com.lzb.demo.common.repository.event.DomainEvent;

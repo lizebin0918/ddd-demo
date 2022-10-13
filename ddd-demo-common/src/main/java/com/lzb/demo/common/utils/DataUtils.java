@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.utils;
+package com.lzb.demo.common.utils;
 
 import org.apache.commons.lang3.RandomUtils;
 

@@ -1,7 +1,7 @@
 package com.lzb.demo.common.id.impl;
 
 
-import com.lzb.demo.common.common.ThreadFactoryImpl;
+import com.lzb.demo.common.thread.ThreadFactoryImpl;
 import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.common.id.IdGenerator;
 import com.lzb.demo.common.id.enity.*;

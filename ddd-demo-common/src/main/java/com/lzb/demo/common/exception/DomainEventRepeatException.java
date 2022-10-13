@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.exception;
+package com.lzb.demo.common.exception;
 
 /**
  * <pre>

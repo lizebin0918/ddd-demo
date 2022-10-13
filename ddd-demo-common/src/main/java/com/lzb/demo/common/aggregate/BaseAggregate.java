@@ -2,7 +2,7 @@ package com.lzb.demo.common.aggregate;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.lzb.demo.common.common.exception.IllegalVersionException;
+import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.common.log.common.OperationType;
 import com.lzb.demo.common.log.service.dto.OperationLog;
 import com.lzb.demo.common.repository.event.DomainEvent;

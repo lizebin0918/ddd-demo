@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.helper;
+package com.lzb.demo.common.helper;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

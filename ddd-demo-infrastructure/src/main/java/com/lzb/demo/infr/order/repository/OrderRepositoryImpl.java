@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.common.aggregate.MyDiff;
-import com.lzb.demo.common.common.exception.ConcurrencyUpdateException;
+import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.repository.base.BaseRepository;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;

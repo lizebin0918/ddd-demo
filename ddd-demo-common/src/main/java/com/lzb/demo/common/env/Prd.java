@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 
 import java.lang.annotation.*;
 
-import static com.lzb.demo.common.common.helper.EnvHelper.PRD;
+import static com.lzb.demo.common.helper.EnvHelper.PRD;
 
 
 /**

@@ -1,9 +1,8 @@
 package com.lzb.demo.common.enums;
 
-import com.lzb.demo.common.common.utils.enums.EnumValue;
+import com.lzb.demo.common.utils.enums.EnumValue;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 
 @Getter
 @RequiredArgsConstructor

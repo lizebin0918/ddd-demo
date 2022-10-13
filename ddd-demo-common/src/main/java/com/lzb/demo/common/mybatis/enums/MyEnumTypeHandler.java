@@ -3,7 +3,7 @@ package com.lzb.demo.common.mybatis.enums;
 import com.baomidou.mybatisplus.core.toolkit.ExceptionUtils;
 import com.baomidou.mybatisplus.core.toolkit.ReflectionKit;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
-import com.lzb.demo.common.common.utils.enums.BaseEnumValue;
+import com.lzb.demo.common.utils.enums.BaseEnumValue;
 import org.apache.ibatis.reflection.DefaultReflectorFactory;
 import org.apache.ibatis.reflection.MetaClass;
 import org.apache.ibatis.reflection.ReflectorFactory;

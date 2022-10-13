@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.exception;
+package com.lzb.demo.common.exception;
 
 /**
  * 并发更新聚合根异常

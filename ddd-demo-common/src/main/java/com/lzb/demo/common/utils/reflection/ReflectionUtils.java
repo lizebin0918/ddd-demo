@@ -1,6 +1,6 @@
-package com.lzb.demo.common.common.utils.reflection;
+package com.lzb.demo.common.utils.reflection;
 
-import com.lzb.demo.common.common.utils.DataUtils;
+import com.lzb.demo.common.utils.DataUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

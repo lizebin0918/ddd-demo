@@ -1,6 +1,6 @@
 package com.lzb.demo.infr.order.converter;
 
-import com.lzb.demo.common.common.utils.enums.EnumUtils;
+import com.lzb.demo.common.utils.enums.EnumUtils;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.entity.Money;

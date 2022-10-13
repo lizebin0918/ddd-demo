@@ -1,4 +1,4 @@
-package com.lzb.demo.common.common.helper;
+package com.lzb.demo.common.helper;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
