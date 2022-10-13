@@ -6,8 +6,9 @@ import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,10 +18,10 @@ import org.springframework.stereotype.Component;
  * @author lizebin
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class OrderApplicationService {
 
-    private OrderService orderService;
+    private final OrderService orderService;
 
     /**
      * 下单

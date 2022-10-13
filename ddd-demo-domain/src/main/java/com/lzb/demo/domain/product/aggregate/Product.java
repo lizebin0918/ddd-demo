@@ -1,7 +1,8 @@
 package com.lzb.demo.domain.product.aggregate;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * 订单明细的商品<br/>
@@ -10,7 +11,7 @@ import lombok.Getter;
  * @author lizebin
  */
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Product {
 
     private long productId;

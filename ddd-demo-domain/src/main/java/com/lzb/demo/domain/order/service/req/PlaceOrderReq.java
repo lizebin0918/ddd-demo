@@ -1,7 +1,8 @@
 package com.lzb.demo.domain.order.service.req;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public class PlaceOrderReq {
 
     @Value
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     public static class OrderDetail {
 
         /**

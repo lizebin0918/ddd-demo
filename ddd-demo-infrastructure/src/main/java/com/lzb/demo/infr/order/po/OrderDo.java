@@ -1,13 +1,15 @@
 package com.lzb.demo.infr.order.po;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.Version;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.Value;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 /**
@@ -15,59 +17,45 @@ import java.time.OffsetDateTime;
  * @author lizebin
  * @since 2022-02-14
  */
-@Value
+@Data
 @Builder
-@AllArgsConstructor
-@TableName("\"order\"")
-public class OrderDo {
+@TableName(value = "\"order\"", autoResultMap = true)
+public class OrderDo implements Serializable {
 
     /**
      * 订单号
      */
     @NonNull
     @TableId(type = IdType.INPUT)
-    Long orderId;
+    private Long orderId;
 
     /**
      * 支付金额
      */
     @NonNull
-    BigDecimal payMoney;
+    private BigDecimal payMoney;
 
     /**
      * 下单用户
      */
     @NonNull
-    Long userId;
+    private Long userId;
 
     /**
      * 订单状态
      */
     @NonNull
-    Integer status;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    LocalDateTime createDateTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    LocalDateTime updateDateTime;
+    private Integer status;
 
     /**
      * 乐观锁版本号
      */
-    @NonNull
     @Version
-    Integer version;
+    private Integer version;
 
     /**
      * 发货时间
      */
-    OffsetDateTime shippedDateTime;
+    private OffsetDateTime shippedDateTime;
 
 }

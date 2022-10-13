@@ -9,7 +9,8 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.retry.annotation.Backoff;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,10 @@ import static com.lzb.demo.common.aggregate.BaseAggregate.DEFAULT_VERSION;
  * @author lizebin
  */
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class OrderServiceImpl implements OrderService {
 
-    private OrderRepository orders;
+    private final OrderRepository orders;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

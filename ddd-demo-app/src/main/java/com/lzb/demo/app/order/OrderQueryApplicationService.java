@@ -2,7 +2,8 @@ package com.lzb.demo.app.order;
 
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,10 +13,10 @@ import org.springframework.stereotype.Component;
  * @author lizebin
  */
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class OrderQueryApplicationService {
 
-    private OrderGateway orderGateway;
+    private final OrderGateway orderGateway;
 
     /**
      * 分页查询，直接走Gateway，不经过domain

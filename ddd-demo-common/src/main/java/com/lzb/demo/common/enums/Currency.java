@@ -1,11 +1,12 @@
 package com.lzb.demo.common.enums;
 
 import com.lzb.demo.common.common.utils.enums.EnumValue;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum Currency implements EnumValue<String> {
     AED("AED", "阿联酋迪拉姆"),
     AFN("AFN", "Afghan afghani"),

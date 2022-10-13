@@ -1,13 +1,11 @@
 package com.lzb.demo.common.log.service.dto;
 
-import com.alibaba.fastjson.JSON;
-import com.lzb.demo.common.exception.BizException;
 import com.lzb.demo.common.log.common.OperationType;
 import com.lzb.demo.common.log.repository.entity.OrderOperationLogDo;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Lazy;
 
-import javax.validation.ValidationException;
 import java.time.LocalDateTime;
 
 /**
@@ -17,8 +15,8 @@ import java.time.LocalDateTime;
  * @author lzb
  */
 @Slf4j
-@Builder
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class OperationLog {
@@ -26,13 +24,11 @@ public class OperationLog {
     /**
      * 订单号
      */
-    @NonNull
     private Long orderId;
 
     /**
      * 操作人id
      */
-    @NonNull
     private Long operatorId;
 
     /**

@@ -18,8 +18,8 @@ create table if not exists "order"
     pay_money         numeric           not null,
     user_id           bigint            not null,
     status            integer           not null,
-    create_date_time  timestamp         not null,
-    update_date_time  timestamp         not null,
+    create_date_time  timestamp  default CURRENT_TIMESTAMP       not null,
+    update_date_time  timestamp   default CURRENT_TIMESTAMP      not null,
     "version"         integer default 1 not null,
     shipped_date_time timestamp with time zone
 );
@@ -31,8 +31,8 @@ create table if not exists order_detail
     order_id         integer not null,
     count            integer not null,
     product_id       bigint,
-    create_date_time timestamp,
-    update_date_time timestamp,
+    create_date_time timestamp default CURRENT_TIMESTAMP,
+    update_date_time timestamp default CURRENT_TIMESTAMP,
     status           integer,
     product_code     text
 );

@@ -1,10 +1,11 @@
 package com.lzb.demo.domain.order.valobj;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Value;
+import org.springframework.context.annotation.Lazy;
 
 @Value
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Product {
 
     long productId;

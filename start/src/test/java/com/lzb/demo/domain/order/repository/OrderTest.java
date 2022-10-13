@@ -19,18 +19,7 @@ public class OrderTest {
 
     @Test
     public void test() {
-        OrderDo orderDo = new OrderDo(1L,
-                BigDecimal.ONE,
-                1L,
-                1,
-                null,
-                null,
-                1,
-                OffsetDateTime.now());
-        String orderJson = JSON.toJSONString(orderDo);
-        System.out.println(orderJson);
-        OrderDo orderDo1 = JSON.parseObject(orderJson, OrderDo.class);
-        assertEquals(orderDo.getOrderId(), orderDo1.getOrderId());
+
     }
 
 }

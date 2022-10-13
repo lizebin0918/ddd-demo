@@ -13,4 +13,12 @@ import com.lzb.demo.infr.order.po.OrderDo;
  */
 public interface IOrderService extends IService<OrderDo> {
 
+    /**
+     * 根据id全字段更新
+     *
+     * @param orderDo
+     * @return
+     */
+    boolean updateAllFieldsById(OrderDo orderDo);
+
 }

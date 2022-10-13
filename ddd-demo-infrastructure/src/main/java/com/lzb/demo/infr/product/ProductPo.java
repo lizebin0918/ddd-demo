@@ -3,11 +3,15 @@ package com.lzb.demo.infr.product;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.*;
+import lombok.Builder;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.springframework.context.annotation.Lazy;
 
 @Value
 @Builder
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 @TableName("product")
 public class ProductPo {
 

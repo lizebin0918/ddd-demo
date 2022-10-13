@@ -13,6 +13,7 @@ import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  *
  * @author lizebin
  */
-public class OrderConverter {
+public class OrderConvertor {
 
     /**
      * 订单聚合根转换
@@ -63,7 +64,7 @@ public class OrderConverter {
      * @return
      */
     public static Collection<OrderDetail> toOrderDetails(Collection<OrderDetailDo> orderDetailDos) {
-        return orderDetailDos.stream().map(OrderConverter::toOrderDetail).collect(Collectors.toSet());
+        return orderDetailDos.stream().map(OrderConvertor::toOrderDetail).collect(Collectors.toSet());
     }
 
     /**
@@ -72,7 +73,7 @@ public class OrderConverter {
      * @param productDtosGetter
      * @return
      */
-    public static Collection<OrderDetailDo> toOrderDetailDos(Order order, Function<Collection<Long>, Products> productDtosGetter) {
+    public static List<OrderDetailDo> toOrderDetailDos(Order order, Function<Collection<Long>, Products> productDtosGetter) {
         Products products = productDtosGetter.apply(order.productIds());
         return order.getOrderDetails().list().stream()
                 .map(item -> toOrderDetailPo(order.getId(), item, products))

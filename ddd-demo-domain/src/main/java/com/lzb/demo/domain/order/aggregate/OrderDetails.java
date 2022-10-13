@@ -2,8 +2,9 @@ package com.lzb.demo.domain.order.aggregate;
 
 
 import com.lzb.demo.domain.order.entity.OrderDetail;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 import java.io.Serializable;
 import java.util.*;
@@ -15,7 +16,7 @@ import java.util.*;
  * @author lizebin
  */
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor(onConstructor_ = {@Lazy})
 public class OrderDetails implements Iterable<OrderDetail>, Serializable {
 
     private final Collection<OrderDetail> orderDetails;

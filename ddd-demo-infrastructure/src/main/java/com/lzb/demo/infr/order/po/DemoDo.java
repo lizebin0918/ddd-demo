@@ -15,7 +15,7 @@ import java.util.Optional;
 @Value // 所有字段都是final/getter
 @Builder // 方便手动创建
 //@TableName("\"user\"")
-//@AllArgsConstructor// mybatis自动装配
+//@RequiredArgsConstructor(onConstructor_ = {@Lazy})// mybatis自动装配
 @RequiredArgsConstructor
 public class DemoDo {
 

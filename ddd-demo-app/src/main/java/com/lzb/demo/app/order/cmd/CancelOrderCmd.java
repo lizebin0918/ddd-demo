@@ -1,7 +1,8 @@
 package com.lzb.demo.app.order.cmd;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 /**
  * 指令对象<br/>
@@ -10,17 +11,17 @@ import lombok.Getter;
  * @author lizebin
  */
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CancelOrderCmd {
 
     /**
      * 订单号
      */
-    private long orderId;
+    private final long orderId;
 
     /**
      * 操作人
      */
-    private long operatorId;
+    private final long operatorId;
 
 }

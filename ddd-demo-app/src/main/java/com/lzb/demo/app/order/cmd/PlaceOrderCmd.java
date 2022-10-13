@@ -1,7 +1,8 @@
 package com.lzb.demo.app.order.cmd;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
 import java.util.Collection;
@@ -16,21 +17,21 @@ import java.util.Collection;
 public class PlaceOrderCmd {
 
     @Getter
-    @AllArgsConstructor
+    @RequiredArgsConstructor
     public static class OrderDetail {
         /**
          * 明细id
          */
-        private long id;
+        private final long id;
         /**
          * 数量
          */
-        private Integer count;
+        private final Integer count;
 
         /**
          * 商品id
          */
-        private Long productId;
+        private final Long productId;
     }
 
     /**

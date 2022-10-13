@@ -1,59 +1,47 @@
 package com.lzb.demo.infr.order.po;
 
-import com.baomidou.mybatisplus.annotation.*;
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Builder;
-import lombok.NonNull;
-import lombok.Value;
+import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
-@Value
+@Data
 @Builder
-@AllArgsConstructor
 @TableName("order_detail")
-public class OrderDetailDo {
+public class OrderDetailDo implements Serializable {
 
     /**
      * 主键
      */
-    @NonNull
     @TableId(type = IdType.INPUT)
-    Long id;
+    private Long id;
 
     /**
      * 订单号
      */
-    @NonNull
-    Long orderId;
+    private Long orderId;
 
     /**
      * 数量
      */
-    @NonNull
-    Integer count;
+    private Integer count;
 
     /**
      * 商品id
      */
-    @NonNull
-    Long productId;
+    private Long productId;
 
     /**
      * 商品编码
      */
-    String productCode;
-
-    @TableField(fill = FieldFill.INSERT)
-    LocalDateTime createDateTime;
-
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    LocalDateTime updateDateTime;
+    private String productCode;
 
     /**
      * 订单明细状态
      */
-    @NonNull
-    Integer status;
+    private Integer status;
 
 }

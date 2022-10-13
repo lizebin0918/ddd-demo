@@ -105,7 +105,8 @@ public class Order extends BaseAggregate<Order> {
                 orderDetail.getCount()
         ));
 
-        addEvent(new OrderPlacedDomainEvent(id, productIds()));
+        // 生单事件
+        //addEvent(new OrderPlacedDomainEvent(id, productIds()));
     }
 
     /**
