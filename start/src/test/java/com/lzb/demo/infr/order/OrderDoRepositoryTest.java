@@ -1,9 +1,11 @@
 package com.lzb.demo.infr.order;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.lzb.demo.SpringbootTestBase;
 import com.lzb.demo.infr.order.mapper.OrderDetailMapper;
 import com.lzb.demo.infr.order.mapper.OrderMapper;
+import com.lzb.demo.infr.order.po.OrderDo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,7 +25,8 @@ public class OrderDoRepositoryTest extends SpringbootTestBase {
 
     @Test
     public void test_select_all() {
-        System.out.println(orderMapper.selectList(Wrappers.emptyWrapper()));
+        QueryWrapper<OrderDo> queryWrapper = Wrappers.emptyWrapper();
+        System.out.println(orderMapper.selectList(queryWrapper));
         System.out.println(orderDetailMapper.selectList(Wrappers.emptyWrapper()));
     }
 
