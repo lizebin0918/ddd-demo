@@ -178,6 +178,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-devtools</artifactId>
 				<version>${spring-boot.version}</version>
+				<scope>runtime</scope>
 			</dependency>
 
 			<!--测试相关-->
