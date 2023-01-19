@@ -1,4 +1,4 @@
-package com.lzb.demo;
+package com.lzb.demo.test;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class MyTest {
 
     @Test
-    void should_test() {
+    public void should_test() {
         System.out.println("123--------------------------");
     }
 
