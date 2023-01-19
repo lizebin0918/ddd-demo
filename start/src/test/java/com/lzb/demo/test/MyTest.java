@@ -11,7 +11,7 @@ class MyTest {
 
     @Test
     void should_test() {
-        System.out.println("123--------------------------");
+        System.out.println("MyTest--------------------------");
     }
 
 }
