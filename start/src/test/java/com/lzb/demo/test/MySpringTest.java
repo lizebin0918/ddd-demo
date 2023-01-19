@@ -8,11 +8,11 @@ import org.junit.jupiter.api.Test;
  * Created on : 2023-01-19 18:53
  * @author lizebin
  */
-public class MySpringTest extends SpringbootTestBase {
+class MySpringTest extends SpringbootTestBase {
 
     @Test
-    public void should_() {
-        System.out.println("MySpring Test");
+    void should_() {
+        System.out.println("MySpring Test------");
     }
 
 }
