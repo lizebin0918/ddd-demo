@@ -1,9 +1,12 @@
 package com.lzb.demo.domain;
 
 
-public class CustomerEntityTest {
+import org.junit.jupiter.api.Test;
 
-    public void testCustomerConflict() {
+class CustomerEntityTest {
+
+    @Test
+    void testCustomerConflict() {
         System.out.println("Please mock gatewayimpl, test pure Domain Knowledge");
     }
 }

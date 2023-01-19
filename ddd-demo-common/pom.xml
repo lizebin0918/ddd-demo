@@ -124,15 +124,4 @@
         </dependency>
     </dependencies>
 
-    <build>
-        <finalName>ddd-demo-common</finalName>
-        <plugins>
-            <!-- 编译plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
