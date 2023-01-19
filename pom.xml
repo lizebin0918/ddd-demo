@@ -122,11 +122,6 @@
 				<version>${org.postgresql.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.lzb</groupId>
-				<artifactId>ddd-demo-common</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
 				<version>2.1.214</version>
