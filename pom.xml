@@ -249,6 +249,7 @@
                             <!--https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html-->
                             <!-- <include>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</include>-->
                             <include>com.lzb.demo.test1/*Test.java</include>
+                            <include>com.lzb.demo.test/*Test.java</include>
                         </includes>
                     </configuration>
                 </plugin>
