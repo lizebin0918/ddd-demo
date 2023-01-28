@@ -283,7 +283,7 @@
     </build>
     <profiles>
         <profile>
-            <id>dev</id>
+            <id>local</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
@@ -292,9 +292,15 @@
             </properties>
         </profile>
         <profile>
-            <id>prod</id>
+            <id>dev</id>
             <properties>
-                <activatedProperties>prod</activatedProperties>
+                <activatedProperties>dev</activatedProperties>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <activatedProperties>test</activatedProperties>
             </properties>
         </profile>
     </profiles>
