@@ -254,9 +254,11 @@
                         <includes>
                             <!--https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html-->
                             <!-- <include>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</include>-->
-                            <include>com.lzb.demo.test1/*Test.java</include>
-                            <include>com.lzb.demo.test/*Test.java</include>
+                            <include>com.lzb.demo.test1/*UnitTest.java</include>
                         </includes>
+                        <excludes>
+                            <exclude>**/*IntegrationTest.java</exclude>
+                        </excludes>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -270,6 +272,27 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <classifier>exec</classifier>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>3.0.0-M8</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                                <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <includes>
+                            <include>com.lzb.demo.test1/*IntegrationTest.java</include>
+                        </includes>
+                    </configuration>
                 </plugin>
 
                 <!--单元测试+集成测试-->

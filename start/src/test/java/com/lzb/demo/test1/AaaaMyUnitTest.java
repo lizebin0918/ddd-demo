@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
  * Created on : 2023-01-19 19:02
  * @author lizebin
  */
-class AaaaMyTest {
+class AaaaMyUnitTest {
 
 
     // :/**/Test*.java
@@ -19,7 +19,7 @@ class AaaaMyTest {
 
     @Test
     void should_test1() {
-        System.out.println("MyTest1------");
+        System.out.println("MyUnitTest------");
     }
 
 }
