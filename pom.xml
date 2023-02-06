@@ -273,7 +273,8 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <classifier>exec</classifier>
+                        <classifier>execution</classifier>
+                        <outputDirectory>${project.build.directory}/execution</outputDirectory>
                     </configuration>
                 </plugin>
                 <plugin>
