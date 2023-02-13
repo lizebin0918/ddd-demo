@@ -253,6 +253,12 @@
                     <configuration>
                         <includes>
                             <!--https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html-->
+                            <!--默认扫描的测试类规则-->
+                            <!-- :/**/Test*.java -->
+                            <!-- :/**/*Test.java -->
+                            <!-- :/**/*Tests.java -->
+                            <!-- :/**/*TestCase.java -->
+                            <!-- 自定义规则 -->
                             <!-- <include>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</include>-->
                             <include>com.lzb.demo.test1/*UnitTest.java</include>
                         </includes>
