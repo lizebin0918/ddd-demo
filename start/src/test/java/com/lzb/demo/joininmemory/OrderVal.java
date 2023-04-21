@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.product.ProductPo;
-import lombok.Data;
 import lombok.NonNull;
 
 /**
@@ -17,13 +16,12 @@ import lombok.NonNull;
  * Created on : 2023-04-21 17:35
  * @author lizebin
  */
-@Data
 public class OrderVal {
 
     /**
      * 订单号
      */
-    private Long id;
+    private Long orderId;
 
     /**
      * 支付金额

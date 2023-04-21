@@ -1,5 +1,8 @@
 package com.lzb.demo.joininmemory;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.lzb.demo.SpringbootTestBase;
+import com.lzb.demo.infr.order.mapper.OrderMapper;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 
 /**
  * <br/>
@@ -59,7 +63,12 @@ class JoinInMemoryTest extends SpringbootTestBase {
 
         System.out.println("------------test-------");
         System.out.println(JSON.toJSONString(orderAggVal));
+    }
 
+    @Test
+    void should_count1() {
+        long count = orderMapper.selectCount(Wrappers.lambdaQuery());
+        Assertions.assertTrue(count >= 0);
     }
 
 }
