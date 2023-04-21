@@ -3,7 +3,7 @@ package com.lzb.demo.domain;
 
 import org.junit.jupiter.api.Test;
 
-public class CustomerEntityTest {
+class CustomerEntityTest {
 
     @Test
     void testCustomerConflict() {

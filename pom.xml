@@ -97,14 +97,9 @@
 			<!--Validation API End -->
 			<!-- Misc -->
 			<dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>1.18.16</version>
-			</dependency>
-			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
-				<version>3.4</version>
+				<version>3.12.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
@@ -173,6 +168,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-devtools</artifactId>
 				<version>${spring-boot.version}</version>
+				<scope>runtime</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.24</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>4.4</version>
 			</dependency>
 
 			<!--测试相关-->
@@ -231,6 +239,21 @@
 				<scope>test</scope>
 			</dependency>
 
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter-test</artifactId>
+                <version>3.5.2</version>
+                <scope>test</scope>
+            </dependency>
+
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.17.6</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -239,8 +262,31 @@
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<version>3.3.0</version>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.0.0-M8</version>
+					<dependencies>
+						<dependency>
+							<groupId>org.junit.vintage</groupId>
+							<artifactId>junit-vintage-engine</artifactId>
+							<version>5.9.1</version>
+						</dependency>
+					</dependencies>
+					<configuration>
+						<includes>
+							<!--https://maven.apache.org/surefire/maven-surefire-plugin/examples/inclusion-exclusion.html-->
+							<!--默认扫描的测试类规则-->
+							<!-- :/**/Test*.java -->
+							<!-- :/**/*Test.java -->
+							<!-- :/**/*Tests.java -->
+							<!-- :/**/*TestCase.java -->
+							<!-- 自定义规则 -->
+							<!-- <include>%regex[.*(Cat|Dog).*], !%regex[pkg.*Slow.*.class], pkg/**/*Fast*.java, Basic????, !Unstable*</include>-->
+							<include>com.lzb.demo.test1/*UnitTest.java</include>
+						</includes>
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+						</excludes>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
@@ -254,7 +300,59 @@
 						</execution>
 					</executions>
 				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>3.0.0-M8</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<useModulePath>false</useModulePath>
+						<additionalClasspathElements>
+							<additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+						</additionalClasspathElements>
+						<includes>
+							<include>com.lzb.demo.test1/*IntegrationTest.java</include>
+						</includes>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
+		<resources>
+			<resource>
+				<!--通过开启 filtering，maven 会将文件中的 @XX@ 替换 profile 中定义的 XX 变量/属性-->
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<activatedProperties>local</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<activatedProperties>test</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
 </project>

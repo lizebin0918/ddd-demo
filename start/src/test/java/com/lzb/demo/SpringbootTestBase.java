@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author : lizebin
  */
 @Transactional
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class SpringbootTestBase {
 
     @BeforeEach

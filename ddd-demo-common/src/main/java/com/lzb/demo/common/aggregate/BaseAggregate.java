@@ -35,8 +35,7 @@ public class BaseAggregate<R extends BaseAggregate<R>> implements Serializable {
     @NonNull
     protected Long id;
 
-    @NonNull
-    protected Integer version;
+    protected Integer version = DEFAULT_VERSION;
 
     /**
      * 领域事件
