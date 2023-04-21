@@ -45,6 +45,25 @@ class JoinInMemoryTest extends SpringbootTestBase {
     @Test
     void should_count() {
 
+        List<Long> orderIds = new ArrayList<>();
+
+        for (int i = 0; i < 3; i++) {
+            orderIds.add(addOrder());
+        }
+
+        List<OrderAggVal> orderAggVals = new ArrayList<>();
+        orderIds.forEach(orderId -> {
+            OrderDo orderDo = orderMapper.selectById(orderId);
+            orderAggVals.add(new OrderAggVal(orderDo));
+        });
+
+        this.joinService.joinInMemory(OrderAggVal.class, orderAggVals);
+
+        System.out.println("------------test-------");
+        System.out.println(JSON.toJSONString(orderAggVals));
+    }
+
+    private long addOrder() {
         long orderId = ThreadLocalRandom.current().nextLong(1000000);
         Order order = Order.builder()
                 .id(orderId)
@@ -55,14 +74,7 @@ class JoinInMemoryTest extends SpringbootTestBase {
                 .build();
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(100000), 1, 1L)));
         orderRepository.add(order);
-
-        OrderDo orderDo = orderMapper.selectById(orderId);
-        OrderAggVal orderAggVal = new OrderAggVal(orderDo);
-
-        this.joinService.joinInMemory(OrderAggVal.class, List.of(orderAggVal));
-
-        System.out.println("------------test-------");
-        System.out.println(JSON.toJSONString(orderAggVal));
+        return orderId;
     }
 
     @Test
