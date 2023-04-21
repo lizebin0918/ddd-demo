@@ -23,6 +23,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.expression.BeanFactoryResolver;
 
+/**
+ * Created by taoli on 2022/8/5.
+ * gitee : https://gitee.com/litao851025/lego
+ * 编程就像玩 Lego
+ */
 @Configuration
 @Slf4j
 public class JoinInMemoryAutoConfiguration {
@@ -44,11 +49,13 @@ public class JoinInMemoryAutoConfiguration {
 
     @Bean
     public JoinInMemoryBasedJoinItemExecutorFactory joinInMemoryBasedJoinItemExecutorFactory(ApplicationContext applicationContext) {
+        System.out.println("初始化 JoinInMemoryBasedJoinItemExecutorFactory");
         return new JoinInMemoryBasedJoinItemExecutorFactory(new BeanFactoryResolver(applicationContext));
     }
 
     @Bean
     public ExecutorService defaultExecutor() {
+        System.out.println("初始化 defaultExecutor");
         BasicThreadFactory basicThreadFactory = new BasicThreadFactory.Builder()
                 .namingPattern("JoinInMemory-Thread-%d")
                 .daemon(true)

@@ -15,8 +15,8 @@ import org.apache.commons.lang3.time.StopWatch;
 
 /**
  * Created by taoli on 2022/7/31.
- * 
- * 
+ * gitee : https://gitee.com/litao851025/lego
+ * 编程就像玩 Lego
  *
  * 并行执行器，同一 level 的 join 在线程中并行执行
  */

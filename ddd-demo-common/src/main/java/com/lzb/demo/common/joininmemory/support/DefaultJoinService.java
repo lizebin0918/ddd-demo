@@ -11,8 +11,8 @@ import com.lzb.demo.common.joininmemory.JoinService;
 
 /**
  * Created by taoli on 2022/7/31.
- * 
- * 
+ * gitee : https://gitee.com/litao851025/lego
+ * 编程就像玩 Lego
  *
  * Join 服务对外接口
  */

@@ -20,8 +20,8 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 /**
  * Created by taoli on 2022/8/5.
- * 
- * 
+ * gitee : https://gitee.com/litao851025/lego
+ * 编程就像玩 Lego
  */
 @Slf4j
 public class JoinInMemoryBasedJoinItemExecutorFactory extends AbstractAnnotationBasedJoinItemExecutorFactory<JoinInMemory>{

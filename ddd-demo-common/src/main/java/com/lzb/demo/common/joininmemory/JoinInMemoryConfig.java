@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Created by taoli on 2022/8/5.
- * 
- * 
+ * gitee : https://gitee.com/litao851025/lego
+ * 编程就像玩 Lego
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
