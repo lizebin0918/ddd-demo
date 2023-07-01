@@ -19,10 +19,6 @@
         </dependency>
         <dependency>
             <groupId>com.lzb</groupId>
-            <artifactId>ddd-demo-infrastructure</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lzb</groupId>
             <artifactId>ddd-demo-domain</artifactId>
         </dependency>
         <dependency>
