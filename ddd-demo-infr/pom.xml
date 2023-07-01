@@ -10,9 +10,9 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>ddd-demo-infrastructure</artifactId>
+    <artifactId>ddd-demo-infr</artifactId>
     <packaging>jar</packaging>
-    <name>ddd-demo-infrastructure</name>
+    <name>ddd-demo-infr</name>
 
     <dependencies>
         <dependency>

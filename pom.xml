@@ -25,7 +25,7 @@
 		<module>ddd-demo-adapter</module>
 		<module>ddd-demo-app</module>
 		<module>ddd-demo-domain</module>
-		<module>ddd-demo-infrastructure</module>
+		<module>ddd-demo-infr</module>
 		<module>start</module>
 		<module>ddd-demo-common</module>
 	</modules>
@@ -55,7 +55,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.lzb</groupId>
-				<artifactId>ddd-demo-infrastructure</artifactId>
+				<artifactId>ddd-demo-infr</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>

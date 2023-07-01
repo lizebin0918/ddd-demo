@@ -32,7 +32,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.lzb</groupId>
-			<artifactId>ddd-demo-infrastructure</artifactId>
+			<artifactId>ddd-demo-infr</artifactId>
 		</dependency>
 
 		<dependency>
