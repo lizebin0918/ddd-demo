@@ -18,6 +18,10 @@
             <artifactId>ddd-demo-app</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>ddd-demo-domain</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
