@@ -1,9 +1,10 @@
 package com.lzb.demo.app.order.assembler;
 
+import java.util.stream.Collectors;
+
+import com.lzb.demo.app.order.cmd.OrderDetail;
 import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
-
-import java.util.stream.Collectors;
 
 /**
  * Dto <-> Entity<br/>
@@ -33,7 +34,7 @@ public class OrderAssembler {
      * @param orderDetail
      * @return
      */
-    private static PlaceOrderReq.OrderDetail toPlaceOrderReqDetail(PlaceOrderCmd.OrderDetail orderDetail) {
+    private static PlaceOrderReq.OrderDetail toPlaceOrderReqDetail(OrderDetail orderDetail) {
         return new PlaceOrderReq.OrderDetail(orderDetail.getId(), orderDetail.getCount(), orderDetail.getProductId());
     }
 

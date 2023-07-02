@@ -1,13 +1,20 @@
 package com.lzb.demo.app.order;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.lzb.demo.app.order.assembler.OrderAssembler;
 import com.lzb.demo.app.order.cmd.CancelOrderCmd;
+import com.lzb.demo.app.order.cmd.OrderDetail;
 import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
+import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
+import com.lzb.demo.domain.order.service.PlaceOrderProductValidator;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomUtils;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +30,10 @@ public class OrderApplicationService {
 
     private final OrderService orderService;
 
+    private final OrderRepository orderRepository;
+
+    private final PlaceOrderProductValidator placeOrderProductValidator;
+
     /**
      * 下单
      * @param placeOrderCmd
@@ -33,8 +44,13 @@ public class OrderApplicationService {
         // id生成器
         long orderIdValue = RandomUtils.nextLong(1, 100000);
 
-        // 生单
+        // dto 转 cmd
         PlaceOrderReq req = OrderAssembler.toPlaceOrderReq(orderIdValue, placeOrderCmd);
+
+        // 校验商品是否存在
+        placeOrderProductValidator.isProductIdExist(req.getOrderDetails());
+
+        // 生单
         Result placeOrderResult = orderService.placeOrder(req);
 
         // 锁库存

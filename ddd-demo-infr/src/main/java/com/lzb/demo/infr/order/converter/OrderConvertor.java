@@ -1,5 +1,11 @@
 package com.lzb.demo.infr.order.converter;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 import com.lzb.demo.common.utils.enums.EnumUtils;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
@@ -8,15 +14,9 @@ import com.lzb.demo.domain.order.entity.OrderDetail;
 import com.lzb.demo.domain.order.enums.OrderDetailStatus;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.valobj.Product;
-import com.lzb.demo.infr.order.dto.Products;
+import com.lzb.demo.domain.product.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * 订单转换ACL<br/>

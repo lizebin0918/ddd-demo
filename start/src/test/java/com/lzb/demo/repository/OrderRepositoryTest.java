@@ -3,15 +3,10 @@ package com.lzb.demo.repository;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import com.alibaba.fastjson.JSON;
 import com.lzb.demo.SpringbootTestBase;
-import com.lzb.demo.common.exception.ConcurrencyUpdateException;
 import com.lzb.demo.common.exception.IllegalVersionException;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
@@ -19,8 +14,8 @@ import com.lzb.demo.domain.order.entity.Money;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
+import com.lzb.demo.domain.product.gateway.ProductQueryGateway;
 import com.lzb.demo.infr.order.gateway.OrderGateway;
-import com.lzb.demo.infr.product.ProductGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +38,9 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Autowired
     private OrderGateway orderGateway;
+
+    @Autowired
+    private ProductQueryGateway productQueryGateway;
 
     @Test
     public void test_getById() {
@@ -82,12 +80,9 @@ public class OrderRepositoryTest extends SpringbootTestBase {
         assertThrows(IllegalVersionException.class, () -> orderRepository.update(order));
     }
 
-    @Autowired
-    private ProductGateway productGateway;
-
     @Test
     void should_no_throw_exception() {
-        productGateway.listBy(1L);
+        productQueryGateway.listBy(1L);
     }
 
 }

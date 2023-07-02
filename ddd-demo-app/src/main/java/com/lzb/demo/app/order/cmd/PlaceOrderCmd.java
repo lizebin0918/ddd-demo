@@ -16,24 +16,6 @@ import java.util.Collection;
 @Getter
 public class PlaceOrderCmd {
 
-    @Getter
-    @RequiredArgsConstructor
-    public static class OrderDetail {
-        /**
-         * 明细id
-         */
-        private final long id;
-        /**
-         * 数量
-         */
-        private final Integer count;
-
-        /**
-         * 商品id
-         */
-        private final Long productId;
-    }
-
     /**
      * 支付金额
      */

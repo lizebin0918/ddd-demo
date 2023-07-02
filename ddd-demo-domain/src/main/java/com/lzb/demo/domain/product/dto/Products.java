@@ -1,12 +1,12 @@
-package com.lzb.demo.infr.order.dto;
-
-import com.lzb.demo.domain.order.valobj.Product;
+package com.lzb.demo.domain.product.dto;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import com.lzb.demo.domain.order.valobj.Product;
 
 /**
  * <br/>

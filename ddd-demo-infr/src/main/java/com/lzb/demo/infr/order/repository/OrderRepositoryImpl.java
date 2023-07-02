@@ -1,5 +1,13 @@
 package com.lzb.demo.infr.order.repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -10,20 +18,18 @@ import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
 import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
+import com.lzb.demo.domain.product.dto.Products;
+import com.lzb.demo.domain.product.gateway.ProductQueryGateway;
 import com.lzb.demo.infr.order.converter.OrderConvertor;
-import com.lzb.demo.infr.order.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
 import com.lzb.demo.infr.order.service.IOrderDetailService;
 import com.lzb.demo.infr.order.service.IOrderService;
-import com.lzb.demo.infr.product.ProductGateway;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Repository;
 
-import java.util.*;
-import java.util.function.Function;
+import org.springframework.stereotype.Repository;
 
 /**
  * <br/>
@@ -43,7 +49,7 @@ public class OrderRepositoryImpl extends BaseRepository implements OrderReposito
     private IOrderDetailService orderDetailService;
 
     @NonNull
-    private ProductGateway productGateway;
+    private ProductQueryGateway productGateway;
 
     private final Function<Collection<Long>, Products> getProducts = ids -> productGateway.getOrderProducts(ids);
 
