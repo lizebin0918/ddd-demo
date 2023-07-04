@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lzb.demo.app.order.view.OrderView;
 import com.lzb.demo.common.utils.enums.EnumUtils;
 import com.lzb.demo.domain.order.aggregate.Order;
 import com.lzb.demo.domain.order.aggregate.OrderDetails;
@@ -17,6 +19,7 @@ import com.lzb.demo.domain.order.valobj.Product;
 import com.lzb.demo.domain.product.dto.Products;
 import com.lzb.demo.infr.order.po.OrderDetailDo;
 import com.lzb.demo.infr.order.po.OrderDo;
+import lombok.experimental.UtilityClass;
 
 /**
  * 订单转换ACL<br/>
@@ -24,6 +27,7 @@ import com.lzb.demo.infr.order.po.OrderDo;
  *
  * @author lizebin
  */
+@UtilityClass
 public class OrderConvertor {
 
     /**
@@ -120,4 +124,7 @@ public class OrderConvertor {
                .version(order.getVersion()).build();
     }
 
+    public static Page<OrderView> toOrderViewPage(Page<OrderDo> page) {
+        return null;
+    }
 }

@@ -15,7 +15,6 @@ import com.lzb.demo.domain.order.enums.OrderStatus;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import com.lzb.demo.domain.product.gateway.ProductQueryGateway;
-import com.lzb.demo.infr.order.gateway.OrderGateway;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -35,9 +34,6 @@ public class OrderRepositoryTest extends SpringbootTestBase {
 
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private OrderGateway orderGateway;
 
     @Autowired
     private ProductQueryGateway productQueryGateway;
@@ -63,11 +59,6 @@ public class OrderRepositoryTest extends SpringbootTestBase {
                 .build();
         order.placeOrder(List.of(new PlaceOrderReq.OrderDetail(ThreadLocalRandom.current().nextLong(100000), 1, 1L)));
         orderRepository.add(order);
-    }
-
-    @Test
-    public void test_listOrderForPage() {
-        System.out.println(JSON.toJSONString(orderGateway.listForPage(1, 1)));
     }
 
     @Test

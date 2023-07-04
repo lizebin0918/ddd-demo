@@ -1,4 +1,4 @@
-package com.lzb.demo.app.product.query;
+package com.lzb.demo.app.product.dto;
 
 /**
  * 商品查询<br/>

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lzb.demo.app.product.ProductQueryApplicationService;
-import com.lzb.demo.app.product.query.ProductQuery;
+import com.lzb.demo.app.product.dto.ProductQuery;
 import com.lzb.demo.app.product.view.ProductView;
 import lombok.RequiredArgsConstructor;
 

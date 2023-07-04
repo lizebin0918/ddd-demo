@@ -1,8 +1,7 @@
 package com.lzb.demo.infr.user.repository;
 
 import com.lzb.demo.domain.user.aggregate.User;
-import com.lzb.demo.domain.user.valobj.MyOrders;
-import com.lzb.demo.infr.order.gateway.OrderGateway;
+import com.lzb.demo.infr.order.service.IOrderService;
 import com.lzb.demo.infr.user.gateway.MyOrdersImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,10 +16,10 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class UserRepositoryImpl {
 
-    private final OrderGateway orderGateway;
+    private final IOrderService orderService;
 
     private void setMyOrders(User user) {
-        MyOrdersImpl myOrders = MyOrdersImpl.builder().user(user).orderGateway(orderGateway).build();
+        MyOrdersImpl myOrders = MyOrdersImpl.builder().user(user).orderService(orderService).build();
         user.setMyOrders(myOrders);
     }
 

@@ -1,12 +1,27 @@
-package com.lzb.demo.infr.order.query;
+package com.lzb.demo.app.order.dto;
+
+import java.time.OffsetDateTime;
+import java.util.List;
+
+import lombok.Data;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * 订单列表查询<br/>
+ * Created on : 2023-07-04 22:41
+ * @author mac
+ */
+@Data
 public class OrderQuery {
+
+    private int pageNum;
+    private int pageSize;
+
+    /**
+     * 邮箱
+     */
+    private String email;
 
     private List<String> orderIds;
 
@@ -23,6 +38,4 @@ public class OrderQuery {
      */
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime orderEndDateTime;
-
-
 }

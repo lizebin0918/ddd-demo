@@ -1,14 +1,14 @@
 package com.lzb.demo.infr.user.gateway;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.lzb.demo.domain.user.aggregate.User;
 import com.lzb.demo.domain.user.valobj.MyOrders;
 import com.lzb.demo.domain.user.valobj.Order;
-import com.lzb.demo.infr.order.gateway.OrderGateway;
+import com.lzb.demo.infr.order.service.IOrderService;
 import lombok.Builder;
 import lombok.NonNull;
-
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * 用户订单列表实现<br/>
@@ -19,8 +19,7 @@ import java.util.List;
 @Builder
 public class MyOrdersImpl implements MyOrders {
 
-    @NonNull
-    private final OrderGateway orderGateway;
+    private final IOrderService orderService;
 
     @NonNull
     private final User user;
