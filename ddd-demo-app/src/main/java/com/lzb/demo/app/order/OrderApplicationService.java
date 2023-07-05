@@ -1,15 +1,14 @@
 package com.lzb.demo.app.order;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collections;
 
 import com.lzb.demo.app.order.assembler.OrderAssembler;
 import com.lzb.demo.app.order.cmd.CancelOrderCmd;
-import com.lzb.demo.app.order.cmd.OrderDetail;
 import com.lzb.demo.app.order.cmd.PlaceOrderCmd;
 import com.lzb.demo.common.rsp.Result;
 import com.lzb.demo.domain.order.repository.OrderRepository;
 import com.lzb.demo.domain.order.service.OrderService;
+import com.lzb.demo.domain.order.service.PlaceOrderLockStockHandler;
 import com.lzb.demo.domain.order.service.PlaceOrderProductValidator;
 import com.lzb.demo.domain.order.service.req.PlaceOrderReq;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +33,8 @@ public class OrderApplicationService {
 
     private final PlaceOrderProductValidator placeOrderProductValidator;
 
+    private final PlaceOrderLockStockHandler placeOrderLockStockHandler;
+
     /**
      * 下单
      * @param placeOrderCmd
@@ -49,6 +50,9 @@ public class OrderApplicationService {
 
         // 校验商品是否存在
         placeOrderProductValidator.isProductIdExist(req.getOrderDetails());
+
+        // 锁库存
+        placeOrderLockStockHandler.lockStock(Collections.emptyMap());
 
         // 生单
         Result placeOrderResult = orderService.placeOrder(req);
