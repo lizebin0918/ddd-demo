@@ -1,0 +1,28 @@
+spring:
+  main:
+    banner-mode: off
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:15432/postgres?currentSchema=ddd-demo
+    username: postgres
+    password: 123456
+  data:
+    redis:
+      host: localhost
+      port: 16379
+  # 如果连接测试库，可以移回测试目录的配置文件
+  sql:
+    init:
+      mode: always
+  docker:
+    compose:
+      enabled: true
+      skip:
+        # 是否在测试中跳过docker-compose，采用testcontainer
+        in-tests: true
+cache:
+  caffeine:
+    maximumSize: 1000
+    expireAfterWriteSeconds: 300
+  redis:
+    timeToLiveSeconds: 600

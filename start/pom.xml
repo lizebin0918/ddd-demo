@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lzb</groupId>
+        <artifactId>ddd-demo</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>start</artifactId>
+    <name>start</name>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>order-context-adapter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>order-context-app</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>order-context-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>order-context-infr</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>product-context-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>product-context-infr</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>inventory-context-domain</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>inventory-context-infr</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>test-component</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.lzb</groupId>
+            <artifactId>component</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-resolver-dns-native-macos</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-docker-compose</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.5.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

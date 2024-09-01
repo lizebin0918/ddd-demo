@@ -1,0 +1,43 @@
+{
+  "currency": "CNY",
+  "exchangeRate": 1,
+  "id": 1,
+  "orderAddress": {
+    "country": "CHINA",
+    "email": "123456@qq.com",
+    "fullAddressLine": {
+      "addressLine1": "line1",
+      "addressLine2": "line2"
+    },
+    "fullName": {
+      "firstName": "first",
+      "lastName": "last"
+    },
+    "phoneNumber": "13800000000"
+  },
+  "orderDetails": {
+    "list": [
+      {
+        "count": 1,
+        "id": 1,
+        "orderStatus": "WAIT_PAY",
+        "price": 1,
+        "skuId": 1,
+        "version": 1
+      },
+      {
+        "count": 1,
+        "id": 2,
+        "orderStatus": "WAIT_PAY",
+        "price": 10,
+        "skuId": 2,
+        "version": 1
+      }
+    ]
+  },
+  "orderStatus": "WAIT_PAY",
+  "totalActualPay": 88,
+  "totalShouldPay": 88,
+  "userId": 1,
+  "version": 1
+}

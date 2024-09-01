@@ -1,0 +1,28 @@
+{
+  "orderAddress": {
+    "country": "CHINA",
+    "email": "123456@qq.com",
+    "fullAddressLine": {
+      "addressLine1": "line1",
+      "addressLine2": "line2"
+    },
+    "fullName": {
+      "firstName": "first",
+      "lastName": "last"
+    },
+    "phoneNumber": "13800000000"
+  },
+  "orderDetails": [
+    {
+      "orderStatus": "WAIT_PAY",
+      "price": 1
+    },
+    {
+      "orderStatus": "WAIT_PAY",
+      "price": 10
+    }
+  ],
+  "orderId": 1,
+  "orderStatus": "WAIT_PAY",
+  "totalActualPay": 88
+}

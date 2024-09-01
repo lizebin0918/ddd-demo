@@ -1,0 +1,38 @@
+{
+  "currency": "CNY",
+  "exchangeRate": 1,
+  "extension": {
+    "isFirstOrder": true,
+    "shipInsuranceFee": 10
+  },
+  "orderAddress": {
+    "country": "country",
+    "email": "email",
+    "fullAddressLine": {
+      "addressLine1": "addressLine1",
+      "addressLine2": "addressLine2"
+    },
+    "fullName": {
+      "firstName": "firstName",
+      "lastName": "lastName"
+    },
+    "phoneNumber": "phoneNumber"
+  },
+  "orderDetails": {
+    "list": [
+      {
+        "count": 1,
+        "locked": true,
+        "orderStatus": "WAIT_PAY",
+        "price": 1,
+        "skuId": 1,
+        "version": 1
+      }
+    ]
+  },
+  "orderStatus": "WAIT_PAY",
+  "totalActualPay": 1,
+  "totalShouldPay": 1,
+  "userId": 1,
+  "version": 1
+}

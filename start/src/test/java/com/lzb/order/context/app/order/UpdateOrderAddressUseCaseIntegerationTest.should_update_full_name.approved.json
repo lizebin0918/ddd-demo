@@ -1,0 +1,13 @@
+{
+  "country": "CHINA",
+  "email": "123456@qq.com",
+  "fullAddressLine": {
+    "addressLine1": "line1",
+    "addressLine2": "line2"
+  },
+  "fullName": {
+    "firstName": "li",
+    "lastName": ""
+  },
+  "phoneNumber": "13800000000"
+}

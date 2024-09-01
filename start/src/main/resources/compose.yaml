@@ -1,0 +1,44 @@
+services:
+  # 数据会挂在到外部硬盘，启动会报order表已存在的错误，但是testcontainer没这个问题
+  postgres:
+    image: 'postgres:14.9'
+    environment:
+      - 'POSTGRES_DB=postgres'
+      # ${spring.datasource.password}
+      - 'POSTGRES_PASSWORD=123456'
+      # ${spring.datasource.username}
+      - 'POSTGRES_USER=postgres'
+    # environment:
+        # NODE_ENV: ${NODE_ENV}
+        # DATABASE_CLIENT: ${DATABASE_CLIENT}
+        # DATABASE_HOST: ${DATABASE_HOST}
+        # DATABASE_PORT: ${DATABASE_PORT}
+        # DATABASE_NAME: ${DATABASE_NAME}
+        # DATABASE_USERNAME: ${DATABASE_USERNAME}
+        # DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+        # DATABASE_SCHEMA: ${DATABASE_SCHEMA}
+        # DATABASE_SSL: ${DATABASE_SSL}
+    ports:
+      - '15432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  redis:
+    image: 'redis:7.2.0'
+    ports:
+      # 外部端口:内部映射端口
+      - '16379:6379'
+    volumes:
+      - redis-data:/data
+volumes:
+  postgres-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: size=100m,uid=1000  # 这里可以根据需要调整大小和其他选项
+  redis-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: size=50m  # 这里可以根据需要调整大小

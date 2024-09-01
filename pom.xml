@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.lzb</groupId>
+	<artifactId>ddd-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>ddd-demo</name>
+	<modules>
+		<module>start</module>
+		<module>test-component</module>
+		<module>component</module>
+		<module>order-context</module>
+		<module>product-context</module>
+		<module>inventory-context</module>
+	</modules>
+	<properties>
+		<java.version>21</java.version>
+		<encoding>UTF-8</encoding>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
+		<spring-boot.version>3.3.2</spring-boot.version>
+		<postgresql.version>42.7.3</postgresql.version>
+		<mybatis-plus.version>3.5.7</mybatis-plus.version>
+		<lombok.version>1.18.34</lombok.version>
+		<approvaltests.version>24.3.0</approvaltests.version>
+		<testcontainers.version>1.19.3</testcontainers.version>
+		<guava.version>33.1.0-jre</guava.version>
+		<caffeine.version>3.1.8</caffeine.version>
+		<commons-collections4.version>4.4</commons-collections4.version>
+		<io.vavr.version>0.10.4</io.vavr.version>
+		<io.vavr.jackson.version>0.10.3</io.vavr.jackson.version>
+		<streamex.version>0.8.2</streamex.version>
+		<archunit.version>1.3.0</archunit.version>
+		<redission.version>3.23.4</redission.version>
+		<commons-lang3.version>3.16.0</commons-lang3.version>
+		<hutool.version>5.8.30</hutool.version>
+		<mockito.version>5.8.0</mockito.version>
+		<rest-assured.version>5.4.0</rest-assured.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>alimaven</id>
+			<name>aliyun maven</name>
+			<url>https://maven.aliyun.com/repository/public</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>Central Repository</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>com.e-iceblue</id>
+			<name>e-iceblue</name>
+			<url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<dependencyManagement>
+		<dependencies>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>order-context-adapter</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>order-context-app</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>order-context-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>order-context-infr</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>product-context-app</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>product-context-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>product-context-infr</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>inventory-context-domain</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>inventory-context-infr</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>start</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>test-component</artifactId>
+				<version>${project.version}</version>
+
+			</dependency>
+
+			<dependency>
+				<groupId>com.lzb</groupId>
+				<artifactId>component</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring-boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${postgresql.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
+				<!--springboot.3.2不兼容，剔除掉-->
+				<exclusions>
+					<exclusion>
+						<groupId>org.mybatis</groupId>
+						<artifactId>mybatis-spring</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!--springboot.3.2使用的版本-->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>3.0.3</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<!--测试相关-->
+			<dependency>
+				<groupId>com.pholser</groupId>
+				<artifactId>junit-quickcheck-core</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.pholser</groupId>
+				<artifactId>junit-quickcheck-generators</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.javafaker</groupId>
+				<artifactId>javafaker</artifactId>
+				<version>1.0.2</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-junit-jupiter</artifactId>
+				<version>${mockito.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-inline</artifactId>
+				<version>5.2.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.approvaltests</groupId>
+				<artifactId>approvaltests</artifactId>
+				<version>${approvaltests.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter-test</artifactId>
+				<version>${mybatis-plus.version}</version>
+
+			</dependency>
+
+			<!--testcontainer-->
+
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers</artifactId>
+				<version>${testcontainers.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.redis.testcontainers</groupId>
+				<artifactId>testcontainers-redis-junit-jupiter</artifactId>
+				<version>1.4.6</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>${testcontainers.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>${testcontainers.version}</version>
+				<scope>compile</scope>
+			</dependency>
+
+			<!--testcontainer-->
+
+			<dependency>
+				<groupId>com.tngtech.archunit</groupId>
+				<artifactId>archunit-junit5</artifactId>
+				<version>${archunit.version}</version>
+			</dependency>
+
+			<!--com.apifan.common:common-random:1.0.18-->
+			<dependency>
+				<groupId>org.jeasy</groupId>
+				<artifactId>easy-random-core</artifactId>
+				<version>5.0.0</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>${commons-lang3.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>checker-qual</artifactId>
+						<groupId>org.checkerframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>error_prone_annotations</artifactId>
+						<groupId>com.google.errorprone</groupId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-collections4</artifactId>
+				<version>${commons-collections4.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.ben-manes.caffeine</groupId>
+				<artifactId>caffeine</artifactId>
+				<version>${caffeine.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.vavr</groupId>
+				<artifactId>vavr</artifactId>
+				<version>${io.vavr.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.vavr</groupId>
+				<artifactId>vavr-jackson</artifactId>
+				<version>${io.vavr.jackson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>one.util</groupId>
+				<artifactId>streamex</artifactId>
+				<version>${streamex.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson-spring-boot-starter</artifactId>
+				<version>${redission.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-resolver-dns-native-macos</artifactId>
+				<version>4.1.97.Final</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-docker-compose</artifactId>
+				<scope>runtime</scope>
+				<optional>true</optional>
+				<version>${spring-boot.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.danielbechler</groupId>
+				<artifactId>java-object-diff</artifactId>
+				<version>0.95</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-core</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-http</artifactId>
+				<version>${hutool.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>transmittable-thread-local</artifactId>
+				<version>2.14.5</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.rest-assured</groupId>
+				<artifactId>rest-assured</artifactId>
+				<version>${rest-assured.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.gson</groupId>
+				<artifactId>gson</artifactId>
+				<version>2.9.0</version>
+			</dependency>
+
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!--jackson反序列化用到-->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.11.0</version>
+					<configuration>
+						<compilerArgs>
+							<arg>-parameters</arg>
+						</compilerArgs>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.3.1</version>
+					<configuration>
+						<nonFilteredFileExtensions>
+							<!--过滤掉pdf文件，不对其进行重新编码-->
+							<nonFilteredFileExtension>pdf</nonFilteredFileExtension>
+							<nonFilteredFileExtension>xls</nonFilteredFileExtension>
+							<nonFilteredFileExtension>xlsx</nonFilteredFileExtension>
+						</nonFilteredFileExtensions>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.2.2</version>
+					<configuration>
+						<includes>
+							<include>**/*UnitTest.java</include>
+						</includes>
+						<excludes>
+							<exclude>**/*IntegrationTest.java</exclude>
+						</excludes>
+						<properties>
+							<configurationParameters>
+								<!--启用并发执行-->
+								junit.jupiter.execution.parallel.enabled = true
+								<!--类下面的方法用同一个线程-->
+								junit.jupiter.execution.parallel.mode.default = same_thread
+								<!--类之间并行执行-->
+								junit.jupiter.execution.parallel.mode.classes.default = concurrent
+								junit.jupiter.execution.parallel.config.strategy = dynamic
+								junit.jupiter.execution.parallel.config.fixed.parallelism = 8
+							</configurationParameters>
+						</properties>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring-boot.version}</version>
+					<configuration>
+						<excludes>
+							<exclude>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+							</exclude>
+						</excludes>
+					</configuration>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-failsafe-plugin</artifactId>
+					<version>3.2.2</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>integration-test</goal>
+								<goal>verify</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<useModulePath>false</useModulePath>
+						<additionalClasspathElements>
+							<additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+						</additionalClasspathElements>
+						<includes>
+							<include>**/*IntegrationTest.java</include>
+						</includes>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>*.pdf</exclude>
+					<exclude>*.xls</exclude>
+					<exclude>*.xlsx</exclude>
+				</excludes>
+			</resource>
+		</resources>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+			<activation>
+				<!--默认环境-->
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>ci</id>
+			<properties>
+				<activatedProperties>ci</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<activatedProperties>test</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>prd</id>
+			<properties>
+				<activatedProperties>prd</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
+
+
+</project>

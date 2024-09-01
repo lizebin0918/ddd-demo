@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzb.order.context.infr.order.persistence.mapper.OrderPoMapper">
+
+    <select id="get" resultType="com.lzb.order.context.infr.order.persistence.po.OrderPo">
+        select * from "order" where order_id = #{orderId}
+    </select>
+    <select id="orderCount" resultType="java.util.Map">
+        select order_id as orderId, count(*) as count from "order" group by order_id;
+    </select>
+    <select id="selectStr" resultType="java.lang.String">
+        select '1'
+    </select>
+</mapper>

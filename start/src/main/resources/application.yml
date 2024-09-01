@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: ddd-demo
+  profiles:
+    active: @activatedProperties@
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  main:
+    #不允许循环依赖，先google解决，如果是业务循环依赖，看看中间是否能加一层，如果循环依赖了@SpyBean会报错
+    allow-circular-references: false
+    # 默认不要懒加载，懒加载无法检测循环依赖
+    lazy-initialization: false
+    allow-bean-definition-overriding: false
+  sql:
+    init:
+      data-locations: classpath:sql/data.sql
+      mode: never
+      schema-locations: classpath:sql/schema.sql
+  docker:
+    compose:
+      enabled: false
+      file: classpath:compose.yaml
+server:
+  port: 8080
+  servlet:
+    context-path: /ddd-demo
+logging:
+  config: classpath:logback.xml
+redisson:
+  host: ${spring.data.redis.host}
+  port: ${spring.data.redis.port}
+  netty-threads: 1
+  threads: 1
+  connection-minimum-idle-size: 1
+  connection-pool-size: 1
